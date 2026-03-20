@@ -925,6 +925,7 @@ function loadTrades(id){
     const s=JSON.parse(localStorage.getItem(acctLSKey(id))||'null');
     if(!s){ trades=[]; nextId=1; return; }
     trades=s.trades||[]; nextId=s.nextId||trades.length+1;
+    sortTrades();
   }catch(e){ trades=[]; nextId=1; }
 }
 function migrateLegacy(){

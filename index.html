@@ -2448,7 +2448,11 @@ function irpfLoadState(){
 
 document.getElementById('irpf-f-fecha').value=todayISO;
 irpfLoadState();
-irpfSelectedYear=irpfCurrentYear;
+// Seleccionar el año más reciente que tenga cobros; si no hay, el año actual
+{
+  const cobrosYears=[...new Set(irpfCobros.map(c=>c.fecha.slice(0,4)))].sort();
+  irpfSelectedYear=cobrosYears.length>0?cobrosYears[cobrosYears.length-1]:irpfCurrentYear;
+}
 irpfBuildYearSelector();
 irpfRender();
 irpfGlLoadConfig();
@@ -2510,9 +2514,8 @@ function irpfAddCobro(){
   irpfCobros.sort((a,b)=>a.fecha.localeCompare(b.fecha));
   document.getElementById('irpf-f-bruto').value='';
   document.getElementById('irpf-f-fecha').value=todayISO;
-  // Asegurar que el año seleccionado coincide con el año del cobro recién añadido
-  const cobroYear=fecha.slice(0,4);
-  if(irpfSelectedYear!=='all'&&irpfSelectedYear!==cobroYear) irpfSelectedYear=cobroYear;
+  // Cambiar siempre al año del cobro recién añadido para que aparezca inmediatamente
+  irpfSelectedYear=fecha.slice(0,4);
   irpfSaveState();irpfBuildYearSelector();irpfRender();
   toast('Cobro registrado ✓');
 }
@@ -2520,6 +2523,14 @@ function irpfAddCobro(){
 function irpfDeleteCobro(id){
   if(!confirm('¿Eliminar este cobro?'))return;
   irpfCobros=irpfCobros.filter(c=>c.id!==id);
+  // Si el año activo se quedó sin cobros, ir al más reciente con cobros
+  if(irpfSelectedYear!=='all'){
+    const stillHas=irpfCobros.some(c=>c.fecha.startsWith(irpfSelectedYear));
+    if(!stillHas){
+      const years=[...new Set(irpfCobros.map(c=>c.fecha.slice(0,4)))].sort();
+      irpfSelectedYear=years.length>0?years[years.length-1]:irpfCurrentYear;
+    }
+  }
   irpfSaveState();irpfBuildYearSelector();irpfRender();
 }
 
@@ -2914,16 +2925,13 @@ function retaBuildYearSelector() {
 
 // ── Sync desde cobros IRPF ───────────────────────────
 function retaSyncFromIRPF() {
-  // Sincronizar año con IRPF: usar el año activo de IRPF si tiene cobros,
-  // o el más reciente con cobros si retaSelectedYear no tiene ninguno
+  // Sincronizar año: siempre seguir el año activo de IRPF
   if (irpfCobros.length > 0) {
     const years = [...new Set(irpfCobros.map(c => c.fecha.slice(0,4)))].sort();
-    // Si el año activo en IRPF (no 'all') tiene cobros, usar ese
-    const irpfActiveYear = (irpfSelectedYear !== 'all') ? irpfSelectedYear : null;
-    if (irpfActiveYear && years.includes(irpfActiveYear)) {
-      retaSelectedYear = irpfActiveYear;
+    if (irpfSelectedYear !== 'all') {
+      retaSelectedYear = irpfSelectedYear; // seguir exactamente el año de IRPF
     } else if (!years.includes(retaSelectedYear)) {
-      retaSelectedYear = years[years.length - 1]; // año más reciente con cobros
+      retaSelectedYear = years[years.length - 1];
     }
   }
 
@@ -3000,7 +3008,9 @@ function retaToggleSyncIRPF() {
 
 // ── Presets y tipo ────────────────────────────────────
 function retaSetIngr(v) {
-  if (retaSyncEnabled) return; // ignorar si sync activo
+  // Solo bloquear si sync activo Y hay cobros reales del año
+  const cobrosAnioActual = irpfCobros.filter(c => c.fecha.startsWith(retaSelectedYear));
+  if (retaSyncEnabled && cobrosAnioActual.length > 0) return;
   document.getElementById('reta-inp-ingr').value = v;
   document.querySelectorAll('#reta-pres-ingr .preset-btn').forEach(b => {
     const m = b.textContent.match(/(\d+)k/);

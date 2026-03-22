@@ -2879,341 +2879,370 @@ function irpfToggleSyncPanel(){
   dot.textContent=isOpen?'▸':'▾';
 }
 
+
 // ═══════════════════════════════════════════════════════
-// ── RETA / AUTÓNOMOS MODULE ──────────────────────────
+// ── RETA / AUTÓNOMOS MODULE ─────────────────────────
 // ═══════════════════════════════════════════════════════
 
 const RETA_TRAMOS = [
-  { t:'1',  rMin:      0, rMax:   8039.99, bMin:  653.59, bMax:  718.94, cuotaMin: 206 },
-  { t:'2',  rMin:   8040, rMax:  10159.99, bMin:  718.94, bMax:  900.00, cuotaMin: 226 },
-  { t:'3',  rMin:  10160, rMax:  12299.99, bMin:  849.67, bMax:  900.00, cuotaMin: 267 },
-  { t:'4',  rMin:  12300, rMax:  14039.99, bMin:  898.69, bMax:  950.98, cuotaMin: 283 },
-  { t:'5',  rMin:  14040, rMax:  15119.99, bMin:  950.98, bMax:  960.78, cuotaMin: 299 },
-  { t:'6',  rMin:  15120, rMax:  17279.99, bMin:  960.78, bMax: 1000.00, cuotaMin: 302 },
-  { t:'7',  rMin:  17280, rMax:  18899.99, bMin: 1000.00, bMax: 1050.00, cuotaMin: 315 },
-  { t:'8',  rMin:  18900, rMax:  22959.99, bMin: 1050.00, bMax: 1190.18, cuotaMin: 330 },
-  { t:'9',  rMin:  22960, rMax:  26799.99, bMin: 1190.18, bMax: 1260.00, cuotaMin: 375 },
-  { t:'10', rMin:  26800, rMax:  30479.99, bMin: 1260.00, bMax: 1320.00, cuotaMin: 397 },
-  { t:'11', rMin:  30480, rMax:  36039.99, bMin: 1320.00, bMax: 1414.06, cuotaMin: 415 },
-  { t:'12', rMin:  36040, rMax:  43199.99, bMin: 1414.06, bMax: 1732.03, cuotaMin: 445 },
-  { t:'13', rMin:  43200, rMax:  54039.99, bMin: 1732.03, bMax: 2054.00, cuotaMin: 545 },
-  { t:'14', rMin:  54040, rMax:  72099.99, bMin: 2054.00, bMax: 3424.00, cuotaMin: 646 },
-  { t:'15', rMin:  72100, rMax: 999999999, bMin: 3424.00, bMax: 4720.50, cuotaMin:1077 },
+  { t:'1',  rMin:      0, rMax:   8039.99, bMin:  653.59, bMax:  718.94 },
+  { t:'2',  rMin:   8040, rMax:  10159.99, bMin:  718.94, bMax:  900.00 },
+  { t:'3',  rMin:  10160, rMax:  12299.99, bMin:  849.67, bMax:  900.00 },
+  { t:'4',  rMin:  12300, rMax:  14039.99, bMin:  898.69, bMax:  950.98 },
+  { t:'5',  rMin:  14040, rMax:  15119.99, bMin:  950.98, bMax:  960.78 },
+  { t:'6',  rMin:  15120, rMax:  17279.99, bMin:  960.78, bMax: 1000.00 },
+  { t:'7',  rMin:  17280, rMax:  18899.99, bMin: 1000.00, bMax: 1050.00 },
+  { t:'8',  rMin:  18900, rMax:  22959.99, bMin: 1050.00, bMax: 1190.18 },
+  { t:'9',  rMin:  22960, rMax:  26799.99, bMin: 1190.18, bMax: 1260.00 },
+  { t:'10', rMin:  26800, rMax:  30479.99, bMin: 1260.00, bMax: 1320.00 },
+  { t:'11', rMin:  30480, rMax:  36039.99, bMin: 1320.00, bMax: 1414.06 },
+  { t:'12', rMin:  36040, rMax:  43199.99, bMin: 1414.06, bMax: 1732.03 },
+  { t:'13', rMin:  43200, rMax:  54039.99, bMin: 1732.03, bMax: 2054.00 },
+  { t:'14', rMin:  54040, rMax:  72099.99, bMin: 2054.00, bMax: 3424.00 },
+  { t:'15', rMin:  72100, rMax: 999999999, bMin: 3424.00, bMax: 4720.50 },
 ];
-const RETA_T_CC_GENERAL  = 28.30;
-const RETA_T_CC_DISCAPAC = 26.50;
-const RETA_T_CC_FAMILIAR = 27.45;
-const RETA_T_IT   = 1.30;
-const RETA_T_CESE = 0.90;
-const RETA_T_FP   = 0.10;
-const RETA_T_MEI  = 0.90;
 
-let retaTipoAlta    = 'general';
-let retaTpAno       = 1;
-let retaSelectedYear = String(new Date().getFullYear());
-let retaSyncEnabled  = true; // toggle: usar cobros IRPF
+// Tipos RETA 2026
+const RCC = 28.30, RCC_D = 26.50, RCC_F = 27.45;
+const RIT = 1.30, RCESE = 0.90, RFP = 0.10, RMEI = 0.90;
 
-// ── Deducción Gipuzkoa Art. 28 NF 3/2014 ─────────────
-function retaCalcDeduccionGipuzkoa(base) {
-  if (base <= 0) return 0;
-  if (base <= 35000)  return base * 0.20;
-  if (base <= 85000)  return 35000 * 0.20 + (base - 35000) * 0.15;
-  return 35000 * 0.20 + 50000 * 0.15 + (base - 85000) * 0.10;
+// Estado
+let rTipo = 'general';
+let rTpAno = 1;
+let rSyncOn = true;
+
+// Deducción Gipuzkoa Art.28 NF 3/2014
+function rDeducGip(b) {
+  if (b <= 0) return 0;
+  if (b <= 35000)  return b * 0.20;
+  if (b <= 85000)  return 35000*0.20 + (b-35000)*0.15;
+  return 35000*0.20 + 50000*0.15 + (b-85000)*0.10;
 }
 
-const retaFE = n => (isNaN(n)||n===null) ? '—' :
-  n.toLocaleString('es-ES',{style:'currency',currency:'EUR',minimumFractionDigits:2,maximumFractionDigits:2});
-const retaFP = n => (isNaN(n)||n===null) ? '—' :
-  n.toFixed(2).replace('.',',')+' %';
-const retaFN = (n,d=0) => isNaN(n) ? '—' :
-  n.toLocaleString('es-ES',{minimumFractionDigits:d,maximumFractionDigits:d});
+// Formatters
+function rFE(n) {
+  if (isNaN(n) || n === null) return '—';
+  return n.toLocaleString('es-ES',{style:'currency',currency:'EUR',minimumFractionDigits:2,maximumFractionDigits:2});
+}
+function rFP(n) {
+  if (isNaN(n) || n === null) return '—';
+  return n.toFixed(2).replace('.',',')+' %';
+}
+function rFN(n, d) {
+  if (isNaN(n)) return '—';
+  return n.toLocaleString('es-ES',{minimumFractionDigits:d||0,maximumFractionDigits:d||0});
+}
+function rEl(id) { return document.getElementById(id); }
+function rSet(id, val) { var e=rEl(id); if(e) e.textContent=val; }
 
-// ── Year selector ─────────────────────────────────────
+// ── Año selector RETA ──────────────────────────────────
 function retaBuildYearSelector() {
-  const cobrosYears = [...new Set(irpfCobros.map(c => c.fecha.slice(0,4)))].sort();
-  const years = [...new Set([...cobrosYears, String(new Date().getFullYear())])].sort();
-  const wrap = document.getElementById('reta-year-selector');
+  var wrap = rEl('reta-year-selector');
   if (!wrap) return;
+  var cobrosYears = irpfCobros.map(function(c){ return c.fecha.slice(0,4); })
+    .filter(function(v,i,a){ return a.indexOf(v)===i; }).sort();
+  var years = cobrosYears.concat([String(new Date().getFullYear())])
+    .filter(function(v,i,a){ return a.indexOf(v)===i; }).sort();
+  // Leer año actualmente seleccionado
+  var curYear = wrap.dataset.selected || String(new Date().getFullYear());
+  // Si el año guardado no está en la lista, usar el más reciente con cobros
+  if (cobrosYears.length > 0 && cobrosYears.indexOf(curYear) === -1) {
+    curYear = cobrosYears[cobrosYears.length-1];
+  }
+  wrap.dataset.selected = curYear;
   wrap.innerHTML = '';
-  years.forEach(y => {
-    const btn = document.createElement('button');
-    btn.className = 'year-btn' + (retaSelectedYear === y ? ' active' : '');
+  years.forEach(function(y) {
+    var btn = document.createElement('button');
+    btn.className = 'year-btn' + (y === curYear ? ' active' : '');
     btn.textContent = y;
-    btn.onclick = () => { retaSelectedYear = y; retaBuildYearSelector(); retaSyncFromIRPF(); };
+    btn.onclick = function() {
+      wrap.dataset.selected = y;
+      retaBuildYearSelector();
+      retaSyncFromIRPF();
+    };
     wrap.appendChild(btn);
   });
 }
 
-// ── Sync desde cobros IRPF ───────────────────────────
+function retaGetYear() {
+  var wrap = rEl('reta-year-selector');
+  if (wrap && wrap.dataset.selected) return wrap.dataset.selected;
+  // Fallback: año más reciente con cobros, o año actual
+  var cobrosYears = irpfCobros.map(function(c){ return c.fecha.slice(0,4); })
+    .filter(function(v,i,a){ return a.indexOf(v)===i; }).sort();
+  return cobrosYears.length > 0 ? cobrosYears[cobrosYears.length-1] : String(new Date().getFullYear());
+}
+
+// ── Sync desde cobros IRPF ─────────────────────────────
 function retaSyncFromIRPF() {
-  // Sincronizar año: siempre seguir el año activo de IRPF
-  if (irpfCobros.length > 0) {
-    const years = [...new Set(irpfCobros.map(c => c.fecha.slice(0,4)))].sort();
-    if (irpfSelectedYear !== 'all') {
-      retaSelectedYear = irpfSelectedYear; // seguir exactamente el año de IRPF
-    } else if (!years.includes(retaSelectedYear)) {
-      retaSelectedYear = years[years.length - 1];
-    }
-  }
-
-  // Reconstruir selector de años por si hay cobros nuevos
   retaBuildYearSelector();
+  var year = retaGetYear();
+  var cobrosAnio = irpfCobros.filter(function(c){ return c.fecha.startsWith(year); });
+  var totalEUR = cobrosAnio.reduce(function(s,c){ return s+c.tuParteEUR; }, 0);
+  var n = cobrosAnio.length;
 
-  const cobrosAnio = irpfCobros.filter(c => c.fecha.startsWith(retaSelectedYear));
-  const totalEUR   = cobrosAnio.reduce((s, c) => s + c.tuParteEUR, 0);
-  const n          = cobrosAnio.length;
-
-  // Actualizar panel de cobros
-  const countEl = document.getElementById('reta-cobros-count');
-  const listEl  = document.getElementById('reta-cobros-list');
-  const totalEl = document.getElementById('reta-cobros-total');
-  const dotEl   = document.getElementById('reta-sync-dot');
-  const labelEl = document.getElementById('reta-sync-label');
-
-  if (countEl) countEl.textContent = n + (n === 1 ? ' cobro' : ' cobros');
-
-  if (n === 0) {
-    if (listEl)  listEl.textContent = 'Sin cobros registrados en IRPF para ' + retaSelectedYear + '.';
-    if (totalEl) totalEl.textContent = '—';
-    if (dotEl)   dotEl.style.background = 'var(--text3)';
-    if (labelEl) labelEl.textContent = 'Sin cobros IRPF';
-  } else {
-    // Mostrar resumen de cobros (máx. 5 líneas + total si hay más)
-    const lines = cobrosAnio.map(c => {
-      const d = c.fecha.split('-'); const fechaStr = d[2]+'/'+d[1]+'/'+d[0].slice(2);
-      return fechaStr + ' · ' + retaFE(c.tuParteEUR);
-    });
-    if (listEl)  listEl.innerHTML = lines.join('<br>');
-    if (totalEl) totalEl.textContent = retaFE(totalEUR);
-    if (dotEl)   dotEl.style.background = 'var(--green)';
-    if (labelEl) labelEl.textContent = retaSelectedYear + ' · ' + n + ' cobros sincronizados';
-  }
-
-  // Si sync activo → rellenar campo ingresos
-  if (retaSyncEnabled) {
-    const inp = document.getElementById('reta-inp-ingr');
-    if (inp) {
-      inp.value = n > 0 ? totalEUR.toFixed(2) : '';
-      inp.readOnly = n > 0; // bloquear si hay datos reales
-      inp.style.color = n > 0 ? 'var(--green)' : '';
-      inp.style.borderColor = n > 0 ? 'var(--green)' : '';
+  // Panel cobros
+  rSet('reta-cobros-count', n + (n===1?' cobro':' cobros'));
+  var listEl = rEl('reta-cobros-list');
+  if (listEl) {
+    if (n === 0) {
+      listEl.textContent = 'Sin cobros registrados en IRPF para ' + year + '.';
+    } else {
+      listEl.innerHTML = cobrosAnio.map(function(c){
+        var d = c.fecha.split('-');
+        return d[2]+'/'+d[1]+'/'+d[0].slice(2) + ' · ' + rFE(c.tuParteEUR);
+      }).join('<br>');
     }
-    // Desactivar presets si hay datos reales
-    document.querySelectorAll('#reta-pres-ingr .preset-btn').forEach(b => {
-      b.disabled = n > 0;
-      b.style.opacity = n > 0 ? '0.35' : '';
-    });
-    // Actualizar label
-    const lbl = document.getElementById('reta-ingr-label');
-    if (lbl) lbl.textContent = n > 0
-      ? 'Ingresos brutos anuales (€) · desde IRPF'
-      : 'Ingresos brutos anuales (€)';
+  }
+  rSet('reta-cobros-total', n > 0 ? rFE(totalEUR) : '—');
+
+  // Sync badge
+  var dotEl = rEl('reta-sync-dot');
+  var lblEl = rEl('reta-sync-label');
+  if (dotEl) dotEl.style.background = n>0 ? 'var(--green)' : 'var(--text3)';
+  if (lblEl) lblEl.textContent = n>0 ? year+' · '+n+' cobros' : 'Sin cobros IRPF';
+
+  // Rellenar campo ingresos si sync activo
+  var inp = rEl('reta-inp-ingr');
+  if (inp) {
+    if (rSyncOn && n > 0) {
+      inp.value = totalEUR.toFixed(2);
+      inp.readOnly = true;
+      inp.style.color = 'var(--green)';
+      inp.style.borderColor = 'rgba(0,229,160,0.4)';
+      // Actualizar label
+      var lbl = rEl('reta-ingr-label');
+      if (lbl) lbl.textContent = 'Ingresos (€) · desde IRPF';
+      // Desactivar presets
+      document.querySelectorAll('#reta-pres-ingr .preset-btn').forEach(function(b){
+        b.disabled = true; b.style.opacity = '0.35';
+      });
+    } else {
+      inp.readOnly = false;
+      inp.style.color = '';
+      inp.style.borderColor = '';
+      var lbl2 = rEl('reta-ingr-label');
+      if (lbl2) lbl2.textContent = 'Ingresos brutos anuales (€)';
+      document.querySelectorAll('#reta-pres-ingr .preset-btn').forEach(function(b){
+        b.disabled = false; b.style.opacity = '';
+      });
+    }
   }
 
   retaRecalc();
 }
 
+// ── Toggle sync ────────────────────────────────────────
 function retaToggleSyncIRPF() {
-  retaSyncEnabled = document.getElementById('reta-tog-sync-irpf').checked;
-  const inp = document.getElementById('reta-inp-ingr');
-  if (!retaSyncEnabled) {
-    // Desbloquear campo manual
-    if (inp) { inp.readOnly = false; inp.style.color = ''; inp.style.borderColor = ''; }
-    document.querySelectorAll('#reta-pres-ingr .preset-btn').forEach(b => { b.disabled = false; b.style.opacity = ''; });
-    const lbl = document.getElementById('reta-ingr-label');
-    if (lbl) lbl.textContent = 'Ingresos brutos anuales (€)';
-  } else {
-    retaSyncFromIRPF();
-  }
+  rSyncOn = rEl('reta-tog-sync-irpf').checked;
+  retaSyncFromIRPF();
 }
 
-// ── Presets y tipo ────────────────────────────────────
+// ── Presets ────────────────────────────────────────────
 function retaSetIngr(v) {
-  // Solo bloquear si sync activo Y hay cobros reales del año
-  const cobrosAnioActual = irpfCobros.filter(c => c.fecha.startsWith(retaSelectedYear));
-  if (retaSyncEnabled && cobrosAnioActual.length > 0) return;
-  document.getElementById('reta-inp-ingr').value = v;
-  document.querySelectorAll('#reta-pres-ingr .preset-btn').forEach(b => {
-    const m = b.textContent.match(/(\d+)k/);
-    b.classList.toggle('active', m && parseInt(m[1])*1000 === v);
+  var year = retaGetYear();
+  var cobrosAnio = irpfCobros.filter(function(c){ return c.fecha.startsWith(year); });
+  if (rSyncOn && cobrosAnio.length > 0) return; // bloqueado
+  var inp = rEl('reta-inp-ingr');
+  if (inp) inp.value = v;
+  document.querySelectorAll('#reta-pres-ingr .preset-btn').forEach(function(b){
+    var m = b.textContent.match(/(\d+)k/);
+    b.classList.toggle('active', !!(m && parseInt(m[1])*1000 === v));
   });
   retaRecalc();
 }
+
 function retaClearPres(id) {
-  document.querySelectorAll('#'+id+' .preset-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('#'+id+' .preset-btn').forEach(function(b){
+    b.classList.remove('active');
+  });
 }
+
 function retaSetTipo(t, btn) {
-  retaTipoAlta = t;
-  document.querySelectorAll('#reta-pres-tipo .preset-btn').forEach(b => b.classList.remove('active'));
+  rTipo = t;
+  document.querySelectorAll('#reta-pres-tipo .preset-btn').forEach(function(b){
+    b.classList.remove('active');
+  });
   btn.classList.add('active');
-  document.getElementById('reta-tp-opts').style.display = t === 'tarifa-plana' ? '' : 'none';
+  var opts = rEl('reta-tp-opts');
+  if (opts) opts.style.display = t==='tarifa-plana' ? '' : 'none';
   retaRecalc();
 }
+
 function retaSetTpAno(n, btn) {
-  retaTpAno = n;
-  document.querySelectorAll('#reta-pres-tp .preset-btn').forEach(b => b.classList.remove('active'));
+  rTpAno = n;
+  document.querySelectorAll('#reta-pres-tp .preset-btn').forEach(function(b){
+    b.classList.remove('active');
+  });
   btn.classList.add('active');
   retaRecalc();
 }
 
-// ── Cálculo principal ─────────────────────────────────
+// ── Cálculo ────────────────────────────────────────────
 function retaRecalc() {
-  const ingr    = parseFloat(document.getElementById('reta-inp-ingr').value)  || 0;
-  const gastos  = parseFloat(document.getElementById('reta-inp-gastos').value) || 0;
-  const useGip  = document.getElementById('reta-tog-gipuzkoa').checked;
-  const withIT  = document.getElementById('reta-tog-it').checked;
-  const withCese= document.getElementById('reta-tog-cese').checked;
-  const pluri   = document.getElementById('reta-tog-pluri').checked;
-  const useMax  = document.getElementById('reta-tog-max').checked;
-  const esTP    = retaTipoAlta === 'tarifa-plana' && retaTpAno <= 2;
+  var inp = rEl('reta-inp-ingr');
+  var ingrVal = inp ? parseFloat(inp.value) : 0;
+  var ingr = isNaN(ingrVal) ? 0 : ingrVal;
 
-  const basePrevia = Math.max(0, ingr - gastos);
-  const deduccion  = (useGip && basePrevia > 0) ? retaCalcDeduccionGipuzkoa(basePrevia) : 0;
-  const baseNeta   = Math.max(0, basePrevia - deduccion);
+  var gEl = rEl('reta-inp-gastos');
+  var gastosVal = gEl ? parseFloat(gEl.value) : 0;
+  var gastos = isNaN(gastosVal) ? 0 : gastosVal;
+
+  var useGip  = rEl('reta-tog-gipuzkoa') ? rEl('reta-tog-gipuzkoa').checked : true;
+  var withIT  = rEl('reta-tog-it')   ? rEl('reta-tog-it').checked   : true;
+  var withCese= rEl('reta-tog-cese') ? rEl('reta-tog-cese').checked : true;
+  var pluri   = rEl('reta-tog-pluri')? rEl('reta-tog-pluri').checked : false;
+  var useMax  = rEl('reta-tog-max')  ? rEl('reta-tog-max').checked  : false;
+  var esTP    = rTipo === 'tarifa-plana' && rTpAno <= 2;
+
+  var basePrevia = Math.max(0, ingr - gastos);
+  var deduccion  = (useGip && basePrevia > 0) ? rDeducGip(basePrevia) : 0;
+  var baseNeta   = Math.max(0, basePrevia - deduccion);
 
   // Badge deducción
-  const tagDed = document.getElementById('reta-tag-deduccion');
-  if (useGip && deduccion > 0) {
-    const pct = deduccion / basePrevia * 100;
-    tagDed.textContent = '−'+retaFE(deduccion)+' ('+retaFN(pct,1)+' %)';
-    tagDed.className = 'tag green';
-  } else {
-    tagDed.textContent = 'No aplicada'; tagDed.className = 'tag';
+  var tagDed = rEl('reta-tag-deduccion');
+  if (tagDed) {
+    if (useGip && deduccion > 0) {
+      tagDed.textContent = '−'+rFE(deduccion)+' ('+rFN(deduccion/basePrevia*100,1)+' %)';
+      tagDed.className = 'tag green';
+    } else {
+      tagDed.textContent = 'No aplicada'; tagDed.className = 'tag';
+    }
   }
 
   // Tipo CC
-  let tipCC = RETA_T_CC_GENERAL;
-  if (retaTipoAlta === 'discapacidad') tipCC = RETA_T_CC_DISCAPAC;
-  if (retaTipoAlta === 'familiar')     tipCC = RETA_T_CC_FAMILIAR;
-  if (pluri) tipCC *= 0.5;
-  const tipTotal = tipCC + (withIT?RETA_T_IT:0) + (withCese?RETA_T_CESE:0) + RETA_T_FP + RETA_T_MEI;
+  var tipCC = RCC;
+  if (rTipo === 'discapacidad') tipCC = RCC_D;
+  if (rTipo === 'familiar')     tipCC = RCC_F;
+  if (pluri) tipCC = tipCC * 0.5;
+  var tipTotal = tipCC + (withIT?RIT:0) + (withCese?RCESE:0) + RFP + RMEI;
 
-  document.getElementById('reta-r-tipo-cc').textContent    = retaFP(tipCC);
-  document.getElementById('reta-r-tipo-it').textContent    = withIT ? retaFP(RETA_T_IT) : '—';
-  document.getElementById('reta-r-tipo-total').textContent = retaFP(tipTotal);
-
-  // Stats izq
-  document.getElementById('reta-r-ingr').textContent      = ingr > 0 ? retaFE(ingr) : '—';
-  document.getElementById('reta-r-gastos').textContent    = gastos > 0 ? '−'+retaFE(gastos) : '—';
-  document.getElementById('reta-r-deduccion').textContent = (useGip && deduccion > 0) ? '−'+retaFE(deduccion) : '—';
-  document.getElementById('reta-r-base-neta').textContent = ingr > 0 ? retaFE(baseNeta) : '—';
+  rSet('reta-r-tipo-cc',    rFP(tipCC));
+  rSet('reta-r-tipo-it',    withIT ? rFP(RIT) : '—');
+  rSet('reta-r-tipo-total', rFP(tipTotal));
+  rSet('reta-r-ingr',       ingr > 0 ? rFE(ingr) : '—');
+  rSet('reta-r-gastos',     gastos > 0 ? '−'+rFE(gastos) : '—');
+  rSet('reta-r-deduccion',  (useGip && deduccion > 0) ? '−'+rFE(deduccion) : '—');
+  rSet('reta-r-base-neta',  ingr > 0 ? rFE(baseNeta) : '—');
 
   if (ingr <= 0) { retaSetEmpty(); retaRenderTramosTable(-1); return; }
 
-  // Tarifa plana fija
+  // Tarifa plana
   if (esTP) {
-    document.getElementById('reta-res-mes').textContent      = retaFE(80);
-    document.getElementById('reta-res-mes').className        = 'reta-result-main pos';
-    document.getElementById('reta-res-mes-sub').textContent  = 'Tarifa plana fija';
-    document.getElementById('reta-res-anual').textContent    = retaFE(960);
-    document.getElementById('reta-res-anual').className      = 'reta-result-main neg';
-    document.getElementById('reta-res-anual-sub').textContent= '80 € × 12 meses';
-    document.getElementById('reta-breakdown').style.display  = 'none';
-    document.getElementById('reta-tag-tramo').textContent    = 'Tarifa Plana';
-    retaSetKpi('reta-kpi-mes',   '80,00 €',  'pos');
-    retaSetKpi('reta-kpi-anual', '960,00 €', 'neg');
-    const pctTP = baseNeta > 0 ? 960/baseNeta*100 : 0;
-    retaSetKpi('reta-kpi-pct', retaFP(pctTP), 'neu');
-    retaRenderTramosTable(-1); return;
+    _retaShowResult(80, 960, 'Tarifa plana fija', '80 € × 12 meses', baseNeta, ingr, -1, true);
+    rSet('reta-tag-tramo', 'Tarifa Plana');
+    return;
   }
 
   // Tramo
-  let tramoIdx = RETA_TRAMOS.findIndex(t => baseNeta >= t.rMin && baseNeta <= t.rMax);
-  if (tramoIdx < 0) tramoIdx = RETA_TRAMOS.length - 1;
-  const tramo  = RETA_TRAMOS[tramoIdx];
-  const baseMes = useMax ? tramo.bMax : tramo.bMin;
+  var tramoIdx = -1;
+  for (var i=0; i<RETA_TRAMOS.length; i++) {
+    if (baseNeta >= RETA_TRAMOS[i].rMin && baseNeta <= RETA_TRAMOS[i].rMax) { tramoIdx=i; break; }
+  }
+  if (tramoIdx < 0) tramoIdx = RETA_TRAMOS.length-1;
+  var tramo = RETA_TRAMOS[tramoIdx];
+  var baseMes = useMax ? tramo.bMax : tramo.bMin;
 
-  const qCC    = baseMes * tipCC / 100;
-  const qIT    = withIT    ? baseMes * RETA_T_IT   / 100 : 0;
-  const qCese  = withCese  ? baseMes * RETA_T_CESE / 100 : 0;
-  const qFP    = baseMes * RETA_T_FP  / 100;
-  const qMEI   = baseMes * RETA_T_MEI / 100;
-  const qTotal = qCC + qIT + qCese + qFP + qMEI;
-  const qAnual = qTotal * 12;
+  var qCC   = baseMes * tipCC / 100;
+  var qIT   = withIT    ? baseMes * RIT   / 100 : 0;
+  var qCese = withCese  ? baseMes * RCESE / 100 : 0;
+  var qFP   = baseMes * RFP  / 100;
+  var qMEI  = baseMes * RMEI / 100;
+  var qTotal = qCC + qIT + qCese + qFP + qMEI;
+  var qAnual = qTotal * 12;
 
-  document.getElementById('reta-tag-tramo').textContent = 'Tramo '+tramo.t;
-  retaSetKpi('reta-kpi-mes',   retaFE(qTotal), 'pos');
-  retaSetKpi('reta-kpi-anual', retaFE(qAnual), 'neg');
-  const pctNeta = baseNeta > 0 ? qAnual/baseNeta*100 : 0;
-  retaSetKpi('reta-kpi-pct', retaFP(pctNeta), 'neu');
+  rSet('reta-tag-tramo', 'Tramo '+tramo.t);
+  _retaShowResult(qTotal, qAnual, 'base: '+rFE(baseMes)+'/mes', rFE(qTotal)+' × 12',
+    baseNeta, ingr, tramoIdx, false);
 
-  const rMesEl = document.getElementById('reta-res-mes');
-  rMesEl.textContent = retaFE(qTotal); rMesEl.className = 'reta-result-main pos';
-  document.getElementById('reta-res-mes-sub').textContent = 'base: '+retaFE(baseMes)+'/mes';
-  const rAnEl = document.getElementById('reta-res-anual');
-  rAnEl.textContent = retaFE(qAnual); rAnEl.className = 'reta-result-main neg';
-  document.getElementById('reta-res-anual-sub').textContent = retaFE(qTotal)+' × 12';
-
-  document.getElementById('reta-breakdown').style.display = '';
-  document.getElementById('reta-bd-base').textContent   = retaFE(baseMes);
-  document.getElementById('reta-bd-cc').textContent     = retaFE(qCC);
-  document.getElementById('reta-row-it').style.display  = withIT ? '' : 'none';
-  document.getElementById('reta-bd-it').textContent     = retaFE(qIT);
-  document.getElementById('reta-row-cese').style.display= withCese ? '' : 'none';
-  document.getElementById('reta-bd-cese').textContent   = retaFE(qCese);
-  document.getElementById('reta-bd-fp').textContent     = retaFE(qFP);
-  document.getElementById('reta-bd-mei').textContent    = retaFE(qMEI);
-  document.getElementById('reta-bd-total').textContent  = retaFE(qTotal);
-  document.getElementById('reta-bd-anual').textContent  = retaFE(qAnual);
-  document.getElementById('reta-bd-pct-neta').textContent  = retaFP(pctNeta);
-  const pctBruto = ingr > 0 ? qAnual/ingr*100 : 0;
-  document.getElementById('reta-bd-pct-bruto').textContent = retaFP(pctBruto);
-  document.getElementById('reta-bd-rango').textContent  = retaFE(tramo.bMin)+'–'+retaFE(tramo.bMax);
+  // Desglose
+  var bd = rEl('reta-breakdown');
+  if (bd) bd.style.display = '';
+  rSet('reta-bd-base',  rFE(baseMes));
+  rSet('reta-bd-cc',    rFE(qCC));
+  var rowIT = rEl('reta-row-it');
+  if (rowIT) rowIT.style.display = withIT ? '' : 'none';
+  rSet('reta-bd-it',    rFE(qIT));
+  var rowCese = rEl('reta-row-cese');
+  if (rowCese) rowCese.style.display = withCese ? '' : 'none';
+  rSet('reta-bd-cese',  rFE(qCese));
+  rSet('reta-bd-fp',    rFE(qFP));
+  rSet('reta-bd-mei',   rFE(qMEI));
+  rSet('reta-bd-total', rFE(qTotal));
+  rSet('reta-bd-anual', rFE(qAnual));
+  rSet('reta-bd-pct-neta',   rFP(baseNeta > 0 ? qAnual/baseNeta*100 : 0));
+  rSet('reta-bd-pct-bruto',  rFP(ingr > 0 ? qAnual/ingr*100 : 0));
+  rSet('reta-bd-rango', rFE(tramo.bMin)+'–'+rFE(tramo.bMax));
 
   retaRenderTramosTable(tramoIdx);
 }
 
-function retaSetKpi(id, val, cls) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.textContent = val; el.className = 'kpi-val '+cls;
+function _retaShowResult(mes, anual, subMes, subAnual, baseNeta, ingr, tramoIdx, isTP) {
+  var eMes = rEl('reta-res-mes');
+  if (eMes) { eMes.textContent = rFE(mes); eMes.className = 'reta-result-main pos'; }
+  rSet('reta-res-mes-sub', subMes);
+  var eAn = rEl('reta-res-anual');
+  if (eAn) { eAn.textContent = rFE(anual); eAn.className = 'reta-result-main neg'; }
+  rSet('reta-res-anual-sub', subAnual);
+
+  // KPIs
+  var kMes = rEl('reta-kpi-mes');
+  if (kMes) { kMes.textContent = rFE(mes); kMes.className = 'kpi-val pos'; }
+  var kAn = rEl('reta-kpi-anual');
+  if (kAn) { kAn.textContent = rFE(anual); kAn.className = 'kpi-val neg'; }
+  var pctNeta = baseNeta > 0 ? anual/baseNeta*100 : 0;
+  var kPct = rEl('reta-kpi-pct');
+  if (kPct) { kPct.textContent = rFP(pctNeta); kPct.className = 'kpi-val neu'; }
+
+  if (!isTP) {
+    var bd = rEl('reta-breakdown');
+    // breakdown shown in retaRecalc
+  } else {
+    var bd2 = rEl('reta-breakdown');
+    if (bd2) bd2.style.display = 'none';
+    retaRenderTramosTable(-1);
+  }
 }
 
 function retaSetEmpty() {
-  ['reta-res-mes','reta-res-anual'].forEach(id => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.textContent = '—'; el.className = 'reta-result-main empty';
+  ['reta-res-mes','reta-res-anual'].forEach(function(id){
+    var e = rEl(id);
+    if (e) { e.textContent='—'; e.className='reta-result-main empty'; }
   });
-  ['reta-res-mes-sub','reta-res-anual-sub'].forEach(id => { const el=document.getElementById(id); if(el) el.textContent=''; });
-  const bd = document.getElementById('reta-breakdown');
-  if (bd) bd.style.display = 'none';
-  const tt = document.getElementById('reta-tag-tramo');
-  if (tt) tt.textContent = 'Tramo —';
-  ['reta-kpi-mes','reta-kpi-anual','reta-kpi-pct'].forEach(id => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.textContent = '—'; el.className = 'kpi-val neu';
+  rSet('reta-res-mes-sub',''); rSet('reta-res-anual-sub','');
+  var bd = rEl('reta-breakdown'); if(bd) bd.style.display='none';
+  rSet('reta-tag-tramo','Tramo —');
+  ['reta-kpi-mes','reta-kpi-anual','reta-kpi-pct'].forEach(function(id){
+    var e = rEl(id);
+    if (e) { e.textContent='—'; e.className='kpi-val neu'; }
   });
 }
 
 function retaRenderTramosTable(activeIdx) {
-  const tbody = document.getElementById('reta-tramos-tbody');
+  var tbody = rEl('reta-tramos-tbody');
   if (!tbody) return;
   tbody.innerHTML = '';
-  RETA_TRAMOS.forEach((t, i) => {
-    const tr = document.createElement('tr');
+  RETA_TRAMOS.forEach(function(t, i) {
+    var tr = document.createElement('tr');
     if (i === activeIdx) tr.className = 'reta-tr-active';
-    const rMinMes = Math.round(t.rMin / 12);
-    const rMaxMes = t.rMax >= 999999 ? null : Math.round(t.rMax / 12);
-    const rStr = rMinMes === 0
-      ? '< 670 €/mes'
-      : retaFN(rMinMes)+' – '+(rMaxMes ? retaFN(rMaxMes)+' €' : '∞')+' €';
-    tr.innerHTML = `
-      <td>${t.t}</td>
-      <td style="color:var(--text2);font-size:10px">${rStr}</td>
-      <td class="${i===activeIdx?'reta-c-green':''}">${retaFE(t.bMin)}</td>
-      <td>${retaFE(t.bMax)}</td>
-      <td class="${i===activeIdx?'reta-c-warn':''}">${retaFE(t.cuotaMin)}</td>
-    `;
+    var rMinMes = Math.round(t.rMin/12);
+    var rMaxMes = t.rMax >= 999999 ? null : Math.round(t.rMax/12);
+    var rStr = rMinMes===0 ? '< 670 €/mes'
+      : rFN(rMinMes)+' – '+(rMaxMes ? rFN(rMaxMes)+' €' : '∞')+' €';
+    tr.innerHTML = '<td>'+t.t+'</td>'
+      +'<td style="color:var(--text2);font-size:10px">'+rStr+'</td>'
+      +'<td class="'+(i===activeIdx?'reta-c-green':'')+'">'+rFE(t.bMin)+'</td>'
+      +'<td>'+rFE(t.bMax)+'</td>'
+      +'<td class="'+(i===activeIdx?'reta-c-warn':'')+'">—</td>';
     tbody.appendChild(tr);
   });
 }
 
-// Init RETA
+// ── Init ───────────────────────────────────────────────
 retaBuildYearSelector();
 retaRenderTramosTable(-1);
-retaSyncFromIRPF(); // carga inicial desde IRPF
+retaSyncFromIRPF();
+
 </script>
 </body>
 </html>

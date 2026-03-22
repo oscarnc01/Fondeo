@@ -1537,7 +1537,7 @@ function recalcFormPip(){
   if(base===null){ liveEl.textContent=''; autoCalcBeneficio(); return; }
   let multiplier=1;
   if(formCcy!=='USD'){
-    const rate=fxRawForm[formCcy]??fxRaw[formCcy];
+    const rate=(fxRawForm[formCcy] !== null && fxRawForm[formCcy] !== undefined ? fxRawForm[formCcy] : fxRaw[formCcy]);
     if(!rate){
       liveEl.textContent='Sin tipo de cambio';
       document.getElementById('f-pip').value=base; // muestra valor base aunque no haya tipo
@@ -1578,13 +1578,13 @@ function autoCalcBeneficio(){
 }
 
 function autoCalcEditBeneficio(){
-  const lotes=parseFloat(document.getElementById('ei-lotes')?.value);
-  const entrada=parseFloat(document.getElementById('ei-entrada')?.value);
-  const salida=parseFloat(document.getElementById('ei-salida')?.value);
-  const pip=parseFloat(document.getElementById('ei-pip')?.value);
-  const swap=parseFloat(String(document.getElementById('ei-swap')?.value||'0').replace(',','.'))||0;
-  const comision=parseFloat(String(document.getElementById('ei-comision')?.value||'0').replace(',','.'))||0;
-  const tipo=document.getElementById('ei-tipo')?.value||'long';
+  const lotes=parseFloat(document.getElementById('ei-lotes').value);
+  const entrada=parseFloat(document.getElementById('ei-entrada').value);
+  const salida=parseFloat(document.getElementById('ei-salida').value);
+  const pip=parseFloat(document.getElementById('ei-pip').value);
+  const swap=parseFloat(String(document.getElementById('ei-swap').value||'0').replace(',','.'))||0;
+  const comision=parseFloat(String(document.getElementById('ei-comision').value||'0').replace(',','.'))||0;
+  const tipo=document.getElementById('ei-tipo').value||'long';
   if(!isNaN(lotes)&&!isNaN(entrada)&&!isNaN(salida)&&!isNaN(pip)&&pip>0&&lotes>0){
     const dir=tipo==='short'?-1:1;
     const ben=(salida-entrada)*dir*lotes*pip+swap+comision;
@@ -1643,13 +1643,13 @@ function editTrade(id,btn){
       <div class="edit-field"><label>Fecha</label><input class="edit-input" id="ei-fecha" type="date" value="${trade.fecha}"></div>
       <div class="edit-field"><label>Ticker</label><input class="edit-input" id="ei-ticker" type="text" value="${trade.ticker}" style="text-transform:uppercase"></div>
       <div class="edit-field"><label>Tipo</label><select class="edit-select" id="ei-tipo"><option value="long" ${trade.tipo==='long'?'selected':''}>▲ Long</option><option value="short" ${trade.tipo==='short'?'selected':''}>▼ Short</option></select></div>
-      <div class="edit-field"><label>Lotes</label><input class="edit-input" id="ei-lotes" type="number" value="${trade.lotes??''}" min="0" step="any" inputmode="decimal" oninput="autoCalcEditBeneficio()"></div>
-      <div class="edit-field"><label>Entrada</label><input class="edit-input" id="ei-entrada" type="number" value="${trade.entrada??''}" min="0" step="any" inputmode="decimal" oninput="autoCalcEditBeneficio()"></div>
-      <div class="edit-field"><label>Salida</label><input class="edit-input" id="ei-salida" type="number" value="${trade.salida??''}" min="0" step="any" inputmode="decimal" oninput="autoCalcEditBeneficio()"></div>
-      <div class="edit-field"><label>Pip value ($)</label><input class="edit-input" id="ei-pip" type="number" value="${trade.pip??''}" placeholder="10" min="0" step="any" inputmode="decimal" oninput="autoCalcEditBeneficio()"></div>
+      <div class="edit-field"><label>Lotes</label><input class="edit-input" id="ei-lotes" type="number" value="${trade.lotes != null ? trade.lotes : ''}" min="0" step="any" inputmode="decimal" oninput="autoCalcEditBeneficio()"></div>
+      <div class="edit-field"><label>Entrada</label><input class="edit-input" id="ei-entrada" type="number" value="${trade.entrada != null ? trade.entrada : ''}" min="0" step="any" inputmode="decimal" oninput="autoCalcEditBeneficio()"></div>
+      <div class="edit-field"><label>Salida</label><input class="edit-input" id="ei-salida" type="number" value="${trade.salida != null ? trade.salida : ''}" min="0" step="any" inputmode="decimal" oninput="autoCalcEditBeneficio()"></div>
+      <div class="edit-field"><label>Pip value ($)</label><input class="edit-input" id="ei-pip" type="number" value="${trade.pip != null ? trade.pip : ''}" placeholder="10" min="0" step="any" inputmode="decimal" oninput="autoCalcEditBeneficio()"></div>
       <div class="edit-field"><label>Beneficio</label><input class="edit-input" id="ei-beneficio" type="number" value="${trade.beneficio}" step="any" inputmode="decimal"></div>
-      <div class="edit-field"><label>Swap</label><div style="display:flex;gap:6px"><input class="edit-input" id="ei-swap" type="text" inputmode="decimal" value="${trade.swap??0}" oninput="autoCalcEditBeneficio()" style="flex:1;min-width:0"><button type="button" id="ei-swap-sign" style="padding:0 10px;background:var(--surface2);border:1.5px solid var(--border2);border-radius:6px;color:var(--text);font-size:18px;font-weight:700;cursor:pointer;flex-shrink:0;-webkit-tap-highlight-color:transparent;touch-action:manipulation">±</button></div></div>
-      <div class="edit-field"><label>Comisión</label><input class="edit-input" id="ei-comision" type="text" inputmode="decimal" value="${trade.comision??0}" oninput="autoCalcEditBeneficio()"></div>
+      <div class="edit-field"><label>Swap</label><div style="display:flex;gap:6px"><input class="edit-input" id="ei-swap" type="text" inputmode="decimal" value="${trade.swap != null ? trade.swap : 0}" oninput="autoCalcEditBeneficio()" style="flex:1;min-width:0"><button type="button" id="ei-swap-sign" style="padding:0 10px;background:var(--surface2);border:1.5px solid var(--border2);border-radius:6px;color:var(--text);font-size:18px;font-weight:700;cursor:pointer;flex-shrink:0;-webkit-tap-highlight-color:transparent;touch-action:manipulation">±</button></div></div>
+      <div class="edit-field"><label>Comisión</label><input class="edit-input" id="ei-comision" type="text" inputmode="decimal" value="${trade.comision != null ? trade.comision : 0}" oninput="autoCalcEditBeneficio()"></div>
       <div class="edit-field" style="grid-column:1/-1"><label>Notas</label><input class="edit-input" id="ei-notas" type="text" value="${trade.notas||''}"></div>
     </div>
     <div class="edit-actions">
@@ -1828,7 +1828,7 @@ function exportCSV(){
   const filtered=getFiltered();
   if(!filtered.length){toast('No hay operaciones',true);return;}
   const headers=['Fecha','Ticker','Tipo','Lotes','Entrada','Salida','Beneficio','Notas'];
-  const rows=filtered.map(t=>[fmtDate(t.fecha),t.ticker,t.tipo,t.lotes??'',t.entrada??'',t.salida??'',String(t.beneficio).replace('.',','),t.notas||''].join(';'));
+  const rows=filtered.map(t=>[fmtDate(t.fecha),t.ticker,t.tipo,t.lotes != null ? t.lotes : '',t.entrada != null ? t.entrada : '',t.salida != null ? t.salida : '',String(t.beneficio).replace('.',','),t.notas||''].join(';'));
   const blob=new Blob(['\uFEFF'+[headers.join(';'),...rows].join('\n')],{type:'text/csv;charset=utf-8'});
   const url=URL.createObjectURL(blob),a=document.createElement('a');
   a.href=url;a.download=`TradingJournal_${todayISO}.csv`;
@@ -2147,8 +2147,8 @@ function rowsToTrades(rows, colMap){
   const result=[], errors=[];
   rows.forEach((row,i)=>{
     const get=f=>colMap[f]!==undefined?row[colMap[f]]:undefined;
-    const fecha=parseDate(String(get('fecha')??''));
-    const ticker=normalizeTicker(String(get('ticker')??'').trim());
+    const fecha=parseDate(String(get('fecha') != null ? get('fecha') : ''));
+    const ticker=normalizeTicker(String(get('ticker') != null ? get('ticker') : '').trim());
     const beneficio=parseNum(get('beneficio'));
     if(!fecha){ errors.push(`Fila ${i+2}: fecha inválida ("${get('fecha')}")`); return; }
     if(!ticker){ errors.push(`Fila ${i+2}: ticker vacío`); return; }
@@ -2162,7 +2162,7 @@ function rowsToTrades(rows, colMap){
       entrada: parseNum(get('entrada')),
       salida: parseNum(get('salida')),
       beneficio,
-      notas: String(get('notas')??'').trim(),
+      notas: String(get('notas') != null ? get('notas') : '').trim(),
     });
   });
   return {result, errors};
@@ -2430,7 +2430,7 @@ function calcIRPF(base,tramos){
 }
 
 function irpfSaveState(){
-  const salary=document.getElementById('irpf-salary')?.value;
+  const salary=document.getElementById('irpf-salary').value;
   localStorage.setItem(IRPF_LS_KEY,JSON.stringify({cobros:irpfCobros,nextId:irpfNextId,tramosPerYear:irpfTramosPerYear,salary}));
   irpfGlPush(false);
   // Actualizar RETA automáticamente cuando cambian los cobros
@@ -2488,7 +2488,7 @@ async function irpfRefreshFX(){
     clearTimeout(timeout);
     if(!res.ok) throw new Error();
     const data=await res.json();
-    const rate=data.rates?.EUR;
+    const rate=data.rates && data.rates.EUR;
     if(!rate||isNaN(rate)) throw new Error();
     irpfCurrentFX=rate;
     if(document.getElementById('irpf-f-fx')) document.getElementById('irpf-f-fx').value=rate.toFixed(4);
@@ -2516,7 +2516,7 @@ function irpfAddCobro(){
   document.getElementById('irpf-f-fecha').value=todayISO;
   irpfSelectedYear=fecha.slice(0,4);
   // Guardar en localStorage directamente sin hooks
-  const salary=document.getElementById('irpf-salary')?.value;
+  const salary=document.getElementById('irpf-salary').value;
   localStorage.setItem(IRPF_LS_KEY,JSON.stringify({cobros:irpfCobros,nextId:irpfNextId,tramosPerYear:irpfTramosPerYear,salary}));
   irpfGlPush(false);
   // Render directo — sin pasar por irpfSaveState para evitar efectos secundarios
@@ -2539,7 +2539,7 @@ function irpfDeleteCobro(id){
     }
   }
   // Guardar en localStorage directamente sin hooks
-  const salary=document.getElementById('irpf-salary')?.value;
+  const salary=document.getElementById('irpf-salary').value;
   localStorage.setItem(IRPF_LS_KEY,JSON.stringify({cobros:irpfCobros,nextId:irpfNextId,tramosPerYear:irpfTramosPerYear,salary}));
   irpfGlPush(false);
   // Render directo
@@ -2574,16 +2574,16 @@ function irpfEditCobro(id,btn){
 }
 
 function irpfSaveCobro(id){
-  const fecha=document.getElementById('irpf-ei-fecha')?.value;
-  const bruto=parseFloat(document.getElementById('irpf-ei-bruto')?.value);
-  const split=parseFloat(document.getElementById('irpf-ei-split')?.value)/100;
-  const fx=parseFloat(document.getElementById('irpf-ei-fx')?.value);
+  const fecha=document.getElementById('irpf-ei-fecha').value;
+  const bruto=parseFloat(document.getElementById('irpf-ei-bruto').value);
+  const split=parseFloat(document.getElementById('irpf-ei-split').value)/100;
+  const fx=parseFloat(document.getElementById('irpf-ei-fx').value);
   if(!fecha||isNaN(bruto)||bruto<=0||isNaN(split)||isNaN(fx)){toast('Valores inválidos',true);return;}
   const idx=irpfCobros.findIndex(c=>c.id===id); if(idx===-1)return;
   irpfCobros[idx]={id,fecha,bruto,split,fx,tuParteUSD:bruto*split,tuParteEUR:bruto*split*fx};
   irpfCobros.sort((a,b)=>a.fecha.localeCompare(b.fecha));
   irpfSelectedYear=fecha.slice(0,4);
-  const salary2=document.getElementById('irpf-salary')?.value;
+  const salary2=document.getElementById('irpf-salary').value;
   localStorage.setItem(IRPF_LS_KEY,JSON.stringify({cobros:irpfCobros,nextId:irpfNextId,tramosPerYear:irpfTramosPerYear,salary:salary2}));
   irpfGlPush(false);
   irpfBuildYearSelector();
@@ -2635,7 +2635,7 @@ function irpfResetTramos(){
 }
 
 function irpfRender(){
-  const salary=parseFloat(document.getElementById('irpf-salary')?.value)||0;
+  const salary=parseFloat(document.getElementById('irpf-salary').value)||0;
   const year=irpfSelectedYear==='all'?irpfCurrentYear:irpfSelectedYear;
   const tramos=getTramosForYear(year);
   const filtered=irpfSelectedYear==='all'?irpfCobros:irpfCobros.filter(c=>c.fecha.startsWith(irpfSelectedYear));
@@ -2694,7 +2694,7 @@ function irpfRenderTramos(desglose,tramos){
   wrap.appendChild(titleRow);
   tramos.forEach((t,i)=>{
     const isLast=i===tramos.length-1;
-    const aplicado=desglose?desglose[i]?.aplicado:0;
+    const aplicado=desglose?(desglose[i] ? desglose[i].aplicado : 0):0;
     const isActive=aplicado>0;
     const div=document.createElement('div');
     if(irpfEditingTramos){
@@ -2715,7 +2715,7 @@ function irpfRenderTramos(desglose,tramos){
 }
 
 function irpfGetRows(){
-  const salary=parseFloat(document.getElementById('irpf-salary')?.value)||0;
+  const salary=parseFloat(document.getElementById('irpf-salary').value)||0;
   const year=irpfSelectedYear==='all'?irpfCurrentYear:irpfSelectedYear;
   const tramos=getTramosForYear(year);
   const filtered=irpfSelectedYear==='all'?irpfCobros:irpfCobros.filter(c=>c.fecha.startsWith(irpfSelectedYear));
@@ -2834,7 +2834,7 @@ async function irpfGlPush(manual=false){
   if(!irpfGlConfig)return;
   if(manual)irpfGlSetStatus('Subiendo datos…');
   try{
-    const salary=document.getElementById('irpf-salary')?.value;
+    const salary=document.getElementById('irpf-salary').value;
     const data={cobros:irpfCobros,nextId:irpfNextId,tramosPerYear:irpfTramosPerYear,salary};
     const content=JSON.stringify(data,null,2);
     const checkUrl=`${irpfGlAPI()}/repository/files/${encodeURIComponent(IRPF_GL_FILENAME)}?ref=${GL_BRANCH}`;
@@ -2879,8 +2879,10 @@ function irpfToggleSyncPanel(){
   dot.textContent=isOpen?'▸':'▾';
 }
 
+</script>
 
-
+<script>
+// ── RETA MODULE (isolated script) ─────────────────────
 // ═══════════════════════════════════════════════════════
 // ── RETA / AUTÓNOMOS MODULE ─────────────────────────
 // Basado en autonomos_calculator.html (versión funcional)
@@ -2926,12 +2928,9 @@ function retaCalcDeduccionGipuzkoa(base) {
 }
 
 // ── Formatos ──────────────────────────────────────────
-const retaFE = n => (isNaN(n)||n===null) ? '—' :
-  n.toLocaleString('es-ES',{style:'currency',currency:'EUR',minimumFractionDigits:2,maximumFractionDigits:2});
-const retaFP = n => (isNaN(n)||n===null) ? '—' :
-  n.toFixed(2).replace('.',',')+' %';
-const retaFN = (n,d=0) => isNaN(n) ? '—' :
-  n.toLocaleString('es-ES',{minimumFractionDigits:d,maximumFractionDigits:d});
+function retaFE(n) { return (isNaN(n)||n===null) ? '—' : n.toLocaleString('es-ES',{style:'currency',currency:'EUR',minimumFractionDigits:2,maximumFractionDigits:2}); }
+function retaFP(n) { return (isNaN(n)||n===null) ? '—' : n.toFixed(2).replace('.',',')+' %'; }
+function retaFN(n,d) { d=d||0; return isNaN(n) ? '—' : n.toLocaleString('es-ES',{minimumFractionDigits:d,maximumFractionDigits:d}); }
 
 // ── Helpers ───────────────────────────────────────────
 function retaSetIngr(v) {
@@ -3231,10 +3230,22 @@ function retaRenderTramosTable(activeIdx) {
 }
 
 // ── Init ──────────────────────────────────────────────
-retaBuildYearSelector();
-retaRenderTramosTable(-1);
-retaSyncFromIRPF();
-
+// Ensure RETA initializes after everything else is ready
+(function initRETA() {
+  try {
+    retaBuildYearSelector();
+    retaRenderTramosTable(-1);
+    retaSyncFromIRPF();
+    // Force initial calculation if no IRPF cobros
+    var inp = document.getElementById('reta-inp-ingr');
+    if (inp && (!inp.value || parseFloat(inp.value) === 0)) {
+      inp.value = '35000';
+      retaRecalc();
+    }
+  } catch(e) {
+    console.error('[RETA init error]', e);
+  }
+})();
 </script>
 </body>
 </html>

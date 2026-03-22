@@ -1197,7 +1197,6 @@ tr:hover td{background:rgba(0,212,255,0.02);}
       </div>
     </div>
   </div><!-- /tab-sync -->
-</div><!-- /wrapper -->
 
 <!-- IMPORT MODAL -->
 <div id="import-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;align-items:center;justify-content:center;padding:16px">
@@ -1220,7 +1219,7 @@ tr:hover td{background:rgba(0,212,255,0.02);}
 // ── UTILS ─────────────────────────────────────────────
 const fmt=(n,d=2)=>isNaN(n)?'—':(n>=0?'+':'')+n.toLocaleString('es-ES',{minimumFractionDigits:d,maximumFractionDigits:d,useGrouping:true});
 const fmtN=(n,d=2)=>isNaN(n)?'—':n.toLocaleString('es-ES',{minimumFractionDigits:d,maximumFractionDigits:d,useGrouping:true});
-const fmtDate=iso=>{if(!iso)return'—';const[y,m,d]=iso.split('-');returnd+'/'+m+'/'+y.slice(2);};
+const fmtDate=iso=>{if(!iso)return'—';const[y,m,d]=iso.split('-');return`${d}/${m}/${y.slice(2)}`;};
 const todayISO=new Date().toISOString().split('T')[0];
 const nowY=new Date().getFullYear(), nowM=new Date().getMonth()+1;
 
@@ -1328,7 +1327,7 @@ function switchAccount(id){
   // Reset filters
   activeFilter='all'; timePeriod='all';
   // Show journal tab
-  document.querySelectorAll('.tab-content').forEach(function(t){t.classList.remove('active')});
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
   document.getElementById('tab-journal').classList.add('active');
   document.getElementById('tab-btn-calc').classList.remove('active');
   if(document.getElementById('tab-btn-irpf')) document.getElementById('tab-btn-irpf').classList.remove('active');
@@ -1336,8 +1335,8 @@ function switchAccount(id){
   document.getElementById('tab-btn-irpf').classList.remove('active');
   document.getElementById('tab-btn-reta').classList.remove('active');
   // Reset filter buttons
-  document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.toggle('active',b.dataset.filter==='all')});
-  document.querySelectorAll('[data-tp]').forEach(function(b){b.classList.toggle('active',b.dataset.tp==='all')});
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.toggle('active',b.dataset.filter==='all'));
+  document.querySelectorAll('[data-tp]').forEach(b=>b.classList.toggle('active',b.dataset.tp==='all'));
   try{ document.getElementById('range-row').style.display='none'; }catch(e){}
   renderAcctTabs();
   render();
@@ -1352,9 +1351,9 @@ function addAccount(){
   saveTrades();
   activeFilter='all'; timePeriod='all';
   renderAcctTabs();
-  document.querySelectorAll('.tab-content').forEach(function(t){t.classList.remove('active')});
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
   document.getElementById('tab-journal').classList.add('active');
-  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active')});
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   render();
 }
 
@@ -1369,9 +1368,9 @@ function deleteAccount(id){
   currentAcctId=accounts[0].id;
   loadTrades(currentAcctId);
   renderAcctTabs();
-  document.querySelectorAll('.tab-content').forEach(function(t){t.classList.remove('active')});
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
   document.getElementById('tab-journal').classList.add('active');
-  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active')});
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   render();
 }
 
@@ -1402,14 +1401,10 @@ function save(){ saveTrades(); }
 function load(){ /* handled by initAccounts */ }
 
 function showMainTab(id, btn){
-  var tc = document.querySelectorAll('.tab-content');
-  for(var i=0;i<tc.length;i++) tc[i].classList.remove('active');
-  var tb = document.querySelectorAll('.tab');
-  for(var i=0;i<tb.length;i++) tb[i].classList.remove('active');
-  var at = document.querySelectorAll('.acct-tab');
-  for(var i=0;i<at.length;i++) at[i].classList.remove('active');
-  var el = document.getElementById('tab-'+id);
-  if(el) el.classList.add('active');
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.acct-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
   if(btn) btn.classList.add('active');
   if(id==='calc'&&fxRates.EURUSD===null) fetchFxRates();
   if(id==='irpf'&&!irpfFxLoaded) irpfRefreshFX();
@@ -1432,7 +1427,7 @@ initAccounts(); render();
 // ── TIME PERIOD ───────────────────────────────────────
 function setTimePeriod(p, btn){
   timePeriod=p;
-  document.querySelectorAll('.tfilter-btn').forEach(function(b){b.classList.remove('active')});
+  document.querySelectorAll('.tfilter-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('tfilter-custom').classList.toggle('show', p==='custom');
   render();
@@ -1442,7 +1437,7 @@ function isInPeriod(fecha){
   if(timePeriod==='all') return true;
   if(timePeriod==='today') return fecha===todayISO;
   if(timePeriod==='week') return fecha>=getWeekStart()&&fecha<=todayISO;
-  if(timePeriod==='month') return fecha.startsWith(nowY+'-'+String(nowM).padStart(2,'0'));
+  if(timePeriod==='month') return fecha.startsWith(`${nowY}-${String(nowM).padStart(2,'0')}`);
   if(timePeriod==='year') return fecha.startsWith(String(nowY));
   if(timePeriod==='custom'){
     const from=document.getElementById('range-from').value;
@@ -1479,8 +1474,8 @@ const TICKER_PIP_LABEL={'XAUUSD':'$100 Oro','UKOIL':'$100 OIL'};
 
 function clearTickerPresets(){
   if(settingTickerProg) return;
-  document.querySelectorAll('.ticker-fav-presets .preset-btn').forEach(function(b){b.classList.remove('active')});
-  document.querySelectorAll('#form-ccy-presets .preset-btn').forEach(function(b){b.classList.remove('active')});
+  document.querySelectorAll('.ticker-fav-presets .preset-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('#form-ccy-presets .preset-btn').forEach(b=>b.classList.remove('active'));
   formCcy='USD';
   setFormPip(1,'$1 Índice');
 }
@@ -1489,7 +1484,7 @@ function setTicker(tk){
   settingTickerProg=true;
   document.getElementById('f-ticker').value=tk;
   settingTickerProg=false;
-  document.querySelectorAll('.ticker-fav-presets .preset-btn').forEach(function(b){b.classList.toggle('active', b.textContent===tk)});
+  document.querySelectorAll('.ticker-fav-presets .preset-btn').forEach(b=>b.classList.toggle('active', b.textContent===tk));
   if(TICKER_CCY[tk]) setFormCcy(TICKER_CCY[tk]);
   if(TICKER_PIP[tk]) setFormPip(TICKER_PIP[tk], TICKER_PIP_LABEL[tk]||null);
 }
@@ -1504,7 +1499,7 @@ function setType(t){
 // ── FILTER ────────────────────────────────────────────
 function setFilter(f,btn){
   activeFilter=f;
-  document.querySelectorAll('.filter-btn[data-filter]').forEach(function(b){b.classList.remove('active')});
+  document.querySelectorAll('.filter-btn[data-filter]').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active'); render();
 }
 
@@ -1534,7 +1529,7 @@ async function fetchHistoricalRates(date){
   const todayISO2=new Date().toISOString().split('T')[0];
   // Frankfurter doesn't serve today's data until end of day — fall back to live fxRaw
   if(date>=todayISO2){
-    ['EUR','GBP','JPY','CAD'].forEach(function(c){fxRawForm[c]=fxRaw[c];});
+    ['EUR','GBP','JPY','CAD'].forEach(c=>fxRawForm[c]=fxRaw[c]);
     fxRawFormDate=date;
     const liveEl=document.getElementById('f-pip-live');
     if(liveEl) liveEl.title='Tipo de cambio: hoy (en vivo)';
@@ -1542,26 +1537,26 @@ async function fetchHistoricalRates(date){
   }
   if(fxRawFormDate===date) return; // already loaded
   try{
-    const res=await fetch('https://api.frankfurter.app/'+date+'?from=USD&to=EUR,GBP,JPY,CAD');
+    const res=await fetch(`https://api.frankfurter.app/${date}?from=USD&to=EUR,GBP,JPY,CAD`);
     if(!res.ok) throw new Error();
     const data=await res.json();
     fxRawForm.EUR=data.rates.EUR; fxRawForm.GBP=data.rates.GBP;
     fxRawForm.JPY=data.rates.JPY; fxRawForm.CAD=data.rates.CAD;
     fxRawFormDate=date;
     const liveEl=document.getElementById('f-pip-live');
-    if(liveEl) liveEl.title='Tipo de cambio: '+date;
+    if(liveEl) liveEl.title=`Tipo de cambio: ${date}`;
     recalcFormPip();
   } catch(e){ /* silently keep previous rates */ }
 }
 
 function setFormCcy(ccy){
   formCcy=ccy;
-  document.querySelectorAll('#form-ccy-presets .preset-btn').forEach(function(b){b.classList.toggle('active', b.textContent===ccy)});
+  document.querySelectorAll('#form-ccy-presets .preset-btn').forEach(b=>b.classList.toggle('active', b.textContent===ccy));
   recalcFormPip();
 }
 function setFormPip(v, label){
   formPipBase=v;
-  document.querySelectorAll('#form-pip-presets .preset-btn').forEach(function(b){
+  document.querySelectorAll('#form-pip-presets .preset-btn').forEach(b=>{
     const m=b.getAttribute('onclick').match(/setFormPip\(([^)]+)\)/);
     const valMatch=m&&parseFloat(m[1])===v;
     if(label) b.classList.toggle('active', valMatch&&b.textContent.trim()===label);
@@ -1571,7 +1566,7 @@ function setFormPip(v, label){
 }
 function clearFormPipPreset(){
   formPipBase=null;
-  document.querySelectorAll('#form-pip-presets .preset-btn').forEach(function(b){b.classList.remove('active')});
+  document.querySelectorAll('#form-pip-presets .preset-btn').forEach(b=>b.classList.remove('active'));
 }
 function recalcFormPip(){
   const liveEl=document.getElementById('f-pip-live');
@@ -1652,15 +1647,15 @@ function addTrade(){
     lotes:isNaN(lotes)?null:lotes,entrada:isNaN(entrada)?null:entrada,
     salida:isNaN(salida)?null:salida,pip:isNaN(pip)?null:pip,swap,comision,beneficio,notas});
   trades.sort((a,b)=>b.fecha.localeCompare(a.fecha)||b.id-a.id);
-  ['f-ticker','f-lotes','f-entrada','f-salida','f-beneficio','f-notas'].forEach(function(id){document.getElementById(id).value='';});
+  ['f-ticker','f-lotes','f-entrada','f-salida','f-beneficio','f-notas'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('f-swap').value='0';
   document.getElementById('f-comision').value='0';
   document.getElementById('f-fecha').value=todayISO;
   fxRawFormDate=null; fetchHistoricalRates(todayISO);
   document.getElementById('f-ben-auto').style.display='none';
   document.getElementById('f-pip-live').textContent='';
-  document.querySelectorAll('#form-ccy-presets .preset-btn').forEach(function(b){b.classList.remove('active')});
-  document.querySelectorAll('.ticker-fav-presets .preset-btn').forEach(function(b){b.classList.remove('active')});
+  document.querySelectorAll('#form-ccy-presets .preset-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.ticker-fav-presets .preset-btn').forEach(b=>b.classList.remove('active'));
   beneficioManualFlag=false; formCcy='USD';
   setFormPip(1,'$1 Índice');
   save(); render(); toast('Operación registrada ✓');
@@ -1675,9 +1670,9 @@ function deleteTrade(id){
 // ── EDIT ──────────────────────────────────────────────
 function editTrade(id,btn){
   const trade=trades.find(t=>t.id===id); if(!trade)return;
-  document.querySelectorAll('tr.edit-expand-row').forEach(function(r){r.remove()});
-  document.querySelectorAll('tr.editing-row').forEach(function(r){r.classList.remove('editing-row')});
-  document.querySelectorAll('.btn-action.edit-active').forEach(function(b){b.textContent='✎';b.classList.remove('edit-active');});
+  document.querySelectorAll('tr.edit-expand-row').forEach(r=>r.remove());
+  document.querySelectorAll('tr.editing-row').forEach(r=>r.classList.remove('editing-row'));
+  document.querySelectorAll('.btn-action.edit-active').forEach(b=>{b.textContent='✎';b.classList.remove('edit-active');});
   const tr=btn.closest('tr'); tr.classList.add('editing-row');
   btn.textContent='▲'; btn.classList.add('edit-active');
   const editTr=document.createElement('tr'); editTr.className='edit-expand-row';
@@ -1749,7 +1744,7 @@ function render(){
     el.textContent=(sum>=0?'+':'')+fmtN(sum)+' €';
     lel.textContent=ts.length+(ts.length===1?' op':' ops');
   }
-  const monthTrades=trades.filter(t=>t.fecha.startsWith(nowY+'-'+String(nowM).padStart(2,'0')));
+  const monthTrades=trades.filter(t=>t.fecha.startsWith(`${nowY}-${String(nowM).padStart(2,'0')}`));
   const yearTrades=trades.filter(t=>t.fecha.startsWith(String(nowY)));
   kpiSet('kpi-p1-val','kpi-p1-lbl','kpi-p1',periodTrades,periodLabel());
   kpiSet('kpi-p2-val','kpi-p2-lbl','kpi-p2',monthTrades,'Mes actual');
@@ -1759,7 +1754,7 @@ function render(){
   const tickerSel=document.getElementById('ticker-filter');
   const currentTicker=tickerSel.value;
   const allTickers=[...new Set(trades.map(t=>t.ticker))].sort();
-  tickerSel.innerHTML='<option value="">Ticker: Todos</option>'+allTickers.map(tk=>'<option value="'+tk+'"'+(currentTicker===tk?' selected':'')+'>'+tk+'</option>').join('');
+  tickerSel.innerHTML='<option value="">Ticker: Todos</option>'+allTickers.map(tk=>`<option value="${tk}"${currentTicker===tk?' selected':''}>${tk}</option>`).join('');
 
   // Header
   document.getElementById('total-trades').textContent=trades.length;
@@ -1835,7 +1830,7 @@ function render(){
     } else sharpeEl.textContent='—';
 
   } else {
-    ['s-total','s-best','s-worst','s-avg','s-avg-win','s-avg-loss','s-expect','s-rrr','s-profact','s-sharpe'].forEach(function(id){
+    ['s-total','s-best','s-worst','s-avg','s-avg-win','s-avg-loss','s-expect','s-rrr','s-profact','s-sharpe'].forEach(id=>{
       const el=document.getElementById(id); el.textContent='—'; el.className='stat-val';
     });
   }
@@ -1847,7 +1842,7 @@ function render(){
     return;
   }
   tbody.innerHTML='';
-  filtered.forEach(function(t){
+  filtered.forEach(t=>{
     const tr=document.createElement('tr'); tr.className='new-row'; tr.dataset.id=t.id;
     const bc=t.beneficio>0?'pos':t.beneficio<0?'neg':'neu';
     tr.innerHTML=`
@@ -1874,7 +1869,7 @@ function exportCSV(){
   const rows=filtered.map(t=>[fmtDate(t.fecha),t.ticker,t.tipo,t.lotes != null ? t.lotes : '',t.entrada != null ? t.entrada : '',t.salida != null ? t.salida : '',String(t.beneficio).replace('.',','),t.notas||''].join(';'));
   const blob=new Blob(['\uFEFF'+[headers.join(';'),...rows].join('\n')],{type:'text/csv;charset=utf-8'});
   const url=URL.createObjectURL(blob),a=document.createElement('a');
-  a.href=url;a.download='TradingJournal_'+todayISO+'.csv';
+  a.href=url;a.download=`TradingJournal_${todayISO}.csv`;
   document.body.appendChild(a);a.click();document.body.removeChild(a);
   setTimeout(()=>URL.revokeObjectURL(url),1000);
   toast('CSV descargado ✓');
@@ -1892,10 +1887,10 @@ function fmtCapBtn(v){ return '$'+v.toLocaleString('es-ES'); }
 
 function setFxCapFav(i){
   document.getElementById('fx-capital').value=fxCapFavs[i];
-  [0,1].forEach(function(j){document.getElementById('fxcap-btn-'+j).classList.toggle('active',j===i);});
+  [0,1].forEach(j=>document.getElementById('fxcap-btn-'+j).classList.toggle('active',j===i));
   fetchFxRates();
 }
-function clearFxCapFavActive(){ [0,1].forEach(function(j){document.getElementById('fxcap-btn-'+j).classList.remove('active');}); }
+function clearFxCapFavActive(){ [0,1].forEach(j=>document.getElementById('fxcap-btn-'+j).classList.remove('active')); }
 function editFxCapFav(i){
   const cur=fxCapFavs[i];
   const val=prompt('Nuevo valor para el favorito '+(i+1)+' ($):', cur);
@@ -1909,10 +1904,10 @@ function editFxCapFav(i){
 
 function setCalcCapFav(i){
   document.getElementById('c-capital').value=calcCapFavs[i];
-  [0,1].forEach(function(j){document.getElementById('ccap-btn-'+j).classList.toggle('active',j===i);});
+  [0,1].forEach(j=>document.getElementById('ccap-btn-'+j).classList.toggle('active',j===i));
   calcLots();
 }
-function clearCalcCapFavActive(){ [0,1].forEach(function(j){document.getElementById('ccap-btn-'+j).classList.remove('active');}); }
+function clearCalcCapFavActive(){ [0,1].forEach(j=>document.getElementById('ccap-btn-'+j).classList.remove('active')); }
 function editCalcCapFav(i){
   const cur=calcCapFavs[i];
   const val=prompt('Nuevo valor para el favorito '+(i+1)+' ($):', cur);
@@ -1926,18 +1921,18 @@ function editCalcCapFav(i){
 
 function setCalcCcy(ccy){
   calcCcy=ccy;
-  document.querySelectorAll('#ccy-presets .preset-btn').forEach(function(b){b.classList.toggle('active', b.textContent===ccy)});
+  document.querySelectorAll('#ccy-presets .preset-btn').forEach(b=>b.classList.toggle('active', b.textContent===ccy));
   recalcCalcPip();
 }
 function setPip(v){
   calcPipBase=v;
-  document.querySelectorAll('#pip-presets .preset-btn').forEach(function(b){b.classList.toggle('active',parseFloat(b.textContent)===v);});
+  document.querySelectorAll('#pip-presets .preset-btn').forEach(b=>b.classList.toggle('active',parseFloat(b.textContent)===v));
   document.getElementById('c-pip').value='';
   recalcCalcPip();
 }
 function clearPipPreset(){
   calcPipBase=null;
-  document.querySelectorAll('#pip-presets .preset-btn').forEach(function(b){b.classList.remove('active')});
+  document.querySelectorAll('#pip-presets .preset-btn').forEach(b=>b.classList.remove('active'));
 }
 function recalcCalcPip(){
   const liveEl=document.getElementById('c-pip-live');
@@ -1958,10 +1953,10 @@ function recalcCalcPip(){
 
 function setRisk(v){
   document.getElementById('c-riesgo').value=v;
-  document.querySelectorAll('#risk-presets .preset-btn').forEach(function(b){b.classList.toggle('active',parseFloat(b.textContent)===v);});
+  document.querySelectorAll('#risk-presets .preset-btn').forEach(b=>b.classList.toggle('active',parseFloat(b.textContent)===v));
   calcLots();
 }
-function clearRiskPreset(){document.querySelectorAll('#risk-presets .preset-btn').forEach(function(b){b.classList.remove('active')});}
+function clearRiskPreset(){document.querySelectorAll('#risk-presets .preset-btn').forEach(b=>b.classList.remove('active'));}
 
 
 function calcLots(){
@@ -2041,11 +2036,11 @@ async function fetchFxRates(){
     }
     // Lot calculator rates (capital × rate)
     const capital=getFxCapital();
-    ['EURUSD','GBPUSD','JPYUSD'].forEach(function(p){fxPrevRates[p]=fxRates[p];});
+    ['EURUSD','GBPUSD','JPYUSD'].forEach(p=>fxPrevRates[p]=fxRates[p]);
     fxRates.EURUSD=capital*e;
     fxRates.GBPUSD=capital*g;
     fxRates.JPYUSD=capital*j;
-    ['EURUSD','GBPUSD','JPYUSD'].forEach(function(p){fxUpdateDisplay(p);fxCalcLots(p);});
+    ['EURUSD','GBPUSD','JPYUSD'].forEach(p=>{fxUpdateDisplay(p);fxCalcLots(p);});
     const t=new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
     document.getElementById('fx-last-update').textContent='Última actualización: '+t;
     fxSetStatus('ok');
@@ -2154,14 +2149,14 @@ function parseDate(raw){
   if(/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
   // DD/MM/YYYY or DD-MM-YYYY
   const m1=s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
-  if(m1) return m1[3]+'-'+m1[2].padStart(2,'0')+'-'+m1[1].padStart(2,'0');
+  if(m1) return `${m1[3]}-${m1[2].padStart(2,'0')}-${m1[1].padStart(2,'0')}`;
   // DD/MM/YY
   const m2=s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2})$/);
-  if(m2) return '20'+m2[3]+'-'+m2[1].padStart(2,'0')+'-'+m2[2].padStart(2,'0');
+  if(m2) return `20${m2[3]}-${m2[1].padStart(2,'0')}-${m2[2].padStart(2,'0')}`;
   // Excel serial
   if(!isNaN(s)&&s!==''){
     const d=XLSX.SSF.parse_date_code(Number(s));
-    if(d) return d.y+'-'+String(d.m).padStart(2,'0')+'-'+String(d.d).padStart(2,'0');
+    if(d) return `${d.y}-${String(d.m).padStart(2,'0')}-${String(d.d).padStart(2,'0')}`;
   }
   const nd=new Date(s);
   if(!isNaN(nd)) return nd.toISOString().split('T')[0];
@@ -2193,9 +2188,9 @@ function rowsToTrades(rows, colMap){
     const fecha=parseDate(String(get('fecha') != null ? get('fecha') : ''));
     const ticker=normalizeTicker(String(get('ticker') != null ? get('ticker') : '').trim());
     const beneficio=parseNum(get('beneficio'));
-    if(!fecha){ errors.push('Fila '+(i+2)+': fecha inválida ("'+get('fecha')+'")'); return; }
-    if(!ticker){ errors.push('Fila '+(i+2)+': ticker vacío'); return; }
-    if(beneficio===null){ errors.push('Fila '+(i+2)+': beneficio inválido ("'+get('beneficio')+'")'); return; }
+    if(!fecha){ errors.push(`Fila ${i+2}: fecha inválida ("${get('fecha')}")`); return; }
+    if(!ticker){ errors.push(`Fila ${i+2}: ticker vacío`); return; }
+    if(beneficio===null){ errors.push(`Fila ${i+2}: beneficio inválido ("${get('beneficio')}")`); return; }
     result.push({
       id: nextId++,
       fecha,
@@ -2245,23 +2240,23 @@ function showImportModal(trades, errors, mappedFields){
   const mapped=Object.keys(mappedFields).filter(f=>mappedFields[f]!==undefined);
   const missing=Object.keys(fieldNames).filter(f=>!mapped.includes(f)&&f!=='notas');
 
-  let html='<b>'+trades.length+'</b> operaciones detectadas.<br>';
-  html+='<span style="color:var(--green)">Campos mapeados: '+mapped.map(function(f){return fieldNames[f];}).join(', ')+'</span><br>';
-  if(missing.length) html+='<span style="color:var(--warn)">Sin mapear: '+missing.map(function(f){return fieldNames[f];}).join(', ')+'</span><br>';
+  let html=`<b>${trades.length}</b> operaciones detectadas.<br>`;
+  html+=`<span style="color:var(--green)">Campos mapeados: ${mapped.map(f=>fieldNames[f]).join(', ')}</span><br>`;
+  if(missing.length) html+=`<span style="color:var(--warn)">Sin mapear: ${missing.map(f=>fieldNames[f]).join(', ')}</span><br>`;
   if(trades.length>0){
-    html+='<br><b>Primeras '+Math.min(3,trades.length)+' filas:</b><br>';
-    trades.slice(0,3).forEach(function(t){
-      html+='• '+t.fecha+' · '+t.ticker+' · '+t.tipo+' · '+(t.beneficio>0?'+':'')+t.beneficio+'€<br>';
+    html+=`<br><b>Primeras ${Math.min(3,trades.length)} filas:</b><br>`;
+    trades.slice(0,3).forEach(t=>{
+      html+=`• ${t.fecha} · ${t.ticker} · ${t.tipo} · ${t.beneficio>0?'+':''}${t.beneficio}€<br>`;
     });
   }
   preview.innerHTML=html;
 
   if(errors.length){
     errEl.style.display='';
-    errEl.innerHTML='<b>Advertencias:</b><br>'+errors.slice(0,5).join('<br>')+(errors.length>5?'<br>...y '+(errors.length-5)+' más':'');
+    errEl.innerHTML='<b>Advertencias:</b><br>'+errors.slice(0,5).join('<br>')+(errors.length>5?`<br>...y ${errors.length-5} más`:'');
   } else errEl.style.display='none';
 
-  confirmBtn.textContent='IMPORTAR '+trades.length+' TRADES';
+  confirmBtn.textContent=`IMPORTAR ${trades.length} TRADES`;
   confirmBtn.disabled=trades.length===0;
   modal.style.display='flex';
 }
@@ -2278,7 +2273,7 @@ function confirmImport(){
   trades.sort((a,b)=>b.fecha.localeCompare(a.fecha)||b.id-a.id);
   save(); render();
   closeImportModal();
-  toast(importPending.length+' trades importados ✓');
+  toast(`${importPending.length} trades importados ✓`);
   importPending=[];
 }
 
@@ -2351,7 +2346,7 @@ function ghUpdateSyncInfo(){
 }
 
 // GitLab API base
-function glAPI(){ return 'https://gitlab.com/api/v4/projects/'+encodeURIComponent(ghConfig.user+'/'+ghConfig.projectId); }
+function glAPI(){ return `https://gitlab.com/api/v4/projects/${encodeURIComponent(ghConfig.user+'/'+ghConfig.projectId)}`; }
 function glHeaders(){ return { 'PRIVATE-TOKEN': ghConfig.token, 'Content-Type':'application/json' }; }
 
 const GL_FILENAME = 'tradelog_data.json';
@@ -2372,13 +2367,13 @@ async function ghPush(manual){
     const content=JSON.stringify(allData, null, 2);
 
     // Check if file exists
-    const checkUrl=glAPI()+'/repository/files/'+encodeURIComponent(GL_FILENAME)+'?ref='+GL_BRANCH;
+    const checkUrl=`${glAPI()}/repository/files/${encodeURIComponent(GL_FILENAME)}?ref=${GL_BRANCH}`;
     const check=await fetch(checkUrl,{headers:glHeaders()});
     const exists=check.ok;
 
     const method=exists?'PUT':'POST';
     const body={ branch:GL_BRANCH, content, commit_message:'Trading journal sync '+new Date().toISOString() };
-    const r=await fetch(glAPI()+'/repository/files/'+encodeURIComponent(GL_FILENAME),{
+    const r=await fetch(`${glAPI()}/repository/files/${encodeURIComponent(GL_FILENAME)}`,{
       method, headers:glHeaders(), body:JSON.stringify(body)
     });
     if(!r.ok){
@@ -2403,7 +2398,7 @@ async function ghPull(){
   if(!ghConfig){ toast('Configura GitLab primero',true); return; }
   ghSetStatus('Descargando datos…');
   try{
-    const url=glAPI()+'/repository/files/'+encodeURIComponent(GL_FILENAME)+'/raw?ref='+GL_BRANCH;
+    const url=`${glAPI()}/repository/files/${encodeURIComponent(GL_FILENAME)}/raw?ref=${GL_BRANCH}`;
     const r=await fetch(url,{headers:glHeaders()});
     if(r.status===404){ ghSetStatus('No hay datos en GitLab todavía','var(--warn)'); return; }
     if(!r.ok) throw new Error('HTTP '+r.status);
@@ -2461,7 +2456,7 @@ const irpfCurrentYear=String(new Date().getFullYear());
 
 function irpfFmt(n,d){
   if(d===undefined)d=2; return isNaN(n)?'—':n.toLocaleString('es-ES',{minimumFractionDigits:d,maximumFractionDigits:d,useGrouping:true}); }
-function irpfFmtDate(iso){ if(!iso)return'—'; const[y,m,d]=iso.split('-'); returnd+'/'+m+'/'+y.slice(2); }
+function irpfFmtDate(iso){ if(!iso)return'—'; const[y,m,d]=iso.split('-'); return`${d}/${m}/${y.slice(2)}`; }
 function irpfFmtNum(n){ return parseFloat((isNaN(n)?0:n).toFixed(2)); }
 
 function getTramosForYear(y){ return irpfTramosPerYear[y]?JSON.parse(JSON.stringify(irpfTramosPerYear[y])):JSON.parse(JSON.stringify(TRAMOS_DEFAULT)); }
@@ -2515,7 +2510,7 @@ function irpfBuildYearSelector(){
     all.textContent='Todos'; all.onclick=()=>{irpfSelectedYear='all';irpfBuildYearSelector();irpfRender();};
     wrap.appendChild(all);
   }
-  years.forEach(function(y){
+  years.forEach(y=>{
     const btn=document.createElement('button');
     btn.className='year-btn'+(irpfSelectedYear===y?' active':'');
     btn.textContent=y; btn.onclick=()=>{irpfSelectedYear=y;irpfEditingTramos=false;irpfBuildYearSelector();irpfRender();};
@@ -2598,7 +2593,7 @@ function irpfDeleteCobro(id){
 function irpfEditCobro(id,btn){
   const cobro=irpfCobros.find(c=>c.id===id); if(!cobro)return;
   const tr=btn.closest('tr');
-  document.querySelectorAll('.irpf-edit-expand-row').forEach(function(r){r.remove()});
+  document.querySelectorAll('.irpf-edit-expand-row').forEach(r=>r.remove());
   tr.classList.add('editing-row');
   btn.textContent='✓';btn.classList.add('saving');
   const editTr=document.createElement('tr');
@@ -2656,8 +2651,8 @@ function irpfSaveTramoEdits(){
   const year=irpfSelectedYear==='all'?irpfCurrentYear:irpfSelectedYear;
   const tramos=getTramosForYear(year);
   const updated=tramos.map((t,i)=>{
-    const hastaInput=document.querySelector('.irpf-tramo-hasta[data-i="'+i+'"]');
-    const tipoInput=document.querySelector('.irpf-tramo-tipo-input[data-i="'+i+'"]');
+    const hastaInput=document.querySelector(`.irpf-tramo-hasta[data-i="${i}"]`);
+    const tipoInput=document.querySelector(`.irpf-tramo-tipo-input[data-i="${i}"]`);
     const hasta=hastaInput?parseFloat(hastaInput.value):t.hasta;
     const tipo=(tipoInput?parseFloat(tipoInput.value):t.tipo*100)/100;
     return{desde:t.desde,hasta:isNaN(hasta)?t.hasta:hasta,tipo:isNaN(tipo)?t.tipo:tipo};
@@ -2665,19 +2660,19 @@ function irpfSaveTramoEdits(){
   for(let i=1;i<updated.length;i++) updated[i].desde=updated[i-1].hasta+0.01;
   irpfTramosPerYear[year]=updated;
   irpfSaveState();irpfRender();
-  toast('Tramos '+year+' guardados ✓');
+  toast(`Tramos ${year} guardados ✓`);
 }
 
 function irpfResetTramos(){
   const year=irpfSelectedYear==='all'?irpfCurrentYear:irpfSelectedYear;
-  if(!confirm('¿Restablecer los tramos de '+year+' a los valores por defecto?'))return;
+  if(!confirm(`¿Restablecer los tramos de ${year} a los valores por defecto?`))return;
   delete irpfTramosPerYear[year];
   irpfEditingTramos=false;
   document.getElementById('irpf-btn-edit-tramos').textContent='✎ Editar';
   document.getElementById('irpf-btn-edit-tramos').classList.remove('active');
   document.getElementById('irpf-btn-reset-tramos').style.display='none';
   irpfSaveState();irpfRender();
-  toast('Tramos '+year+' restablecidos ✓');
+  toast(`Tramos ${year} restablecidos ✓`);
 }
 
 function irpfRender(){
@@ -2697,17 +2692,17 @@ function irpfRender(){
   document.getElementById('irpf-kpi-tipo').textContent    =totalFTMO>0?irpfFmt(tipoEfect,1)+' %':'—';
 
   const n=filtered.length;
-  const yearLabel=irpfSelectedYear==='all'?'':' · '+irpfSelectedYear;
+  const yearLabel=irpfSelectedYear==='all'?'':` · ${irpfSelectedYear}`;
   document.getElementById('irpf-badge-count').textContent=n+(n===1?' cobro':' cobros')+yearLabel;
 
   const tbody=document.getElementById('irpf-tbody');
   // Limpiar filas de edición expandidas antes de redibujar
-  document.querySelectorAll('.irpf-edit-expand-row').forEach(function(r){r.remove()});
+  document.querySelectorAll('.irpf-edit-expand-row').forEach(r=>r.remove());
   if(!filtered.length){
     tbody.innerHTML=`<tr><td colspan="8"><div class="irpf-empty"><div class="irpf-empty-icon">◈</div><div>${irpfCobros.length&&irpfSelectedYear!=='all'?'Sin cobros en '+irpfSelectedYear+'.':'Sin cobros registrados.'}</div></div></td></tr>`;
   } else {
     tbody.innerHTML='';
-    filtered.forEach(function(c){
+    filtered.forEach(c=>{
       const prop=totalFTMO>0?c.tuParteEUR/totalFTMO:0;
       const imp=impFTMO*prop,neto=c.tuParteEUR-imp;
       const tr=document.createElement('tr');tr.className='new-row';tr.dataset.id=c.id;
@@ -2786,7 +2781,7 @@ function irpfExportCSV(){
   const headers=Object.keys(rows[0]);
   const yearSuffix=irpfSelectedYear==='all'?'':'_'+irpfSelectedYear;
   const csv=[headers.join(';'),...rows.map(r=>headers.map(h=>String(r[h]).replace(/\./g,',')).join(';'))].join('\n');
-  irpfDownloadBlob(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'}),'FTMO_IRPF'+yearSuffix+'_'+todayISO+'.csv');
+  irpfDownloadBlob(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'}),`FTMO_IRPF${yearSuffix}_${todayISO}.csv`);
   toast('CSV descargado ✓');
 }
 
@@ -2796,12 +2791,12 @@ function irpfExportExcel(){
   const headers=Object.keys(rows[0]);
   const yearLabel=irpfSelectedYear==='all'?'Todos los años':irpfSelectedYear;
   const yearSuffix=irpfSelectedYear==='all'?'':'_'+irpfSelectedYear;
-  let html='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="UTF-8"><style>body{font-family:Calibri;font-size:11pt;}table{border-collapse:collapse;width:100%;}th{background:#0a3d2e;color:#fff;padding:8px;text-align:right;}th:first-child{text-align:left;}td{padding:7px;border-bottom:1px solid #e8e8e8;text-align:right;}td:first-child{text-align:left;}.green{color:#007a50;font-weight:bold;}.red{color:#cc1f3a;font-weight:bold;}<\/style></head><body><h2>FTMO · Registro IRPF · '+yearLabel+'</h2><table><thead><tr>';
-  headers.forEach(function(h){html+='<th>'+h+'</th>';});
-  html+='</tr></thead><tbody>';
-  rows.forEach(function(r){html+='<tr>';headers.forEach(function(h){var cls=h.includes('Neto')?'green':h.includes('Impuesto')?'red':'';html+='<td'+(cls?' class="'+cls+'"':'')+'>'+r[h]+'</td>';});html+='</tr>';});
-  html+='</tbody></table></body></html>';
-  irpfDownloadBlob(new Blob([html],{type:'application/vnd.ms-excel;charset=utf-8'}),'FTMO_IRPF'+yearSuffix+'_'+todayISO+'.xls');
+  let html=`<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="UTF-8"><style>body{font-family:Calibri;font-size:11pt;}table{border-collapse:collapse;width:100%;}th{background:#0a3d2e;color:#fff;padding:8px;text-align:right;}th:first-child{text-align:left;}td{padding:7px;border-bottom:1px solid #e8e8e8;text-align:right;}td:first-child{text-align:left;}.green{color:#007a50;font-weight:bold;}.red{color:#cc1f3a;font-weight:bold;}</style></head><body><h2>FTMO · Registro IRPF · ${yearLabel}</h2><table><thead><tr>`;
+  headers.forEach(h=>html+=`<th>${h}</th>`);
+  html+=`</tr></thead><tbody>`;
+  rows.forEach(r=>{html+=`<tr>`;headers.forEach(h=>{const cls=h.includes('Neto')?'green':h.includes('Impuesto')?'red':'';html+=`<td${cls?` class="${cls}"`:''}>${r[h]}</td>`;});html+=`</tr>`;});
+  html+=`</tbody></table></body></html>`;
+  irpfDownloadBlob(new Blob([html],{type:'application/vnd.ms-excel;charset=utf-8'}),`FTMO_IRPF${yearSuffix}_${todayISO}.xls`);
   toast('Excel descargado ✓');
 }
 
@@ -2821,12 +2816,12 @@ function irpfImportCSV(input){
       if(idx.fecha===undefined||idx.bruto===undefined){toast('Formato de CSV no reconocido');input.value='';return;}
       const existingKeys=new Set(irpfCobros.map(c=>c.fecha+'|'+c.bruto));
       let imported=0,skipped=0;
-      lines.slice(1).forEach(function(line){
+      lines.slice(1).forEach(line=>{
         if(!line.trim())return;
         const cols=line.split(sep).map(c=>c.trim().replace(/^"|"$/g,''));
         const raw=cols[idx.fecha]||'';let fechaISO='';
-        if(/^\d{2}\/\d{2}\/\d{4}$/.test(raw)){const[d,m,y]=raw.split('/');fechaISO=y+'-'+m+'-'+d;}
-        else if(/^\d{2}\/\d{2}\/\d{2}$/.test(raw)){const[d,m,y]=raw.split('/');fechaISO='20'+y+'-'+m+'-'+d;}
+        if(/^\d{2}\/\d{2}\/\d{4}$/.test(raw)){const[d,m,y]=raw.split('/');fechaISO=`${y}-${m}-${d}`;}
+        else if(/^\d{2}\/\d{2}\/\d{2}$/.test(raw)){const[d,m,y]=raw.split('/');fechaISO=`20${y}-${m}-${d}`;}
         else if(/^\d{4}-\d{2}-\d{2}$/.test(raw)){fechaISO=raw;}
         else{skipped++;return;}
         const parseN=s=>parseFloat(String(s).replace(',','.'));
@@ -2843,8 +2838,8 @@ function irpfImportCSV(input){
       irpfCobros.sort((a,b)=>a.fecha.localeCompare(b.fecha));
       irpfSaveState();irpfBuildYearSelector();irpfRender();input.value='';
       const plural=n=>n!==1?'s':'';
-      const skipMsg=skipped>0?' ('+skipped+' omitido'+plural(skipped)+')':'';
-      toast(imported+' cobro'+plural(imported)+' importado'+plural(imported)+skipMsg+' ✓');
+      const skipMsg=skipped>0?` (${skipped} omitido${plural(skipped)})`:'';
+      toast(`${imported} cobro${plural(imported)} importado${plural(imported)}${skipMsg} ✓`);
     }catch(err){toast('Error al leer el archivo');input.value='';}
   };
   reader.readAsText(file,'UTF-8');
@@ -2874,7 +2869,7 @@ function irpfGlSaveConfig(){
 }
 function irpfGlSetStatus(msg,color){
   color=color||'var(--text3)'; const el=document.getElementById('irpf-gl-status');if(el){el.style.color=color;el.textContent=msg;} }
-function irpfGlAPI(){ return 'https://gitlab.com/api/v4/projects/'+encodeURIComponent(irpfGlConfig.user+'/'+irpfGlConfig.repo); }
+function irpfGlAPI(){ return `https://gitlab.com/api/v4/projects/${encodeURIComponent(irpfGlConfig.user+'/'+irpfGlConfig.repo)}`; }
 function irpfGlHeaders(){ return{'PRIVATE-TOKEN':irpfGlConfig.token,'Content-Type':'application/json'}; }
 
 async function irpfGlPush(manual){
@@ -2885,11 +2880,11 @@ async function irpfGlPush(manual){
     const salary=document.getElementById('irpf-salary').value;
     const data={cobros:irpfCobros,nextId:irpfNextId,tramosPerYear:irpfTramosPerYear,salary};
     const content=JSON.stringify(data,null,2);
-    const checkUrl=irpfGlAPI()+'/repository/files/'+encodeURIComponent(IRPF_GL_FILENAME)+'?ref='+GL_BRANCH;
+    const checkUrl=`${irpfGlAPI()}/repository/files/${encodeURIComponent(IRPF_GL_FILENAME)}?ref=${GL_BRANCH}`;
     const check=await fetch(checkUrl,{headers:irpfGlHeaders()});
     const exists=check.ok;
     const body={branch:GL_BRANCH,content,commit_message:'FTMO IRPF sync '+new Date().toISOString()};
-    const r=await fetch(irpfGlAPI()+'/repository/files/'+encodeURIComponent(IRPF_GL_FILENAME),{method:exists?'PUT':'POST',headers:irpfGlHeaders(),body:JSON.stringify(body)});
+    const r=await fetch(`${irpfGlAPI()}/repository/files/${encodeURIComponent(IRPF_GL_FILENAME)}`,{method:exists?'PUT':'POST',headers:irpfGlHeaders(),body:JSON.stringify(body)});
     if(!r.ok){const err=await r.json().catch(()=>({}));throw new Error(err.message||err.error||'HTTP '+r.status);}
     const now=new Date().toLocaleTimeString('es-ES');
     if(manual){irpfGlSetStatus('✓ Subido a las '+now,'var(--green)');toast('Datos subidos a GitLab ✓');}
@@ -2901,7 +2896,7 @@ async function irpfGlPull(){
   if(!irpfGlConfig){toast('Configura GitLab primero',true);return;}
   irpfGlSetStatus('Descargando datos…');
   try{
-    const url=irpfGlAPI()+'/repository/files/'+encodeURIComponent(IRPF_GL_FILENAME)+'/raw?ref='+GL_BRANCH;
+    const url=`${irpfGlAPI()}/repository/files/${encodeURIComponent(IRPF_GL_FILENAME)}/raw?ref=${GL_BRANCH}`;
     const r=await fetch(url,{headers:irpfGlHeaders()});
     if(r.status===404){irpfGlSetStatus('No hay datos en GitLab todavía','var(--warn)');return;}
     if(!r.ok)throw new Error('HTTP '+r.status);

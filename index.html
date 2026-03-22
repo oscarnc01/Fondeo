@@ -1608,7 +1608,7 @@ function addTrade(){
   trades.push({id:nextId++,fecha,ticker,tipo:tradeType,
     lotes:isNaN(lotes)?null:lotes,entrada:isNaN(entrada)?null:entrada,
     salida:isNaN(salida)?null:salida,pip:isNaN(pip)?null:pip,swap,comision,beneficio,notas});
-  trades.sort((a,b)=>b.fecha.localeCompare(a.fecha));
+  trades.sort((a,b)=>b.fecha.localeCompare(a.fecha)||b.id-a.id);
   ['f-ticker','f-lotes','f-entrada','f-salida','f-beneficio','f-notas'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('f-swap').value='0';
   document.getElementById('f-comision').value='0';
@@ -1678,7 +1678,7 @@ function saveTrade(id){
   if(!fecha||!ticker||isNaN(beneficio)){toast('Campos obligatorios vacíos',true);return;}
   const idx=trades.findIndex(t=>t.id===id); if(idx===-1)return;
   trades[idx]={id,fecha,ticker,tipo,lotes:isNaN(lotes)?null:lotes,entrada:isNaN(entrada)?null:entrada,salida:isNaN(salida)?null:salida,pip:isNaN(pip)?null:pip,swap,comision,beneficio,notas};
-  trades.sort((a,b)=>b.fecha.localeCompare(a.fecha));
+  trades.sort((a,b)=>b.fecha.localeCompare(a.fecha)||b.id-a.id);
   save(); render(); toast('Operación actualizada ✓');
 }
 
@@ -2232,7 +2232,7 @@ function closeImportModal(){
 function confirmImport(){
   if(!importPending.length) return;
   trades.push(...importPending);
-  trades.sort((a,b)=>b.fecha.localeCompare(a.fecha));
+  trades.sort((a,b)=>b.fecha.localeCompare(a.fecha)||b.id-a.id);
   save(); render();
   closeImportModal();
   toast(`${importPending.length} trades importados ✓`);
@@ -2909,6 +2909,14 @@ function retaBuildYearSelector() {
 
 // ── Sync desde cobros IRPF ───────────────────────────
 function retaSyncFromIRPF() {
+  // Si retaSelectedYear no tiene cobros, usar el año más reciente que sí tenga
+  if (irpfCobros.length > 0) {
+    const years = [...new Set(irpfCobros.map(c => c.fecha.slice(0,4)))].sort();
+    if (!years.includes(retaSelectedYear)) {
+      retaSelectedYear = years[years.length - 1]; // año más reciente con cobros
+    }
+  }
+
   // Reconstruir selector de años por si hay cobros nuevos
   retaBuildYearSelector();
 

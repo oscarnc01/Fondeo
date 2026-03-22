@@ -1151,7 +1151,7 @@ tr:hover td{background:rgba(0,212,255,0.02);}
   </div><!-- /tab-reta -->
 
   <!-- ══ TAB: SYNC / SETTINGS ══════════════════════════════════ -->
-  <div class="tab-content" id="tab-sync" style="padding:0 16px 40px;max-width:1200px;margin:0 auto">
+  <div class="tab-content" id="tab-sync">
     <div class="panel" style="max-width:480px;margin:0 auto">
       <div class="panel-head"><span class="panel-title">⚙ SINCRONIZACIÓN GITLAB</span></div>
       <div style="padding:0 4px;font-size:12px;color:var(--text2);line-height:1.7;margin-bottom:16px">
@@ -2796,7 +2796,7 @@ function irpfExportExcel(){
   const headers=Object.keys(rows[0]);
   const yearLabel=irpfSelectedYear==='all'?'Todos los años':irpfSelectedYear;
   const yearSuffix=irpfSelectedYear==='all'?'':'_'+irpfSelectedYear;
-  let html=`<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="UTF-8"><style>body{font-family:Calibri;font-size:11pt;}table{border-collapse:collapse;width:100%;}th{background:#0a3d2e;color:#fff;padding:8px;text-align:right;}th:first-child{text-align:left;}td{padding:7px;border-bottom:1px solid #e8e8e8;text-align:right;}td:first-child{text-align:left;}.green{color:#007a50;font-weight:bold;}.red{color:#cc1f3a;font-weight:bold;}</style></head><body><h2>FTMO · Registro IRPF · ${yearLabel}</h2><table><thead><tr>`;
+  let html='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="UTF-8"><style>body{font-family:Calibri;font-size:11pt;}table{border-collapse:collapse;width:100%;}th{background:#0a3d2e;color:#fff;padding:8px;text-align:right;}th:first-child{text-align:left;}td{padding:7px;border-bottom:1px solid #e8e8e8;text-align:right;}td:first-child{text-align:left;}.green{color:#007a50;font-weight:bold;}.red{color:#cc1f3a;font-weight:bold;}<\/style></head><body><h2>FTMO · Registro IRPF · '+yearLabel+'</h2><table><thead><tr>';
   headers.forEach(function(h){html+='<th>'+h+'</th>';});
   html+='</tr></thead><tbody>';
   rows.forEach(function(r){html+='<tr>';headers.forEach(function(h){var cls=h.includes('Neto')?'green':h.includes('Impuesto')?'red':'';html+='<td'+(cls?' class="'+cls+'"':'')+'>'+r[h]+'</td>';});html+='</tr>';});

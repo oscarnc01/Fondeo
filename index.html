@@ -3176,6 +3176,7 @@ function retaRecalc() {
     var pctTP = baseNeta > 0 ? 960/baseNeta*100 : 0;
     document.getElementById('reta-kpi-pct').textContent = retaFP(pctTP);
     document.getElementById('reta-kpi-pct').className   = 'kpi-val neu';
+    retaCuotaTeoricaMes = 80;
     retaRenderTramosTable(-1);
     return;
   }

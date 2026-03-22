@@ -2514,9 +2514,16 @@ function irpfAddCobro(){
   irpfCobros.sort((a,b)=>a.fecha.localeCompare(b.fecha));
   document.getElementById('irpf-f-bruto').value='';
   document.getElementById('irpf-f-fecha').value=todayISO;
-  // Cambiar siempre al año del cobro recién añadido para que aparezca inmediatamente
   irpfSelectedYear=fecha.slice(0,4);
-  irpfSaveState();irpfBuildYearSelector();irpfRender();
+  // Guardar en localStorage directamente sin hooks
+  const salary=document.getElementById('irpf-salary')?.value;
+  localStorage.setItem(IRPF_LS_KEY,JSON.stringify({cobros:irpfCobros,nextId:irpfNextId,tramosPerYear:irpfTramosPerYear,salary}));
+  irpfGlPush(false);
+  // Render directo — sin pasar por irpfSaveState para evitar efectos secundarios
+  irpfBuildYearSelector();
+  irpfRender();
+  // Sync RETA después del render
+  if(typeof retaSyncFromIRPF==='function') retaSyncFromIRPF();
   toast('Cobro registrado ✓');
 }
 
@@ -2531,7 +2538,15 @@ function irpfDeleteCobro(id){
       irpfSelectedYear=years.length>0?years[years.length-1]:irpfCurrentYear;
     }
   }
-  irpfSaveState();irpfBuildYearSelector();irpfRender();
+  // Guardar en localStorage directamente sin hooks
+  const salary=document.getElementById('irpf-salary')?.value;
+  localStorage.setItem(IRPF_LS_KEY,JSON.stringify({cobros:irpfCobros,nextId:irpfNextId,tramosPerYear:irpfTramosPerYear,salary}));
+  irpfGlPush(false);
+  // Render directo
+  irpfBuildYearSelector();
+  irpfRender();
+  // Sync RETA después del render
+  if(typeof retaSyncFromIRPF==='function') retaSyncFromIRPF();
 }
 
 function irpfEditCobro(id,btn){
@@ -2567,7 +2582,13 @@ function irpfSaveCobro(id){
   const idx=irpfCobros.findIndex(c=>c.id===id); if(idx===-1)return;
   irpfCobros[idx]={id,fecha,bruto,split,fx,tuParteUSD:bruto*split,tuParteEUR:bruto*split*fx};
   irpfCobros.sort((a,b)=>a.fecha.localeCompare(b.fecha));
-  irpfSaveState();irpfBuildYearSelector();irpfRender();
+  irpfSelectedYear=fecha.slice(0,4);
+  const salary2=document.getElementById('irpf-salary')?.value;
+  localStorage.setItem(IRPF_LS_KEY,JSON.stringify({cobros:irpfCobros,nextId:irpfNextId,tramosPerYear:irpfTramosPerYear,salary:salary2}));
+  irpfGlPush(false);
+  irpfBuildYearSelector();
+  irpfRender();
+  if(typeof retaSyncFromIRPF==='function') retaSyncFromIRPF();
   toast('Cobro actualizado ✓');
 }
 function irpfCancelEdit(){irpfRender();}

@@ -3194,14 +3194,9 @@ function _retaShowResult(mes, anual, subMes, subAnual, baseNeta, ingr, tramoIdx,
   var kPct = rEl('reta-kpi-pct');
   if (kPct) { kPct.textContent = rFP(pctNeta); kPct.className = 'kpi-val neu'; }
 
-  if (!isTP) {
-    var bd = rEl('reta-breakdown');
-    // breakdown shown in retaRecalc
-  } else {
-    var bd2 = rEl('reta-breakdown');
-    if (bd2) bd2.style.display = 'none';
-    retaRenderTramosTable(-1);
-  }
+  var bd = rEl('reta-breakdown');
+  if (bd) bd.style.display = isTP ? 'none' : '';
+  if (isTP) retaRenderTramosTable(-1);
 }
 
 function retaSetEmpty() {

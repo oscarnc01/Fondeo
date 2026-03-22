@@ -824,9 +824,9 @@ tr:hover td{background:rgba(0,212,255,0.02);}
               <input type="password" id="irpf-gl-token" placeholder="glpat-xxxxxxxxxxxx" autocomplete="off">
             </div>
             <div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap">
-              <button onclick="irpfGlSaveConfig()" style="flex:1;padding:10px;background:var(--green);color:#000;border:none;border-radius:6px;font-family:var(--display);font-size:12px;letter-spacing:.08em;cursor:pointer;min-width:100px">GUARDAR</button>
-              <button onclick="irpfGlPush(true)" style="flex:1;padding:10px;background:var(--surface2);color:var(--text);border:1px solid var(--border2);border-radius:6px;font-family:var(--display);font-size:12px;letter-spacing:.08em;cursor:pointer;min-width:100px">↑ SUBIR</button>
-              <button onclick="irpfGlPull()" style="flex:1;padding:10px;background:var(--surface2);color:var(--text);border:1px solid var(--border2);border-radius:6px;font-family:var(--display);font-size:12px;letter-spacing:.08em;cursor:pointer;min-width:100px">↓ DESCARGAR</button>
+              <button type="button" onclick="irpfGlSaveConfig()" style="flex:1;padding:10px;background:var(--green);color:#000;border:none;border-radius:6px;font-family:var(--display);font-size:12px;letter-spacing:.08em;cursor:pointer;min-width:100px;touch-action:manipulation;-webkit-tap-highlight-color:transparent">GUARDAR</button>
+              <button type="button" onclick="irpfGlPush(true)" style="flex:1;padding:10px;background:var(--surface2);color:var(--text);border:1px solid var(--border2);border-radius:6px;font-family:var(--display);font-size:12px;letter-spacing:.08em;cursor:pointer;min-width:100px;touch-action:manipulation;-webkit-tap-highlight-color:transparent">↑ SUBIR</button>
+              <button type="button" onclick="irpfGlPull()" style="flex:1;padding:10px;background:var(--surface2);color:var(--text);border:1px solid var(--border2);border-radius:6px;font-family:var(--display);font-size:12px;letter-spacing:.08em;cursor:pointer;min-width:100px;touch-action:manipulation;-webkit-tap-highlight-color:transparent">↓ DESCARGAR</button>
             </div>
             <div id="irpf-gl-status" style="margin-top:12px;font-size:11px;font-family:var(--mono);color:var(--text3);min-height:16px"></div>
             <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);font-size:11px;color:var(--text3);line-height:1.9">
@@ -1174,9 +1174,9 @@ tr:hover td{background:rgba(0,212,255,0.02);}
       </div>
 
       <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
-        <button onclick="ghSaveConfig()" style="flex:1;padding:10px;background:var(--accent);color:#000;border:none;border-radius:6px;font-family:var(--display);font-size:12px;letter-spacing:.08em;cursor:pointer;min-width:120px">GUARDAR CONFIG</button>
-        <button onclick="ghPush(true)" style="flex:1;padding:10px;background:var(--surface2);color:var(--text);border:1px solid var(--border2);border-radius:6px;font-family:var(--display);font-size:12px;letter-spacing:.08em;cursor:pointer;min-width:120px" id="gh-push-btn">↑ SUBIR AHORA</button>
-        <button onclick="ghPull()" style="flex:1;padding:10px;background:var(--surface2);color:var(--text);border:1px solid var(--border2);border-radius:6px;font-family:var(--display);font-size:12px;letter-spacing:.08em;cursor:pointer;min-width:120px" id="gh-pull-btn">↓ DESCARGAR</button>
+        <button type="button" onclick="ghSaveConfig()" style="flex:1;padding:10px;background:var(--accent);color:#000;border:none;border-radius:6px;font-family:var(--display);font-size:12px;letter-spacing:.08em;cursor:pointer;min-width:120px;touch-action:manipulation;-webkit-tap-highlight-color:transparent">GUARDAR CONFIG</button>
+        <button type="button" onclick="ghPush(true)" style="flex:1;padding:10px;background:var(--surface2);color:var(--text);border:1px solid var(--border2);border-radius:6px;font-family:var(--display);font-size:12px;letter-spacing:.08em;cursor:pointer;min-width:120px;touch-action:manipulation;-webkit-tap-highlight-color:transparent" id="gh-push-btn">↑ SUBIR AHORA</button>
+        <button type="button" onclick="ghPull()" style="flex:1;padding:10px;background:var(--surface2);color:var(--text);border:1px solid var(--border2);border-radius:6px;font-family:var(--display);font-size:12px;letter-spacing:.08em;cursor:pointer;min-width:120px;touch-action:manipulation;-webkit-tap-highlight-color:transparent" id="gh-pull-btn">↓ DESCARGAR</button>
       </div>
 
       <div id="gh-status" style="margin-top:14px;font-size:11px;font-family:var(--mono);color:var(--text3);min-height:18px;line-height:1.6"></div>
@@ -1223,7 +1223,8 @@ const fmtDate=iso=>{if(!iso)return'—';const[y,m,d]=iso.split('-');return`${d}/
 const todayISO=new Date().toISOString().split('T')[0];
 const nowY=new Date().getFullYear(), nowM=new Date().getMonth()+1;
 
-function toast(msg,red=false){
+function toast(msg,red){
+  red=red||false;
   const t=document.getElementById('toast');
   t.textContent=msg; t.className='toast show'+(red?' red-toast':'');
   setTimeout(()=>t.classList.remove('show'),2400);
@@ -2309,7 +2310,7 @@ let ghConfig = null; // {user, projectId, token}
 
 function ghLoadConfig(){
   try{
-    const s=localStorage.getItem(GH_CFG_KEY);
+    var s=localStorage.getItem(GH_CFG_KEY);
     if(s){ ghConfig=JSON.parse(s); }
   }catch(e){}
   if(ghConfig){
@@ -2321,26 +2322,27 @@ function ghLoadConfig(){
 }
 
 function ghSaveConfig(){
-  const user=document.getElementById('gh-user').value.trim();
-  const projectId=document.getElementById('gh-repo').value.trim();
-  const token=document.getElementById('gh-token').value.trim();
+  var user=document.getElementById('gh-user').value.trim();
+  var projectId=document.getElementById('gh-repo').value.trim();
+  var token=document.getElementById('gh-token').value.trim();
   if(!user||!projectId||!token){ toast('Rellena todos los campos',true); return; }
-  ghConfig={user, projectId, token};
+  ghConfig={user:user, projectId:projectId, token:token};
   localStorage.setItem(GH_CFG_KEY, JSON.stringify(ghConfig));
   toast('Configuración guardada ✓');
   ghUpdateSyncInfo();
 }
 
-function ghSetStatus(msg, color='var(--text3)'){
+function ghSetStatus(msg, color){
+  color = color || 'var(--text3)';
   const el=document.getElementById('gh-status');
   if(el){ el.style.color=color; el.textContent=msg; }
 }
 
 function ghUpdateSyncInfo(){
-  const el=document.getElementById('gh-sync-info');
+  var el=document.getElementById('gh-sync-info');
   if(!el) return;
   if(!ghConfig){ el.textContent='No configurado'; return; }
-  el.textContent=`Usuario: ${ghConfig.user}\nProyecto ID: ${ghConfig.projectId}\nToken: ${ghConfig.token.substring(0,8)}...`;
+  el.textContent='Usuario: '+ghConfig.user+'\nProyecto ID: '+ghConfig.projectId+'\nToken: '+ghConfig.token.substring(0,8)+'...';
 }
 
 // GitLab API base
@@ -2350,7 +2352,8 @@ function glHeaders(){ return { 'PRIVATE-TOKEN': ghConfig.token, 'Content-Type':'
 const GL_FILENAME = 'tradelog_data.json';
 const GL_BRANCH = 'main';
 
-async function ghPush(manual=false){
+async function ghPush(manual){
+  manual=manual||false;
   if(!ghConfig){ if(manual) toast('Configura GitLab primero',true); return; }
   if(manual) ghSetStatus('Subiendo datos…');
   try{
@@ -2451,7 +2454,8 @@ let irpfFxLoaded=false;
 const IRPF_LS_KEY='ftmo_irpf_v2';
 const irpfCurrentYear=String(new Date().getFullYear());
 
-function irpfFmt(n,d=2){ return isNaN(n)?'—':n.toLocaleString('es-ES',{minimumFractionDigits:d,maximumFractionDigits:d,useGrouping:true}); }
+function irpfFmt(n,d){
+  if(d===undefined)d=2; return isNaN(n)?'—':n.toLocaleString('es-ES',{minimumFractionDigits:d,maximumFractionDigits:d,useGrouping:true}); }
 function irpfFmtDate(iso){ if(!iso)return'—'; const[y,m,d]=iso.split('-'); return`${d}/${m}/${y.slice(2)}`; }
 function irpfFmtNum(n){ return parseFloat((isNaN(n)?0:n).toFixed(2)); }
 
@@ -2854,20 +2858,22 @@ function irpfGlLoadConfig(){
   }
 }
 function irpfGlSaveConfig(){
-  const user=document.getElementById('irpf-gl-user').value.trim();
-  const repo=document.getElementById('irpf-gl-repo').value.trim();
-  const token=document.getElementById('irpf-gl-token').value.trim();
+  var user=document.getElementById('irpf-gl-user').value.trim();
+  var repo=document.getElementById('irpf-gl-repo').value.trim();
+  var token=document.getElementById('irpf-gl-token').value.trim();
   if(!user||!repo||!token){toast('Rellena todos los campos',true);return;}
-  irpfGlConfig={user,repo,token};
+  irpfGlConfig={user:user,repo:repo,token:token};
   localStorage.setItem(IRPF_GL_CFG_KEY,JSON.stringify(irpfGlConfig));
   toast('Configuración guardada ✓');
   irpfGlSetStatus('Configurado · '+user+'/'+repo);
 }
-function irpfGlSetStatus(msg,color='var(--text3)'){ const el=document.getElementById('irpf-gl-status');if(el){el.style.color=color;el.textContent=msg;} }
+function irpfGlSetStatus(msg,color){
+  color=color||'var(--text3)'; const el=document.getElementById('irpf-gl-status');if(el){el.style.color=color;el.textContent=msg;} }
 function irpfGlAPI(){ return `https://gitlab.com/api/v4/projects/${encodeURIComponent(irpfGlConfig.user+'/'+irpfGlConfig.repo)}`; }
 function irpfGlHeaders(){ return{'PRIVATE-TOKEN':irpfGlConfig.token,'Content-Type':'application/json'}; }
 
-async function irpfGlPush(manual=false){
+async function irpfGlPush(manual){
+  manual=manual||false;
   if(!irpfGlConfig)return;
   if(manual)irpfGlSetStatus('Subiendo datos…');
   try{

@@ -43,13 +43,14 @@ header{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap
 .tab.active{color:var(--accent);border-bottom-color:var(--accent);}
 .tab-content{display:none;}
 .tab-content.active{display:block;}
-/* Account tabs */
+/* Account tabs - flat buttons */
 .acct-tab-btn{font-family:var(--display);font-size:13px;letter-spacing:.08em;padding:10px 2px 10px 10px;cursor:pointer;color:var(--text3);background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .2s;-webkit-tap-highlight-color:transparent;white-space:nowrap;touch-action:manipulation;width:auto;}
 .acct-tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
 .acct-tab-icon{font-size:11px;padding:4px 3px;cursor:pointer;color:var(--text3);background:none;border:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation;opacity:0.5;margin-bottom:2px;width:auto;}
 .acct-tab-icon:hover,.acct-tab-icon:active{opacity:1;}
 .acct-tab-del{color:var(--text3);}
 .acct-tab-del:hover,.acct-tab-del:active{color:var(--red);}
+.acct-tab-sep{width:4px;display:inline-block;border-bottom:2px solid transparent;margin-bottom:-1px;}
 .tab-add{font-size:18px;line-height:1;padding:6px 8px 10px;cursor:pointer;color:var(--text3);background:none;border:none;transition:all .2s;-webkit-tap-highlight-color:transparent;margin-bottom:-1px;touch-action:manipulation;width:auto;}
 .tab-add:hover{color:var(--accent);}
 
@@ -178,7 +179,6 @@ tr:hover td{background:rgba(0,212,255,0.02);}
   .kpi-val{font-size:18px;}
   .col-lots,.col-px-in,.col-px-out{display:none;}
 }
-
 /* ── FX TAB ─────────────────────────────────────────── */
 .fx-capital-bar{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap;}
 .fx-capital-label{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text2);flex:1;}
@@ -239,26 +239,22 @@ tr:hover td{background:rgba(0,212,255,0.02);}
 @keyframes irpfpulse{0%,100%{opacity:1}50%{opacity:.35}}
 @keyframes irpfspin{to{transform:rotate(360deg)}}
 @keyframes irpffadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-
 .year-selector{display:flex;gap:6px;flex-wrap:wrap;}
 .year-btn{font-family:var(--mono);font-size:11px;letter-spacing:.08em;padding:5px 11px;border-radius:5px;cursor:pointer;border:1px solid var(--border2);background:var(--bg);color:var(--text2);transition:all .15s;-webkit-tap-highlight-color:transparent;}
 .year-btn:hover{border-color:var(--accent);color:var(--accent);}
 .year-btn.active{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);font-weight:600;}
 .year-btn.all.active{background:rgba(107,132,153,.1);border-color:var(--text2);color:var(--text);}
-
 .irpf-kpi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px;}
 @media(min-width:600px){.irpf-kpi-grid{grid-template-columns:repeat(4,1fr);}}
 .irpf-kpi{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px;position:relative;overflow:hidden;animation:irpffadeUp .4s ease both;}
 .irpf-kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
-.irpf-kpi.green::before{background:var(--green);} .irpf-kpi.red::before{background:var(--red);} .irpf-kpi.warn::before{background:var(--warn);} .irpf-kpi.gray::before{background:var(--text3);}
+.irpf-kpi.green::before{background:var(--green);}.irpf-kpi.red::before{background:var(--red);}.irpf-kpi.warn::before{background:var(--warn);}.irpf-kpi.gray::before{background:var(--text3);}
 .irpf-kpi-label{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--text2);margin-bottom:7px;}
 .irpf-kpi-val{font-family:var(--display);font-size:20px;letter-spacing:-.02em;line-height:1;}
-.irpf-kpi-val.green{color:var(--green);} .irpf-kpi-val.red{color:var(--red);} .irpf-kpi-val.warn{color:var(--warn);}
+.irpf-kpi-val.green{color:var(--green);}.irpf-kpi-val.red{color:var(--red);}.irpf-kpi-val.warn{color:var(--warn);}
 .irpf-kpi-sub{font-size:10px;color:var(--text2);margin-top:5px;line-height:1.4;}
-
 .salary-box{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:12px;margin-bottom:4px;}
 .salary-note{font-size:10px;color:var(--text2);margin-top:8px;line-height:1.6;}
-
 .irpf-field{margin-bottom:11px;}
 .irpf-field label{display:block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text2);margin-bottom:5px;}
 .irpf-field input{width:100%;background:var(--bg);border:1px solid var(--border2);border-radius:5px;padding:10px 12px;font-family:var(--mono);font-size:16px;color:var(--text);outline:none;-webkit-appearance:none;transition:border-color .2s,box-shadow .2s;}
@@ -279,7 +275,6 @@ tr:hover td{background:rgba(0,212,255,0.02);}
 .btn-irpf-edit.active{border-color:var(--green);color:var(--green);background:rgba(0,229,160,.08);}
 .btn-irpf-reset{border-color:rgba(255,77,106,.3);color:var(--red);}
 .btn-irpf-reset:hover{border-color:var(--red);background:var(--red-dim);}
-
 .irpf-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
 .irpf-table{width:100%;border-collapse:collapse;font-size:12px;}
 .irpf-table thead tr{background:var(--bg);border-bottom:1px solid var(--border2);}
@@ -288,7 +283,7 @@ tr:hover td{background:rgba(0,212,255,0.02);}
 .irpf-table td{padding:9px 8px;text-align:right;border-bottom:1px solid var(--border);font-size:11px;white-space:nowrap;}
 .irpf-table td:first-child{text-align:left;color:var(--text2);}
 .irpf-table tr:last-child td{border-bottom:none;}
-.c-green{color:var(--green);} .c-red{color:var(--red);}
+.c-green{color:var(--green);}.c-red{color:var(--red);}
 .irpf-btn-del{background:none;border:1px solid transparent;color:var(--text3);cursor:pointer;font-family:var(--mono);font-size:12px;padding:4px 8px;border-radius:3px;-webkit-tap-highlight-color:transparent;transition:all .15s;}
 .irpf-btn-del:active{border-color:var(--red);color:var(--red);background:var(--red-dim);}
 .irpf-btn-edit-row{background:none;border:1px solid transparent;color:var(--text3);cursor:pointer;font-family:var(--mono);font-size:12px;padding:4px 8px;border-radius:3px;-webkit-tap-highlight-color:transparent;transition:all .15s;}
@@ -297,7 +292,6 @@ tr:hover td{background:rgba(0,212,255,0.02);}
 .irpf-field-input{width:100%;background:var(--bg);border:1px solid var(--border2);border-radius:5px;padding:9px 10px;font-family:var(--mono);font-size:16px;color:var(--text);outline:none;-webkit-appearance:none;transition:border-color .2s,box-shadow .2s;}
 .irpf-field-input:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(0,229,160,.15);}
 @media(max-width:600px){.col-split,.col-fx{display:none;}.irpf-table{min-width:unset;}}
-
 .tramos-title{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text2);margin-bottom:9px;}
 .tramo-row{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:8px;padding:7px 10px;border-radius:4px;margin-bottom:4px;font-size:12px;background:var(--bg);border:1px solid var(--border);transition:border-color .2s;}
 .tramo-row.active-tramo{border-color:rgba(0,229,160,.25);background:rgba(0,229,160,.04);}
@@ -308,22 +302,60 @@ tr:hover td{background:rgba(0,212,255,0.02);}
 .tramo-input{background:var(--surface);border:1px solid var(--border2);border-radius:3px;color:var(--text);font-family:var(--mono);font-size:16px;padding:4px 6px;outline:none;width:80px;text-align:right;transition:border-color .2s;-webkit-appearance:none;}
 .tramo-input:focus{border-color:var(--green);}
 .tramo-input.w-tipo{width:52px;}
-
 .sum-box{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:13px;margin-top:12px;}
 .sum-row{display:flex;justify-content:space-between;font-size:12px;padding:5px 0;color:var(--text2);border-bottom:1px solid var(--border);}
 .sum-row:last-child{border-bottom:none;font-family:var(--display);font-size:13px;color:var(--text);padding-top:9px;margin-top:2px;}
-.sum-val{color:var(--text);} .sum-val.red{color:var(--red);}
-
+.sum-val{color:var(--text);}.sum-val.red{color:var(--red);}
 .irpf-empty{padding:44px 16px;text-align:center;color:var(--text3);font-size:12px;line-height:2;}
 .irpf-empty-icon{font-size:24px;opacity:.3;margin-bottom:10px;}
-
-/* Sync panel IRPF */
 .irpf-sync-panel{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-top:14px;}
 .irpf-sync-toggle{width:100%;padding:13px 16px;background:none;border:none;border-bottom:1px solid transparent;display:flex;align-items:center;justify-content:space-between;cursor:pointer;-webkit-tap-highlight-color:transparent;color:var(--text2);font-family:var(--mono);font-size:11px;letter-spacing:.08em;transition:color .2s;}
 .irpf-sync-toggle:hover{color:var(--text);}
 .irpf-sync-toggle.open{border-bottom-color:var(--border);color:var(--green);}
 .irpf-sync-body{display:none;padding:16px;}
 .irpf-sync-body.open{display:block;}
+
+/* ── RETA TAB STYLES ─────────────────────────────────── */
+.reta-layout{display:grid;grid-template-columns:1fr;gap:14px;}
+@media(min-width:720px){.reta-layout{grid-template-columns:310px 1fr;align-items:start;}}
+.reta-toggle-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--border);}
+.reta-toggle-row:last-child{border-bottom:none;}
+.reta-toggle-info{flex:1;}
+.reta-toggle-info .tl{font-size:11px;color:var(--text);}
+.reta-toggle-info .ts{font-size:10px;color:var(--text2);margin-top:3px;line-height:1.5;}
+.reta-toggle{position:relative;width:38px;height:20px;flex-shrink:0;margin-top:1px;}
+.reta-toggle input{opacity:0;width:0;height:0;}
+.reta-toggle-track{position:absolute;inset:0;background:var(--surface2);border:1px solid var(--border2);border-radius:10px;cursor:pointer;transition:all .2s;}
+.reta-toggle-track::after{content:'';position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:var(--text3);transition:all .2s;}
+.reta-toggle input:checked+.reta-toggle-track{background:var(--green-dim);border-color:var(--green);}
+.reta-toggle input:checked+.reta-toggle-track::after{transform:translateX(18px);background:var(--green);}
+.reta-sub-head{padding:8px 0;border-bottom:1px solid var(--border);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.reta-sub-label{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--text2);}
+.reta-result{background:var(--bg);border:1px solid var(--border2);border-radius:8px;padding:16px;margin-bottom:14px;}
+.reta-result-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.reta-result-label{font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--text3);margin-bottom:8px;}
+.reta-result-main{font-family:var(--display);font-size:30px;letter-spacing:.02em;line-height:1;}
+.reta-result-main.pos{color:var(--green);}
+.reta-result-main.neg{color:var(--red);}
+.reta-result-main.empty{color:var(--text3);font-size:22px;}
+.reta-result-sub{font-size:9px;color:var(--text3);margin-top:6px;}
+.reta-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.reta-table{width:100%;border-collapse:collapse;font-size:11px;}
+.reta-table thead tr{background:var(--surface2);border-bottom:1px solid var(--border2);}
+.reta-table th{padding:7px 8px;text-align:right;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);font-weight:500;white-space:nowrap;font-family:var(--mono);}
+.reta-table th:first-child,.reta-table th:nth-child(2){text-align:left;}
+.reta-table td{padding:8px 8px;text-align:right;border-bottom:1px solid var(--border);font-size:10px;white-space:nowrap;color:var(--text2);}
+.reta-table td:first-child{text-align:left;color:var(--text);}
+.reta-table td:nth-child(2){text-align:left;}
+.reta-table tr:last-child td{border-bottom:none;}
+.reta-table tr.reta-tr-active td{background:rgba(0,229,160,0.04);}
+.reta-table tr.reta-tr-active td:first-child{color:var(--green);}
+.reta-c-green{color:var(--green)!important;font-weight:600;}
+.reta-c-warn{color:var(--warn)!important;}
+.reta-note{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 14px;font-size:10px;color:var(--text2);line-height:1.7;margin-top:0;}
+.reta-note strong{color:var(--text);}
+.reta-note a{color:var(--accent);text-decoration:none;}
+
 </style>
 </head>
 <body>
@@ -346,12 +378,14 @@ tr:hover td{background:rgba(0,212,255,0.02);}
     <button class="tab-add" onclick="addAccount()" title="Nueva cuenta">+</button>
     <button class="tab" id="tab-btn-calc" onclick="showMainTab('calc',this)" style="margin-left:auto">CALC</button>
     <button class="tab" id="tab-btn-irpf" onclick="showMainTab('irpf',this)" style="margin-left:6px">IRPF</button>
+    <button class="tab" id="tab-btn-reta" onclick="showMainTab('reta',this)" style="margin-left:6px">RETA</button>
     <button class="tab" id="tab-btn-sync" onclick="showMainTab('sync',this)" style="margin-left:6px">⚙</button>
   </div>
 
-  <!-- ══ TAB: JOURNAL ══════════════════════════════════ -->
+  <!-- ══ TAB: JOURNAL (shared content area) ══════════════════════════════════ -->
   <div class="tab-content active" id="tab-journal">
 
+    <!-- TIME FILTER -->
     <div class="time-filter-bar">
       <span class="time-section-label">Periodo</span>
       <button class="tfilter-btn active" data-tp="all"   onclick="setTimePeriod('all',this)">Todo</button>
@@ -368,6 +402,7 @@ tr:hover td{background:rgba(0,212,255,0.02);}
       </div>
     </div>
 
+    <!-- KPIs -->
     <div class="kpi-strip">
       <div class="kpi blue"><div class="kpi-period" id="kpi-p1">Periodo</div><div class="kpi-val neu" id="kpi-p1-val">—</div><div class="kpi-label" id="kpi-p1-lbl">—</div></div>
       <div class="kpi blue"><div class="kpi-period" id="kpi-p2">Mes actual</div><div class="kpi-val neu" id="kpi-p2-val">—</div><div class="kpi-label" id="kpi-p2-lbl">—</div></div>
@@ -376,6 +411,7 @@ tr:hover td{background:rgba(0,212,255,0.02);}
 
     <div class="layout">
       <div>
+        <!-- NUEVA OPERACIÓN -->
         <div class="panel">
           <div class="panel-head">
             <span class="panel-title">NUEVA OPERACIÓN</span>
@@ -454,6 +490,7 @@ tr:hover td{background:rgba(0,212,255,0.02);}
           </div>
         </div>
 
+        <!-- ESTADÍSTICAS -->
         <div class="panel">
           <div class="panel-head">
             <span class="panel-title">ESTADÍSTICAS</span>
@@ -483,6 +520,7 @@ tr:hover td{background:rgba(0,212,255,0.02);}
         </div>
       </div>
 
+      <!-- TABLA -->
       <div class="panel" style="margin-bottom:0">
         <div class="panel-head">
           <span class="panel-title">OPERACIONES</span>
@@ -520,6 +558,8 @@ tr:hover td{background:rgba(0,212,255,0.02);}
 
   <!-- ══ TAB: CALCULADORA ══════════════════════════════ -->
   <div class="tab-content" id="tab-calc">
+
+    <!-- ── Capital + Status bar ───────────────────────── -->
     <div class="fx-capital-bar">
       <span class="fx-capital-label">Capital</span>
       <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;flex:1">
@@ -536,7 +576,9 @@ tr:hover td{background:rgba(0,212,255,0.02);}
       </div>
     </div>
 
+    <!-- ── FX Pair Cards ──────────────────────────────── -->
     <div class="fx-cards" style="margin-bottom:20px">
+
       <div class="fx-card fx-card-green">
         <div class="fx-card-header">
           <div><div class="fx-pair-name">EUR / USD</div><div class="fx-pair-sub">Euro · Dólar</div></div>
@@ -554,6 +596,7 @@ tr:hover td{background:rgba(0,212,255,0.02);}
           </div>
         </div>
       </div>
+
       <div class="fx-card fx-card-blue">
         <div class="fx-card-header">
           <div><div class="fx-pair-name">GBP / USD</div><div class="fx-pair-sub">Libra · Dólar</div></div>
@@ -571,6 +614,7 @@ tr:hover td{background:rgba(0,212,255,0.02);}
           </div>
         </div>
       </div>
+
       <div class="fx-card fx-card-orange">
         <div class="fx-card-header">
           <div><div class="fx-pair-name">USD / JPY</div><div class="fx-pair-sub">Dólar · Yen</div></div>
@@ -588,6 +632,7 @@ tr:hover td{background:rgba(0,212,255,0.02);}
           </div>
         </div>
       </div>
+
     </div>
 
     <div class="fx-footer" style="margin-bottom:24px">
@@ -595,6 +640,7 @@ tr:hover td{background:rgba(0,212,255,0.02);}
       <button class="fx-refresh-btn" onclick="fetchFxRates()">↻ Actualizar</button>
     </div>
 
+    <!-- ── Calculadora por % riesgo + R:R ─────────────── -->
     <div class="layout">
       <div>
         <div class="panel">
@@ -639,6 +685,7 @@ tr:hover td{background:rgba(0,212,255,0.02);}
           </div>
         </div>
       </div>
+
       <div>
         <div class="panel">
           <div class="panel-head"><span class="panel-title">RESULTADO</span></div>
@@ -656,6 +703,7 @@ tr:hover td{background:rgba(0,212,255,0.02);}
             </div>
           </div>
         </div>
+
         <div class="panel">
           <div class="panel-head"><span class="panel-title">RATIO RIESGO / BENEFICIO</span></div>
           <div class="panel-body">
@@ -670,13 +718,16 @@ tr:hover td{background:rgba(0,212,255,0.02);}
             <div style="margin-top:10px;font-size:10px;color:var(--text3);line-height:1.8" id="rr-note"></div>
           </div>
         </div>
+
         <div class="fx-formula-note">
           <strong>Lotes FX = Cambio ÷ Rango</strong> · Cambio = Capital × tipo de cambio (Frankfurter API). Auto-actualización cada 30s.<br>
           <strong>Lotes % = (Capital × Riesgo%) ÷ (SL × Pip)</strong>
         </div>
       </div>
     </div>
+
   </div><!-- /tab-calc -->
+
 
   <!-- ══ TAB: IRPF ══════════════════════════════════════ -->
   <div class="tab-content" id="tab-irpf">
@@ -702,7 +753,6 @@ tr:hover td{background:rgba(0,212,255,0.02);}
 
     <div class="layout">
       <div>
-        <!-- Configuración -->
         <div class="panel">
           <div class="panel-head">
             <span class="panel-title">Configuración</span>
@@ -719,7 +769,6 @@ tr:hover td{background:rgba(0,212,255,0.02);}
           </div>
         </div>
 
-        <!-- Nuevo cobro -->
         <div class="panel">
           <div class="panel-head">
             <span class="panel-title">Nuevo cobro</span>
@@ -741,7 +790,6 @@ tr:hover td{background:rgba(0,212,255,0.02);}
           </div>
         </div>
 
-        <!-- Tramos IRPF -->
         <div class="panel">
           <div class="panel-head">
             <span class="panel-title">Tramos IRPF</span>
@@ -760,7 +808,6 @@ tr:hover td{background:rgba(0,212,255,0.02);}
           </div>
         </div>
 
-        <!-- Sync GitLab -->
         <div class="irpf-sync-panel">
           <button class="irpf-sync-toggle" id="irpf-sync-toggle-btn" onclick="irpfToggleSyncPanel()">
             <span>⚙ Sincronización GitLab</span>
@@ -770,18 +817,10 @@ tr:hover td{background:rgba(0,212,255,0.02);}
             <div style="font-size:12px;color:var(--text2);line-height:1.7;margin-bottom:14px">
               Guarda y sincroniza tus cobros en un repositorio <b style="color:var(--text)">privado</b> de GitLab entre todos tus dispositivos.
             </div>
+            <div class="irpf-field"><label>Usuario GitLab</label><input type="text" id="irpf-gl-user" placeholder="tu-usuario" autocomplete="off" autocorrect="off" autocapitalize="off"></div>
+            <div class="irpf-field"><label>Nombre del repositorio</label><input type="text" id="irpf-gl-repo" placeholder="ftmo-irpf-data" autocomplete="off" autocorrect="off" autocapitalize="off"></div>
             <div class="irpf-field">
-              <label>Usuario GitLab</label>
-              <input type="text" id="irpf-gl-user" placeholder="tu-usuario" autocomplete="off" autocorrect="off" autocapitalize="off">
-            </div>
-            <div class="irpf-field">
-              <label>Nombre del repositorio</label>
-              <input type="text" id="irpf-gl-repo" placeholder="ftmo-irpf-data" autocomplete="off" autocorrect="off" autocapitalize="off">
-            </div>
-            <div class="irpf-field">
-              <label>Personal Access Token
-                <a href="https://gitlab.com/-/user_settings/personal_access_tokens" target="_blank" style="font-size:10px;color:var(--green);margin-left:6px;text-decoration:none">Crear token →</a>
-              </label>
+              <label>Personal Access Token <a href="https://gitlab.com/-/user_settings/personal_access_tokens" target="_blank" style="font-size:10px;color:var(--green);margin-left:6px;text-decoration:none">Crear token →</a></label>
               <input type="password" id="irpf-gl-token" placeholder="glpat-xxxxxxxxxxxx" autocomplete="off">
             </div>
             <div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap">
@@ -801,7 +840,6 @@ tr:hover td{background:rgba(0,212,255,0.02);}
         </div>
       </div>
 
-      <!-- Tabla cobros -->
       <div class="panel" style="margin-bottom:0">
         <div class="panel-head">
           <span class="panel-title">Registro de cobros</span>
@@ -815,11 +853,9 @@ tr:hover td{background:rgba(0,212,255,0.02);}
         </div>
         <div class="irpf-table-wrap">
           <table class="irpf-table">
-            <thead>
-              <tr>
-                <th>Fecha</th><th>Bruto $</th><th>Tu parte €</th><th>Neto €</th><th>Impuesto €</th><th class="col-split">Split</th><th class="col-fx">T/C</th><th></th>
-              </tr>
-            </thead>
+            <thead><tr>
+              <th>Fecha</th><th>Bruto $</th><th>Tu parte €</th><th>Neto €</th><th>Impuesto €</th><th class="col-split">Split</th><th class="col-fx">T/C</th><th></th>
+            </tr></thead>
             <tbody id="irpf-tbody"></tbody>
           </table>
         </div>
@@ -827,13 +863,264 @@ tr:hover td{background:rgba(0,212,255,0.02);}
     </div>
   </div><!-- /tab-irpf -->
 
-  <!-- ══ TAB: SYNC ══════════════════════════════════════ -->
+
+  <!-- ══ TAB: RETA / AUTÓNOMOS ═══════════════════════ -->
+  <div class="tab-content" id="tab-reta">
+
+    <!-- RETA top bar: año + sync badge -->
+    <div class="irpf-top-bar" style="margin-bottom:16px">
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;flex:1">
+        <span style="font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--text3)">Ejercicio</span>
+        <div class="year-selector" id="reta-year-selector"></div>
+      </div>
+      <div id="reta-sync-badge" style="display:inline-flex;align-items:center;gap:7px;background:var(--surface);border:1px solid var(--border2);border-radius:6px;padding:6px 12px;font-size:11px;color:var(--text2)">
+        <span id="reta-sync-dot" style="width:7px;height:7px;border-radius:50%;background:var(--text3);flex-shrink:0;display:inline-block"></span>
+        <span id="reta-sync-label">Sin cobros IRPF</span>
+      </div>
+    </div>
+
+    <div class="kpi-strip">
+      <div class="kpi green"><div class="kpi-period">Cuota mensual</div><div class="kpi-val neu" id="reta-kpi-mes">—</div><div class="kpi-label">€ / mes (base mín.)</div></div>
+      <div class="kpi red"><div class="kpi-period">Cuota anual</div><div class="kpi-val neu" id="reta-kpi-anual">—</div><div class="kpi-label">€ / año total</div></div>
+      <div class="kpi blue"><div class="kpi-period">% s/ base neta</div><div class="kpi-val neu" id="reta-kpi-pct">—</div><div class="kpi-label">cuota anual / base neta</div></div>
+    </div>
+
+    <div class="reta-layout">
+
+      <!-- COL IZQ -->
+      <div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <span class="panel-title">RENDIMIENTOS</span>
+            <span class="tag accent">Paso 1</span>
+          </div>
+          <div class="panel-body">
+            <!-- Panel cobros FTMO -->
+            <div style="background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:12px;margin-bottom:12px">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;gap:8px;flex-wrap:wrap">
+                <span style="font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--text2)">Cobros FTMO del ejercicio</span>
+                <span class="tag green" id="reta-cobros-count">0 cobros</span>
+              </div>
+              <div id="reta-cobros-list" style="font-size:10px;color:var(--text3);line-height:1.8;margin-bottom:8px">
+                Sin cobros registrados en IRPF para este año.
+              </div>
+              <div style="border-top:1px solid var(--border);padding-top:8px;display:flex;justify-content:space-between;align-items:center">
+                <span style="font-size:10px;color:var(--text2)">Total cobrado (€)</span>
+                <span style="font-family:var(--display);font-size:18px;color:var(--green)" id="reta-cobros-total">—</span>
+              </div>
+            </div>
+
+            <!-- Toggle sync IRPF -->
+            <div class="reta-toggle-row" style="margin-bottom:10px;padding-bottom:10px">
+              <div class="reta-toggle-info">
+                <div class="tl">Usar cobros de la pestaña IRPF</div>
+                <div class="ts">Rellena los ingresos automáticamente con tus cobros reales</div>
+              </div>
+              <label class="reta-toggle">
+                <input type="checkbox" id="reta-tog-sync-irpf" checked onchange="retaToggleSyncIRPF()">
+                <span class="reta-toggle-track"></span>
+              </label>
+            </div>
+
+            <div class="field">
+              <label id="reta-ingr-label">Ingresos brutos anuales (€)</label>
+              <div class="preset-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:6px" id="reta-pres-ingr">
+                <button class="preset-btn" onclick="retaSetIngr(20000)">20k</button>
+                <button class="preset-btn" onclick="retaSetIngr(35000)">35k</button>
+                <button class="preset-btn" onclick="retaSetIngr(50000)">50k</button>
+                <button class="preset-btn" onclick="retaSetIngr(80000)">80k</button>
+              </div>
+              <input type="number" id="reta-inp-ingr" placeholder="ej. 40000" min="0" step="100" inputmode="decimal" oninput="retaClearPres('reta-pres-ingr');retaRecalc()">
+            </div>
+            <div class="field">
+              <label>Gastos deducibles justificados (€)</label>
+              <input type="number" id="reta-inp-gastos" placeholder="ej. 5000" min="0" step="100" inputmode="decimal" oninput="retaRecalc()">
+            </div>
+
+            <div class="reta-sub-head">
+              <span class="reta-sub-label">Deducción Gipuzkoa · Art. 28 NF IRPF</span>
+              <span class="tag green" id="reta-tag-deduccion">—</span>
+            </div>
+
+            <div class="reta-toggle-row" style="padding-top:0">
+              <div class="reta-toggle-info">
+                <div class="tl">Aplicar deducción foral Gipuzkoa</div>
+                <div class="ts">
+                  Art. 28 NF 3/2014 (reforma NF 1/2025):<br>
+                  · 20 % sobre los primeros 35.000 € netos<br>
+                  · 15 % sobre 35.001 – 85.000 €<br>
+                  · 10 % sobre el exceso de 85.000 €<br>
+                  <em style="color:var(--green)">Mucho más ventajosa que el 5 % estatal.</em>
+                </div>
+              </div>
+              <label class="reta-toggle">
+                <input type="checkbox" id="reta-tog-gipuzkoa" checked onchange="retaRecalc()">
+                <span class="reta-toggle-track"></span>
+              </label>
+            </div>
+
+            <div style="margin-top:10px">
+              <div class="stat-row"><span>Ingresos brutos</span><span class="stat-val" style="color:var(--accent)" id="reta-r-ingr">—</span></div>
+              <div class="stat-row"><span>Gastos justificados</span><span class="stat-val" id="reta-r-gastos">—</span></div>
+              <div class="stat-row"><span>Deducción Gipuzkoa</span><span class="stat-val" style="color:var(--warn)" id="reta-r-deduccion">—</span></div>
+              <div class="stat-row"><span style="color:var(--text)">Base neta cotización</span><span class="stat-val pos" id="reta-r-base-neta" style="font-size:12px">—</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <span class="panel-title">SITUACIÓN</span>
+            <span class="tag accent">Paso 2</span>
+          </div>
+          <div class="panel-body">
+            <div class="field" style="margin-bottom:8px">
+              <label>Tipo de alta</label>
+              <div class="preset-grid" style="grid-template-columns:1fr 1fr;" id="reta-pres-tipo">
+                <button class="preset-btn active" onclick="retaSetTipo('general',this)">General<br><span style="font-size:9px;opacity:.65">31,50 % total</span></button>
+                <button class="preset-btn" onclick="retaSetTipo('tarifa-plana',this)">Tarifa plana<br><span style="font-size:9px;opacity:.65">80 €/mes</span></button>
+                <button class="preset-btn" onclick="retaSetTipo('discapacidad',this)">≥33 % discap.<br><span style="font-size:9px;opacity:.65">28,30 % CC</span></button>
+                <button class="preset-btn" onclick="retaSetTipo('familiar',this)">Familiar colab.<br><span style="font-size:9px;opacity:.65">27,45 % CC</span></button>
+              </div>
+            </div>
+
+            <div id="reta-tp-opts" style="display:none;padding:8px 0 4px;border-top:1px solid var(--border)">
+              <div class="field" style="margin-bottom:4px">
+                <label>Año tarifa plana</label>
+                <div class="preset-grid" style="grid-template-columns:1fr 1fr 1fr;" id="reta-pres-tp">
+                  <button class="preset-btn active" onclick="retaSetTpAno(1,this)">Año 1<br><span style="font-size:9px;opacity:.65">80 €/mes fijo</span></button>
+                  <button class="preset-btn" onclick="retaSetTpAno(2,this)">Año 2<br><span style="font-size:9px;opacity:.65">80 € si ≤ SMI</span></button>
+                  <button class="preset-btn" onclick="retaSetTpAno(3,this)">Fin TP<br><span style="font-size:9px;opacity:.65">tipo normal</span></button>
+                </div>
+              </div>
+              <div style="font-size:10px;color:var(--text3);line-height:1.6">2.º año solo si rendimientos ≤ SMI anual (≈ 16.576 €).</div>
+            </div>
+
+            <div style="margin-top:8px">
+              <div class="stat-section-label">TIPOS 2026</div>
+              <div class="stat-row"><span>Contingencias comunes</span><span class="stat-val" id="reta-r-tipo-cc">28,30 %</span></div>
+              <div class="stat-row"><span>AT/EP + IT</span><span class="stat-val" id="reta-r-tipo-it">1,30 %</span></div>
+              <div class="stat-row"><span>Cese de actividad</span><span class="stat-val">0,90 %</span></div>
+              <div class="stat-row"><span>Formación profesional</span><span class="stat-val">0,10 %</span></div>
+              <div class="stat-row"><span>MEI 2026 <span style="color:var(--warn);font-size:9px">(↑ 0,10 %)</span></span><span class="stat-val" style="color:var(--warn)">0,90 %</span></div>
+              <div class="stat-row"><span style="color:var(--text)">Tipo total</span><span class="stat-val" style="color:var(--accent)" id="reta-r-tipo-total">31,50 %</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <span class="panel-title">OPCIONES</span>
+            <span class="tag accent">Paso 3</span>
+          </div>
+          <div class="panel-body">
+            <div class="reta-toggle-row">
+              <div class="reta-toggle-info"><div class="tl">IT + AT/EP</div><div class="ts">Incapacidad temporal + accidente · +1,30 %</div></div>
+              <label class="reta-toggle"><input type="checkbox" id="reta-tog-it" checked onchange="retaRecalc()"><span class="reta-toggle-track"></span></label>
+            </div>
+            <div class="reta-toggle-row">
+              <div class="reta-toggle-info"><div class="tl">Cese de actividad</div><div class="ts">Prestación por cierre del negocio · +0,90 %</div></div>
+              <label class="reta-toggle"><input type="checkbox" id="reta-tog-cese" checked onchange="retaRecalc()"><span class="reta-toggle-track"></span></label>
+            </div>
+            <div class="reta-toggle-row">
+              <div class="reta-toggle-info"><div class="tl">Pluriactividad</div><div class="ts">Reducción 50 % en CC durante 18 meses</div></div>
+              <label class="reta-toggle"><input type="checkbox" id="reta-tog-pluri" onchange="retaRecalc()"><span class="reta-toggle-track"></span></label>
+            </div>
+            <div class="reta-toggle-row">
+              <div class="reta-toggle-info"><div class="tl">Cotizar por base máxima</div><div class="ts">Por defecto se usa la base mínima obligatoria</div></div>
+              <label class="reta-toggle"><input type="checkbox" id="reta-tog-max" onchange="retaRecalc()"><span class="reta-toggle-track"></span></label>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /col izq -->
+
+      <!-- COL DER -->
+      <div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <span class="panel-title">RESULTADO</span>
+            <span class="tag" id="reta-tag-tramo">Tramo —</span>
+          </div>
+          <div class="panel-body">
+            <div class="reta-result">
+              <div class="reta-result-grid">
+                <div>
+                  <div class="reta-result-label">Cuota mensual</div>
+                  <div class="reta-result-main empty" id="reta-res-mes">—</div>
+                  <div class="reta-result-sub" id="reta-res-mes-sub"></div>
+                </div>
+                <div>
+                  <div class="reta-result-label">Cuota anual</div>
+                  <div class="reta-result-main empty" id="reta-res-anual">—</div>
+                  <div class="reta-result-sub" id="reta-res-anual-sub"></div>
+                </div>
+              </div>
+            </div>
+
+            <div id="reta-breakdown" style="display:none">
+              <div class="stat-section-label">DESGLOSE MENSUAL</div>
+              <div class="stat-row"><span>Base de cotización</span><span class="stat-val" style="color:var(--accent)" id="reta-bd-base">—</span></div>
+              <div class="stat-row"><span>Contingencias comunes</span><span class="stat-val" style="color:var(--warn)" id="reta-bd-cc">—</span></div>
+              <div class="stat-row" id="reta-row-it"><span>IT + AT/EP</span><span class="stat-val" style="color:var(--warn)" id="reta-bd-it">—</span></div>
+              <div class="stat-row" id="reta-row-cese"><span>Cese de actividad</span><span class="stat-val" style="color:var(--warn)" id="reta-bd-cese">—</span></div>
+              <div class="stat-row"><span>Formación profesional</span><span class="stat-val" style="color:var(--warn)" id="reta-bd-fp">—</span></div>
+              <div class="stat-row"><span>MEI 2026 (0,90 %)</span><span class="stat-val" style="color:var(--warn)" id="reta-bd-mei">—</span></div>
+              <div class="stat-row" style="border-top:1px solid var(--border2);padding-top:10px;margin-top:4px">
+                <span style="color:var(--text);font-size:12px">Total mensual</span>
+                <span class="stat-val pos" id="reta-bd-total" style="font-size:13px">—</span>
+              </div>
+              <div class="stat-section-label" style="margin-top:8px">CONTEXTO ANUAL</div>
+              <div class="stat-row"><span>Cuota anual total</span><span class="stat-val neg" id="reta-bd-anual">—</span></div>
+              <div class="stat-row"><span>% cuota / base neta</span><span class="stat-val" id="reta-bd-pct-neta">—</span></div>
+              <div class="stat-row"><span>% cuota / ingresos brutos</span><span class="stat-val" style="color:var(--text3);font-size:10px" id="reta-bd-pct-bruto">—</span></div>
+              <div class="stat-row"><span>Rango base del tramo</span><span class="stat-val" style="color:var(--accent)" id="reta-bd-rango">—</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <span class="panel-title">TRAMOS RETA 2026</span>
+            <span class="tag" style="border-color:rgba(245,166,35,.25);color:var(--warn);background:var(--warn-dim)">= 2025 · MEI 0,90 %</span>
+          </div>
+          <div class="reta-table-wrap">
+            <table class="reta-table">
+              <thead>
+                <tr>
+                  <th>T</th>
+                  <th>Rendim. neto/mes</th>
+                  <th>Base mín.</th>
+                  <th>Base máx.</th>
+                  <th>Cuota mín.</th>
+                </tr>
+              </thead>
+              <tbody id="reta-tramos-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="reta-note">
+          <strong>Gipuzkoa · Art. 28 NF 3/2014</strong> (reforma NF 1/2025): deducción escalonada 20%/15%/10%, mucho más ventajosa que el 5% estatal.<br>
+          <strong>RETA 2026:</strong> bases y tramos congelados respecto a 2025 (RDL 16/2025). MEI sube del 0,80% → <strong>0,90%</strong>.<br>
+          Tipo total: 28,30% CC + 1,30% IT + 0,90% cese + 0,10% FP + 0,90% MEI = <strong>31,50%</strong>. Herramienta orientativa.
+          <a href="https://www.seg-social.es" target="_blank">Seg-social.es →</a>
+        </div>
+
+      </div><!-- /col der -->
+    </div>
+  </div><!-- /tab-reta -->
+
+  <!-- ══ TAB: SYNC / SETTINGS ══════════════════════════════════ -->
   <div class="tab-content" id="tab-sync">
     <div class="panel" style="max-width:480px;margin:0 auto">
       <div class="panel-head"><span class="panel-title">⚙ SINCRONIZACIÓN GITLAB</span></div>
       <div style="padding:0 4px;font-size:12px;color:var(--text2);line-height:1.7;margin-bottom:16px">
         Tus trades se guardarán en un repositorio <b style="color:var(--text)">privado</b> de GitLab y se sincronizarán entre todos tus dispositivos.
       </div>
+
       <div class="field">
         <label>Usuario GitLab</label>
         <input type="text" id="gh-user" placeholder="tu-usuario" autocomplete="off" autocorrect="off" autocapitalize="off">
@@ -848,12 +1135,15 @@ tr:hover td{background:rgba(0,212,255,0.02);}
         </label>
         <input type="password" id="gh-token" placeholder="glpat-xxxxxxxxxxxx" autocomplete="off">
       </div>
+
       <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
         <button onclick="ghSaveConfig()" style="flex:1;padding:10px;background:var(--accent);color:#000;border:none;border-radius:6px;font-family:var(--display);font-size:12px;letter-spacing:.08em;cursor:pointer;min-width:120px">GUARDAR CONFIG</button>
         <button onclick="ghPush(true)" style="flex:1;padding:10px;background:var(--surface2);color:var(--text);border:1px solid var(--border2);border-radius:6px;font-family:var(--display);font-size:12px;letter-spacing:.08em;cursor:pointer;min-width:120px" id="gh-push-btn">↑ SUBIR AHORA</button>
         <button onclick="ghPull()" style="flex:1;padding:10px;background:var(--surface2);color:var(--text);border:1px solid var(--border2);border-radius:6px;font-family:var(--display);font-size:12px;letter-spacing:.08em;cursor:pointer;min-width:120px" id="gh-pull-btn">↓ DESCARGAR</button>
       </div>
+
       <div id="gh-status" style="margin-top:14px;font-size:11px;font-family:var(--mono);color:var(--text3);min-height:18px;line-height:1.6"></div>
+
       <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);font-size:11px;color:var(--text3);line-height:1.8">
         <div style="font-family:var(--display);font-size:11px;letter-spacing:.08em;color:var(--text2);margin-bottom:6px">INSTRUCCIONES</div>
         <div>1. Crea un repositorio <b style="color:var(--text)">privado</b> en GitLab</div>
@@ -863,6 +1153,7 @@ tr:hover td{background:rgba(0,212,255,0.02);}
         <div>5. En un nuevo dispositivo, introduce la config y pulsa <b style="color:var(--text)">Descargar</b></div>
         <div style="margin-top:8px;color:var(--warn)">⚠ El token se guarda en localStorage de este dispositivo</div>
       </div>
+
       <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border)">
         <div style="font-family:var(--display);font-size:11px;letter-spacing:.08em;color:var(--text2);margin-bottom:10px">ESTADO SYNC</div>
         <div id="gh-sync-info" style="font-size:11px;font-family:var(--mono);color:var(--text3);line-height:1.8">No configurado</div>
@@ -870,7 +1161,7 @@ tr:hover td{background:rgba(0,212,255,0.02);}
     </div>
   </div><!-- /tab-sync -->
 
-<!-- IMPORT MODAL (trades) -->
+<!-- IMPORT MODAL -->
 <div id="import-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;align-items:center;justify-content:center;padding:16px">
   <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;max-width:420px;width:100%;max-height:80vh;overflow-y:auto">
     <div style="font-family:var(--display);font-size:14px;letter-spacing:.1em;margin-bottom:16px;color:var(--text)">IMPORTAR TRADES</div>
@@ -883,14 +1174,12 @@ tr:hover td{background:rgba(0,212,255,0.02);}
   </div>
 </div>
 
+
 <div class="toast" id="toast"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
-// ═══════════════════════════════════════════════════════
-// ── TRADING JOURNAL ─────────────────────────────────
-// ═══════════════════════════════════════════════════════
-
+// ── UTILS ─────────────────────────────────────────────
 const fmt=(n,d=2)=>isNaN(n)?'—':(n>=0?'+':'')+n.toLocaleString('es-ES',{minimumFractionDigits:d,maximumFractionDigits:d,useGrouping:true});
 const fmtN=(n,d=2)=>isNaN(n)?'—':n.toLocaleString('es-ES',{minimumFractionDigits:d,maximumFractionDigits:d,useGrouping:true});
 const fmtDate=iso=>{if(!iso)return'—';const[y,m,d]=iso.split('-');return`${d}/${m}/${y.slice(2)}`;};
@@ -908,30 +1197,42 @@ function getWeekStart(){
   d.setDate(d.getDate()-day+1); return d.toISOString().split('T')[0];
 }
 
-// ── MULTI-ACCOUNT STATE ──────────────────────────────
-const ACCTS_KEY='tradelog_accounts_v1';
-let accounts=[], currentAcctId=null;
-let trades=[], nextId=1, tradeType='long', activeFilter='all', timePeriod='all';
-let settingTickerProg=false;
+// ── TABS ──────────────────────────────────────────────
+// showTab defined at bottom of script (includes FX auto-fetch)
+
+// ── MULTI-ACCOUNT STATE ───────────────────────────────
+const ACCTS_KEY = 'tradelog_accounts_v1';
+let accounts = []; // [{id, name}]
+let currentAcctId = null;
+let trades = [], nextId = 1, tradeType = 'long', activeFilter = 'all', timePeriod = 'all';
 
 function acctLSKey(id){ return 'tradelog_acct_'+id; }
-function saveAccounts(){ localStorage.setItem(ACCTS_KEY, JSON.stringify(accounts)); }
+
+function saveAccounts(){
+  localStorage.setItem(ACCTS_KEY, JSON.stringify(accounts));
+}
+
 function saveTrades(){
   if(!currentAcctId) return;
   localStorage.setItem(acctLSKey(currentAcctId), JSON.stringify({trades, nextId}));
 }
+
 function loadTrades(id){
   try{
     const s=JSON.parse(localStorage.getItem(acctLSKey(id))||'null');
     if(!s){ trades=[]; nextId=1; return; }
     trades=s.trades||[]; nextId=s.nextId||trades.length+1;
-    sortTrades();
   }catch(e){ trades=[]; nextId=1; }
 }
+
+// Legacy migration: if old LS_KEY exists, import into first account
 function migrateLegacy(){
   const old=localStorage.getItem('tradelog_v2');
   if(!old) return null;
-  try{ const s=JSON.parse(old); if(s&&s.trades&&s.trades.length>0) return s; }catch(e){}
+  try{
+    const s=JSON.parse(old);
+    if(s&&s.trades&&s.trades.length>0) return s;
+  }catch(e){}
   return null;
 }
 
@@ -939,52 +1240,79 @@ function renderAcctTabs(){
   const container=document.getElementById('acct-tabs-container');
   container.innerHTML='';
   for(let i=0;i<accounts.length;i++){
-    const id=accounts[i].id, name=accounts[i].name, isActive=(id===currentAcctId);
+    const id=accounts[i].id;
+    const name=accounts[i].name;
+    const isActive=(id===currentAcctId);
+
     const btn=document.createElement('button');
     btn.className='acct-tab-btn'+(isActive?' active':'');
-    btn.textContent=name; btn.type='button';
+    btn.textContent=name;
+    btn.type='button';
     btn.setAttribute('onclick',"switchAccount('"+id+"')");
     container.appendChild(btn);
+
     const edit=document.createElement('button');
-    edit.className='acct-tab-icon'; edit.textContent='✎'; edit.type='button';
+    edit.className='acct-tab-icon';
+    edit.textContent='✎';
+    edit.type='button';
     edit.setAttribute('onclick',"startRenameById('"+id+"')");
     container.appendChild(edit);
+
     if(accounts.length>1){
       const del=document.createElement('button');
-      del.className='acct-tab-icon acct-tab-del'; del.textContent='×'; del.type='button';
+      del.className='acct-tab-icon acct-tab-del';
+      del.textContent='×';
+      del.type='button';
       del.setAttribute('onclick',"deleteAccount('"+id+"')");
       container.appendChild(del);
     }
-    const sep=document.createElement('span'); sep.innerHTML='&nbsp;&nbsp;';
+
+    const sep=document.createElement('span');
+    sep.innerHTML='&nbsp;&nbsp;';
     container.appendChild(sep);
   }
 }
 
 function startRenameById(id){
-  const acct=accounts.find(a=>a.id===id); if(!acct) return;
+  const acct=accounts.find(a=>a.id===id);
+  if(!acct) return;
   const newName=prompt('Nombre de la cuenta:', acct.name);
   if(newName===null) return;
   acct.name=newName.trim()||acct.name;
-  saveAccounts(); renderAcctTabs();
+  saveAccounts();
+  renderAcctTabs();
 }
 
 function switchAccount(id){
-  currentAcctId=id; loadTrades(id);
+  currentAcctId=id;
+  loadTrades(id);
+  // Reset filters
   activeFilter='all'; timePeriod='all';
+  // Show journal tab
   document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
   document.getElementById('tab-journal').classList.add('active');
   document.getElementById('tab-btn-calc').classList.remove('active');
+  if(document.getElementById('tab-btn-irpf')) document.getElementById('tab-btn-irpf').classList.remove('active');
+  if(document.getElementById('tab-btn-reta')) document.getElementById('tab-btn-reta').classList.remove('active');
   document.getElementById('tab-btn-irpf').classList.remove('active');
+  document.getElementById('tab-btn-reta').classList.remove('active');
+  // Reset filter buttons
   document.querySelectorAll('.filter-btn').forEach(b=>b.classList.toggle('active',b.dataset.filter==='all'));
   document.querySelectorAll('[data-tp]').forEach(b=>b.classList.toggle('active',b.dataset.tp==='all'));
-  renderAcctTabs(); render();
+  try{ document.getElementById('range-row').style.display='none'; }catch(e){}
+  renderAcctTabs();
+  render();
 }
 
 function addAccount(){
   const id='acct_'+Date.now();
   accounts.push({id, name:'Cuenta '+(accounts.length+1)});
-  saveAccounts(); currentAcctId=id; trades=[]; nextId=1; saveTrades();
-  activeFilter='all'; timePeriod='all'; renderAcctTabs();
+  saveAccounts();
+  currentAcctId=id;
+  trades=[]; nextId=1;
+  saveTrades();
+  activeFilter='all'; timePeriod='all';
+  renderAcctTabs();
   document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
   document.getElementById('tab-journal').classList.add('active');
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
@@ -994,11 +1322,14 @@ function addAccount(){
 function deleteAccount(id){
   if(accounts.length<=1){ toast('Necesitas al menos una cuenta'); return; }
   const acct=accounts.find(a=>a.id===id);
-  const resp=prompt('Escribe "borrar" para eliminar "'+( acct?acct.name:id)+'" y todos sus trades:');
+  const resp=prompt('Escribe "borrar" para eliminar "'+( acct?acct.name:id)+'"y todos sus trades:');
   if(!resp||resp.trim().toLowerCase()!=='borrar') return;
   localStorage.removeItem(acctLSKey(id));
   accounts=accounts.filter(a=>a.id!==id);
-  saveAccounts(); currentAcctId=accounts[0].id; loadTrades(currentAcctId); renderAcctTabs();
+  saveAccounts();
+  currentAcctId=accounts[0].id;
+  loadTrades(currentAcctId);
+  renderAcctTabs();
   document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
   document.getElementById('tab-journal').classList.add('active');
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
@@ -1009,30 +1340,42 @@ function initAccounts(){
   let saved=null;
   try{ saved=JSON.parse(localStorage.getItem(ACCTS_KEY)||'null'); }catch(e){}
   if(saved&&saved.length>0){
-    accounts=saved; currentAcctId=accounts[0].id; loadTrades(currentAcctId);
+    accounts=saved;
+    currentAcctId=accounts[0].id;
+    loadTrades(currentAcctId);
   } else {
+    // First run — check for legacy data
     const legacy=migrateLegacy();
     const id='acct_'+Date.now();
-    accounts=[{id, name:'Cuenta 1'}]; currentAcctId=id;
-    if(legacy){ trades=legacy.trades||[]; nextId=legacy.nextId||trades.length+1; saveTrades(); toast('Trades anteriores migrados a Cuenta 1 ✓'); }
+    accounts=[{id, name:'Cuenta 1'}];
+    currentAcctId=id;
+    if(legacy){
+      trades=legacy.trades||[]; nextId=legacy.nextId||trades.length+1;
+      saveTrades();
+      toast('Trades anteriores migrados a Cuenta 1 ✓');
+    }
     saveAccounts();
   }
   renderAcctTabs();
 }
 
 function save(){ saveTrades(); }
+function load(){ /* handled by initAccounts */ }
 
 function showMainTab(id, btn){
   document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.acct-tab').forEach(t=>t.classList.remove('active'));
   document.getElementById('tab-'+id).classList.add('active');
   if(btn) btn.classList.add('active');
   if(id==='calc'&&fxRates.EURUSD===null) fetchFxRates();
   if(id==='irpf'&&!irpfFxLoaded) irpfRefreshFX();
 }
 
-// ── INIT ─────────────────────────────────────────────
-let beneficioManualFlag=false, formPipBase=null, formCcy='USD';
+// ── INIT ──────────────────────────────────────────────
+let beneficioManualFlag = false;
+let formPipBase = null;
+let formCcy = 'USD';
 document.getElementById('f-fecha').value=todayISO;
 fetchHistoricalRates(todayISO);
 fetchFxRates();
@@ -1043,7 +1386,7 @@ beneficioManualFlag=false;
 setFormPip(1,'$1 Índice');
 initAccounts(); render();
 
-// ── TIME PERIOD ──────────────────────────────────────
+// ── TIME PERIOD ───────────────────────────────────────
 function setTimePeriod(p, btn){
   timePeriod=p;
   document.querySelectorAll('.tfilter-btn').forEach(b=>b.classList.remove('active'));
@@ -1080,7 +1423,7 @@ function periodLabel(){
   return '';
 }
 
-// ── TIPO ─────────────────────────────────────────────
+// ── TIPO ──────────────────────────────────────────────
 function toggleBenSign(){
   const el=document.getElementById('f-beneficio');
   const v=parseFloat(el.value.replace(',','.'));
@@ -1095,7 +1438,8 @@ function clearTickerPresets(){
   if(settingTickerProg) return;
   document.querySelectorAll('.ticker-fav-presets .preset-btn').forEach(b=>b.classList.remove('active'));
   document.querySelectorAll('#form-ccy-presets .preset-btn').forEach(b=>b.classList.remove('active'));
-  formCcy='USD'; setFormPip(1,'$1 Índice');
+  formCcy='USD';
+  setFormPip(1,'$1 Índice');
 }
 
 function setTicker(tk){
@@ -1114,7 +1458,7 @@ function setType(t){
   autoCalcBeneficio();
 }
 
-// ── FILTER ───────────────────────────────────────────
+// ── FILTER ────────────────────────────────────────────
 function setFilter(f,btn){
   activeFilter=f;
   document.querySelectorAll('.filter-btn[data-filter]').forEach(b=>b.classList.remove('active'));
@@ -1136,13 +1480,16 @@ function getFiltered(){
   });
 }
 
-// ── AUTO BENEFICIO ───────────────────────────────────
-const fxRawForm={EUR:null,GBP:null,JPY:null,CAD:null,USD:1};
-let fxRawFormDate=null;
+// ── ADD ───────────────────────────────────────────────
+// ── AUTO BENEFICIO ────────────────────────────────────
+// Per-form historical rates (fetched by trade date), separate from live fxRaw
+const fxRawForm = {EUR:null, GBP:null, JPY:null, CAD:null, USD:1};
+let fxRawFormDate = null; // ISO date these rates correspond to
 
 async function fetchHistoricalRates(date){
   if(!date) return;
   const todayISO2=new Date().toISOString().split('T')[0];
+  // Frankfurter doesn't serve today's data until end of day — fall back to live fxRaw
   if(date>=todayISO2){
     ['EUR','GBP','JPY','CAD'].forEach(c=>fxRawForm[c]=fxRaw[c]);
     fxRawFormDate=date;
@@ -1150,7 +1497,7 @@ async function fetchHistoricalRates(date){
     if(liveEl) liveEl.title='Tipo de cambio: hoy (en vivo)';
     recalcFormPip(); return;
   }
-  if(fxRawFormDate===date) return;
+  if(fxRawFormDate===date) return; // already loaded
   try{
     const res=await fetch(`https://api.frankfurter.app/${date}?from=USD&to=EUR,GBP,JPY,CAD`);
     if(!res.ok) throw new Error();
@@ -1158,8 +1505,10 @@ async function fetchHistoricalRates(date){
     fxRawForm.EUR=data.rates.EUR; fxRawForm.GBP=data.rates.GBP;
     fxRawForm.JPY=data.rates.JPY; fxRawForm.CAD=data.rates.CAD;
     fxRawFormDate=date;
+    const liveEl=document.getElementById('f-pip-live');
+    if(liveEl) liveEl.title=`Tipo de cambio: ${date}`;
     recalcFormPip();
-  } catch(e){}
+  } catch(e){ /* silently keep previous rates */ }
 }
 
 function setFormCcy(ccy){
@@ -1184,15 +1533,22 @@ function clearFormPipPreset(){
 function recalcFormPip(){
   const liveEl=document.getElementById('f-pip-live');
   const manualVal=parseFloat(document.getElementById('f-pip').value);
-  const base=formPipBase!==null?formPipBase:(!isNaN(manualVal)&&manualVal>0?manualVal:null);
+  const base=formPipBase!==null ? formPipBase : (!isNaN(manualVal)&&manualVal>0 ? manualVal : null);
   if(base===null){ liveEl.textContent=''; autoCalcBeneficio(); return; }
   let multiplier=1;
   if(formCcy!=='USD'){
     const rate=fxRawForm[formCcy]??fxRaw[formCcy];
-    if(!rate){ liveEl.textContent='Sin tipo de cambio'; document.getElementById('f-pip').value=base; autoCalcBeneficio(); return; }
+    if(!rate){
+      liveEl.textContent='Sin tipo de cambio';
+      document.getElementById('f-pip').value=base; // muestra valor base aunque no haya tipo
+      autoCalcBeneficio(); return;
+    }
     multiplier=1/rate;
-    liveEl.textContent='pip = $'+(base*multiplier).toFixed(4)+' (1/'+rate.toFixed(4)+')';
-  } else { liveEl.textContent=''; }
+    const rateSource=fxRawForm[formCcy]?'hist':'live';
+    liveEl.textContent='pip = $'+(base*multiplier).toFixed(4)+' (1/'+rate.toFixed(4)+' '+rateSource+')';
+  } else {
+    liveEl.textContent='';
+  }
   const effectivePip=base*multiplier;
   document.getElementById('f-pip').value=parseFloat(effectivePip.toFixed(6));
   autoCalcBeneficio();
@@ -1216,7 +1572,9 @@ function autoCalcBeneficio(){
     const ben=(salida-entrada)*dir*lotes*pip+swap+comision;
     document.getElementById('f-beneficio').value=parseFloat(ben.toFixed(2));
     autoTag.style.display='';
-  } else { autoTag.style.display='none'; }
+  } else {
+    autoTag.style.display='none';
+  }
 }
 
 function autoCalcEditBeneficio(){
@@ -1232,17 +1590,6 @@ function autoCalcEditBeneficio(){
     const ben=(salida-entrada)*dir*lotes*pip+swap+comision;
     document.getElementById('ei-beneficio').value=parseFloat(ben.toFixed(2));
   }
-}
-
-// ── ADD TRADE ────────────────────────────────────────
-// ── ORDERING: sort by date DESC, then by insertion order DESC (newest first within same day)
-function sortTrades(){
-  // Stable sort: reverse index within same date so newer entries appear first
-  trades.sort((a,b)=>{
-    const dateCmp=b.fecha.localeCompare(a.fecha);
-    if(dateCmp!==0) return dateCmp;
-    return b.id - a.id; // higher id = added later = show first
-  });
 }
 
 function addTrade(){
@@ -1261,7 +1608,7 @@ function addTrade(){
   trades.push({id:nextId++,fecha,ticker,tipo:tradeType,
     lotes:isNaN(lotes)?null:lotes,entrada:isNaN(entrada)?null:entrada,
     salida:isNaN(salida)?null:salida,pip:isNaN(pip)?null:pip,swap,comision,beneficio,notas});
-  sortTrades();
+  trades.sort((a,b)=>b.fecha.localeCompare(a.fecha));
   ['f-ticker','f-lotes','f-entrada','f-salida','f-beneficio','f-notas'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('f-swap').value='0';
   document.getElementById('f-comision').value='0';
@@ -1276,11 +1623,13 @@ function addTrade(){
   save(); render(); toast('Operación registrada ✓');
 }
 
+// ── DELETE ────────────────────────────────────────────
 function deleteTrade(id){
   if(!confirm('¿Eliminar esta operación?'))return;
   trades=trades.filter(t=>t.id!==id); save(); render();
 }
 
+// ── EDIT ──────────────────────────────────────────────
 function editTrade(id,btn){
   const trade=trades.find(t=>t.id===id); if(!trade)return;
   document.querySelectorAll('tr.edit-expand-row').forEach(r=>r.remove());
@@ -1299,7 +1648,7 @@ function editTrade(id,btn){
       <div class="edit-field"><label>Salida</label><input class="edit-input" id="ei-salida" type="number" value="${trade.salida??''}" min="0" step="any" inputmode="decimal" oninput="autoCalcEditBeneficio()"></div>
       <div class="edit-field"><label>Pip value ($)</label><input class="edit-input" id="ei-pip" type="number" value="${trade.pip??''}" placeholder="10" min="0" step="any" inputmode="decimal" oninput="autoCalcEditBeneficio()"></div>
       <div class="edit-field"><label>Beneficio</label><input class="edit-input" id="ei-beneficio" type="number" value="${trade.beneficio}" step="any" inputmode="decimal"></div>
-      <div class="edit-field"><label>Swap</label><div style="display:flex;gap:6px"><input class="edit-input" id="ei-swap" type="text" inputmode="decimal" value="${trade.swap??0}" oninput="autoCalcEditBeneficio()" style="flex:1;min-width:0"><button type="button" id="ei-swap-sign" onclick="toggleEditSwapSign()" style="padding:0 10px;background:var(--surface2);border:1.5px solid var(--border2);border-radius:6px;color:var(--text);font-size:18px;font-weight:700;cursor:pointer;flex-shrink:0;-webkit-tap-highlight-color:transparent">±</button></div></div>
+      <div class="edit-field"><label>Swap</label><div style="display:flex;gap:6px"><input class="edit-input" id="ei-swap" type="text" inputmode="decimal" value="${trade.swap??0}" oninput="autoCalcEditBeneficio()" style="flex:1;min-width:0"><button type="button" id="ei-swap-sign" style="padding:0 10px;background:var(--surface2);border:1.5px solid var(--border2);border-radius:6px;color:var(--text);font-size:18px;font-weight:700;cursor:pointer;flex-shrink:0;-webkit-tap-highlight-color:transparent;touch-action:manipulation">±</button></div></div>
       <div class="edit-field"><label>Comisión</label><input class="edit-input" id="ei-comision" type="text" inputmode="decimal" value="${trade.comision??0}" oninput="autoCalcEditBeneficio()"></div>
       <div class="edit-field" style="grid-column:1/-1"><label>Notas</label><input class="edit-input" id="ei-notas" type="text" value="${trade.notas||''}"></div>
     </div>
@@ -1309,6 +1658,8 @@ function editTrade(id,btn){
     </div>
   </div></td>`;
   tr.after(editTr);
+  const swapSignBtn=document.getElementById('ei-swap-sign');
+  if(swapSignBtn) swapSignBtn.setAttribute('onclick','toggleEditSwapSign()');
   document.getElementById('ei-fecha').focus();
 }
 
@@ -1327,7 +1678,7 @@ function saveTrade(id){
   if(!fecha||!ticker||isNaN(beneficio)){toast('Campos obligatorios vacíos',true);return;}
   const idx=trades.findIndex(t=>t.id===id); if(idx===-1)return;
   trades[idx]={id,fecha,ticker,tipo,lotes:isNaN(lotes)?null:lotes,entrada:isNaN(entrada)?null:entrada,salida:isNaN(salida)?null:salida,pip:isNaN(pip)?null:pip,swap,comision,beneficio,notas};
-  sortTrades();
+  trades.sort((a,b)=>b.fecha.localeCompare(a.fecha));
   save(); render(); toast('Operación actualizada ✓');
 }
 
@@ -1340,11 +1691,12 @@ function toggleEditSwapSign(){
 
 function cancelEdit(){render();}
 
-// ── RENDER ───────────────────────────────────────────
+// ── RENDER ────────────────────────────────────────────
 function render(){
   const filtered=getFiltered();
   const periodTrades=trades.filter(t=>isInPeriod(t.fecha));
 
+  // KPIs
   function kpiSet(valId,lblId,periodId,ts,label){
     document.getElementById(periodId).textContent=label;
     const el=document.getElementById(valId), lel=document.getElementById(lblId);
@@ -1360,11 +1712,13 @@ function render(){
   kpiSet('kpi-p2-val','kpi-p2-lbl','kpi-p2',monthTrades,'Mes actual');
   kpiSet('kpi-p3-val','kpi-p3-lbl','kpi-p3',yearTrades,'Año actual');
 
+  // Update ticker dropdown
   const tickerSel=document.getElementById('ticker-filter');
   const currentTicker=tickerSel.value;
   const allTickers=[...new Set(trades.map(t=>t.ticker))].sort();
   tickerSel.innerHTML='<option value="">Ticker: Todos</option>'+allTickers.map(tk=>`<option value="${tk}"${currentTicker===tk?' selected':''}>${tk}</option>`).join('');
 
+  // Header
   document.getElementById('total-trades').textContent=trades.length;
   document.getElementById('total-tickers').textContent=allTickers.length;
   document.getElementById('badge-count').textContent=filtered.length+' trade'+(filtered.length!==1?'s':'');
@@ -1373,6 +1727,7 @@ function render(){
   if(currentTicker){tickerTag.style.display='';tickerTag.textContent=currentTicker;}
   else tickerTag.style.display='none';
 
+  // Stats use filtered (period + ticker + type filters)
   const st=filtered;
   const wins=st.filter(t=>t.beneficio>0), losses=st.filter(t=>t.beneficio<0);
   const wr=st.length?wins.length/st.length:null;
@@ -1395,12 +1750,15 @@ function render(){
     document.getElementById('s-avg-win').textContent=avgWin!=null?fmt(avgWin)+' €':'—';
     document.getElementById('s-avg-loss').textContent=avgLoss!=null?'−'+fmtN(avgLoss)+' €':'—';
 
-    const expect=(avgWin!=null&&avgLoss!=null)?wr*avgWin-lossRate*avgLoss:null;
+    // Expectativa = WR * avgWin - LR * avgLoss
+    const expect=(avgWin!=null&&avgLoss!=null)?wr*avgWin - lossRate*avgLoss:null;
     const expectEl=document.getElementById('s-expect');
     expectEl.textContent=expect!=null?fmt(expect)+' €':'—';
     expectEl.className='stat-val '+(expect>0?'pos':expect<0?'neg':'neu');
 
+    // RRR promedio (solo trades con ambos positivo y negativo para comparar)
     const rrrVals=[];
+    // Para cada win usamos el avgLoss como referencia si no hay pérdida individual
     if(avgWin!=null&&avgLoss!=null&&avgLoss>0) rrrVals.push(avgWin/avgLoss);
     const rrrEl=document.getElementById('s-rrr');
     if(rrrVals.length){
@@ -1409,28 +1767,37 @@ function render(){
       rrrEl.className='stat-val '+(rrr>=2?'pos':rrr>=1?'neu':'neg');
     } else rrrEl.textContent='—';
 
+    // Coeficiente de beneficio = suma ganancias / |suma pérdidas|
     const sumWins=wins.reduce((s,t)=>s+t.beneficio,0);
     const sumLosses=Math.abs(losses.reduce((s,t)=>s+t.beneficio,0));
     const pfEl=document.getElementById('s-profact');
-    if(sumLosses>0){ const pf=sumWins/sumLosses; pfEl.textContent=fmtN(pf,2); pfEl.className='stat-val '+(pf>=2?'pos':pf>=1?'neu':'neg'); }
-    else if(sumWins>0){pfEl.textContent='∞';pfEl.className='stat-val pos';}
+    if(sumLosses>0){
+      const pf=sumWins/sumLosses;
+      pfEl.textContent=fmtN(pf,2);
+      pfEl.className='stat-val '+(pf>=2?'pos':pf>=1?'neu':'neg');
+    } else if(sumWins>0){pfEl.textContent='∞';pfEl.className='stat-val pos';}
     else pfEl.textContent='—';
 
+    // Ratio de Sharpe simplificado (retornos / desv. estándar)
     const sharpeEl=document.getElementById('s-sharpe');
     if(bens.length>=2){
       const mean=total/bens.length;
       const variance=bens.reduce((s,b)=>s+(b-mean)**2,0)/(bens.length-1);
       const std=Math.sqrt(variance);
       const sharpe=std>0?mean/std:null;
-      if(sharpe!=null){ sharpeEl.textContent=fmtN(sharpe,2); sharpeEl.className='stat-val '+(sharpe>=1?'pos':sharpe>=0?'neu':'neg'); }
-      else sharpeEl.textContent='—';
+      if(sharpe!=null){
+        sharpeEl.textContent=fmtN(sharpe,2);
+        sharpeEl.className='stat-val '+(sharpe>=1?'pos':sharpe>=0?'neu':'neg');
+      } else sharpeEl.textContent='—';
     } else sharpeEl.textContent='—';
+
   } else {
     ['s-total','s-best','s-worst','s-avg','s-avg-win','s-avg-loss','s-expect','s-rrr','s-profact','s-sharpe'].forEach(id=>{
       const el=document.getElementById(id); el.textContent='—'; el.className='stat-val';
     });
   }
 
+  // Table
   const tbody=document.getElementById('tbody');
   if(!filtered.length){
     tbody.innerHTML=`<tr><td colspan="8"><div class="empty"><span class="empty-icon">◈</span>${trades.length?'Sin resultados.':'Sin operaciones registradas.'}</div></td></tr>`;
@@ -1456,7 +1823,7 @@ function render(){
   });
 }
 
-// ── EXPORT CSV ───────────────────────────────────────
+// ── EXPORT ────────────────────────────────────────────
 function exportCSV(){
   const filtered=getFiltered();
   if(!filtered.length){toast('No hay operaciones',true);return;}
@@ -1470,44 +1837,90 @@ function exportCSV(){
   toast('CSV descargado ✓');
 }
 
-// ── LOT CALCULATOR ───────────────────────────────────
-let calcCcy='USD', calcPipBase=null;
-const fxCapFavs=[100,1000], calcCapFavs=[10000,100000];
+// ── LOT CALCULATOR ────────────────────────────────────
+let calcCcy = 'USD';
+let calcPipBase = null;
+
+// ── FAVOURITE CAPITALS ────────────────────────────────
+const fxCapFavs = [100, 1000];
+const calcCapFavs = [10000, 100000];
 
 function fmtCapBtn(v){ return '$'+v.toLocaleString('es-ES'); }
-function setFxCapFav(i){ document.getElementById('fx-capital').value=fxCapFavs[i]; [0,1].forEach(j=>document.getElementById('fxcap-btn-'+j).classList.toggle('active',j===i)); fetchFxRates(); }
+
+function setFxCapFav(i){
+  document.getElementById('fx-capital').value=fxCapFavs[i];
+  [0,1].forEach(j=>document.getElementById('fxcap-btn-'+j).classList.toggle('active',j===i));
+  fetchFxRates();
+}
 function clearFxCapFavActive(){ [0,1].forEach(j=>document.getElementById('fxcap-btn-'+j).classList.remove('active')); }
 function editFxCapFav(i){
-  const val=prompt('Nuevo valor ($):', fxCapFavs[i]);
+  const cur=fxCapFavs[i];
+  const val=prompt('Nuevo valor para el favorito '+(i+1)+' ($):', cur);
   if(val===null) return;
-  const n=parseFloat(val.replace(/[.,]/g,'').replace(',','.')); if(isNaN(n)||n<=0){ toast('Valor no válido',true); return; }
-  fxCapFavs[i]=n; document.getElementById('fxcap-btn-'+i).textContent=fmtCapBtn(n); setFxCapFav(i);
+  const n=parseFloat(val.replace(/[.,]/g,'').replace(',','.'));
+  if(isNaN(n)||n<=0){ toast('Valor no válido',true); return; }
+  fxCapFavs[i]=n;
+  document.getElementById('fxcap-btn-'+i).textContent=fmtCapBtn(n);
+  setFxCapFav(i);
 }
-function setCalcCapFav(i){ document.getElementById('c-capital').value=calcCapFavs[i]; [0,1].forEach(j=>document.getElementById('ccap-btn-'+j).classList.toggle('active',j===i)); calcLots(); }
+
+function setCalcCapFav(i){
+  document.getElementById('c-capital').value=calcCapFavs[i];
+  [0,1].forEach(j=>document.getElementById('ccap-btn-'+j).classList.toggle('active',j===i));
+  calcLots();
+}
 function clearCalcCapFavActive(){ [0,1].forEach(j=>document.getElementById('ccap-btn-'+j).classList.remove('active')); }
 function editCalcCapFav(i){
-  const val=prompt('Nuevo valor ($):', calcCapFavs[i]);
+  const cur=calcCapFavs[i];
+  const val=prompt('Nuevo valor para el favorito '+(i+1)+' ($):', cur);
   if(val===null) return;
-  const n=parseFloat(String(val).replace(/\./g,'').replace(',','.')); if(isNaN(n)||n<=0){ toast('Valor no válido',true); return; }
-  calcCapFavs[i]=n; document.getElementById('ccap-btn-'+i).textContent=fmtCapBtn(n); setCalcCapFav(i);
+  const n=parseFloat(String(val).replace(/\./g,'').replace(',','.'));
+  if(isNaN(n)||n<=0){ toast('Valor no válido',true); return; }
+  calcCapFavs[i]=n;
+  document.getElementById('ccap-btn-'+i).textContent=fmtCapBtn(n);
+  setCalcCapFav(i);
 }
-function setCalcCcy(ccy){ calcCcy=ccy; document.querySelectorAll('#ccy-presets .preset-btn').forEach(b=>b.classList.toggle('active', b.textContent===ccy)); recalcCalcPip(); }
-function setPip(v){ calcPipBase=v; document.querySelectorAll('#pip-presets .preset-btn').forEach(b=>b.classList.toggle('active',parseFloat(b.textContent)===v)); document.getElementById('c-pip').value=''; recalcCalcPip(); }
-function clearPipPreset(){ calcPipBase=null; document.querySelectorAll('#pip-presets .preset-btn').forEach(b=>b.classList.remove('active')); }
+
+function setCalcCcy(ccy){
+  calcCcy=ccy;
+  document.querySelectorAll('#ccy-presets .preset-btn').forEach(b=>b.classList.toggle('active', b.textContent===ccy));
+  recalcCalcPip();
+}
+function setPip(v){
+  calcPipBase=v;
+  document.querySelectorAll('#pip-presets .preset-btn').forEach(b=>b.classList.toggle('active',parseFloat(b.textContent)===v));
+  document.getElementById('c-pip').value='';
+  recalcCalcPip();
+}
+function clearPipPreset(){
+  calcPipBase=null;
+  document.querySelectorAll('#pip-presets .preset-btn').forEach(b=>b.classList.remove('active'));
+}
 function recalcCalcPip(){
   const liveEl=document.getElementById('c-pip-live');
   const manualVal=parseFloat(document.getElementById('c-pip').value);
-  const base=calcPipBase!==null?calcPipBase:(!isNaN(manualVal)&&manualVal>0?manualVal:null);
+  const base=calcPipBase!==null ? calcPipBase : (!isNaN(manualVal)&&manualVal>0 ? manualVal : null);
   if(!base){ liveEl.textContent=''; calcLots(); return; }
   let multiplier=1;
-  if(calcCcy!=='USD'){ const rate=fxRaw[calcCcy]; if(!rate){ liveEl.textContent='Sin tipo de cambio'; calcLots(); return; } multiplier=1/rate; }
+  if(calcCcy!=='USD'){
+    const rate=fxRaw[calcCcy];
+    if(!rate){ liveEl.textContent='Sin tipo de cambio'; calcLots(); return; }
+    multiplier=1/rate;
+  }
   const effectivePip=base*multiplier;
   liveEl.textContent='pip efectivo = $'+effectivePip.toFixed(4)+(calcCcy!=='USD'?' · 1/'+fxRaw[calcCcy].toFixed(4):'');
   document.getElementById('c-pip').value=parseFloat(effectivePip.toFixed(6));
   calcLots();
 }
-function setRisk(v){ document.getElementById('c-riesgo').value=v; document.querySelectorAll('#risk-presets .preset-btn').forEach(b=>b.classList.toggle('active',parseFloat(b.textContent)===v)); calcLots(); }
-function clearRiskPreset(){ document.querySelectorAll('#risk-presets .preset-btn').forEach(b=>b.classList.remove('active')); }
+
+function setRisk(v){
+  document.getElementById('c-riesgo').value=v;
+  document.querySelectorAll('#risk-presets .preset-btn').forEach(b=>b.classList.toggle('active',parseFloat(b.textContent)===v));
+  calcLots();
+}
+function clearRiskPreset(){document.querySelectorAll('#risk-presets .preset-btn').forEach(b=>b.classList.remove('active'));}
+
+
 function calcLots(){
   const capital=parseFloat(document.getElementById('c-capital').value);
   const riesgo=parseFloat(document.getElementById('c-riesgo').value);
@@ -1515,11 +1928,15 @@ function calcLots(){
   const pip=parseFloat(document.getElementById('c-pip').value);
   const el=document.getElementById('calc-lots');
   const bd=document.getElementById('calc-breakdown');
-  if(isNaN(capital)||isNaN(riesgo)||isNaN(sl)||isNaN(pip)||sl===0||pip===0){ el.textContent='—'; bd.style.display='none'; return; }
+
+  if(isNaN(capital)||isNaN(riesgo)||isNaN(sl)||isNaN(pip)||sl===0||pip===0){
+    el.textContent='—'; bd.style.display='none'; return;
+  }
   const riesgoUSD=capital*riesgo/100;
   const costPerLot=sl*pip;
   const lots=riesgoUSD/costPerLot;
   const lotsRounded=Math.ceil(lots*1000)/1000;
+
   el.textContent=fmtN(lotsRounded,3);
   bd.style.display='';
   document.getElementById('cb-riesgo-usd').textContent='$'+fmtN(riesgoUSD,2);
@@ -1528,6 +1945,7 @@ function calcLots(){
   document.getElementById('cb-cost').textContent='$'+fmtN(costPerLot,2);
   document.getElementById('cb-exact').textContent=fmtN(lots,4)+' lotes';
 }
+
 function calcRR(){
   const sl=parseFloat(document.getElementById('rr-sl').value);
   const tp=parseFloat(document.getElementById('rr-tp').value);
@@ -1543,15 +1961,21 @@ function calcRR(){
   else note.textContent='✗ Ratio negativo. El riesgo supera el beneficio potencial.';
 }
 
-// ── FX LOT CALCULATOR ───────────────────────────────
-const fxRates={EURUSD:null,GBPUSD:null,JPYUSD:null};
-const fxPrevRates={EURUSD:null,GBPUSD:null,JPYUSD:null};
-const FX_DECIMALS={EURUSD:4,GBPUSD:4,JPYUSD:2};
-const fxRaw={EUR:null,GBP:null,JPY:null,CAD:null,USD:1};
+// ── FX LOT CALCULATOR ────────────────────────────────
+const fxRates     = {EURUSD:null, GBPUSD:null, JPYUSD:null};
+const fxPrevRates = {EURUSD:null, GBPUSD:null, JPYUSD:null};
+const FX_DECIMALS = {EURUSD:4, GBPUSD:4, JPYUSD:2};
+// Raw rates: units of currency per 1 USD (from Frankfurter from=USD)
+const fxRaw = {EUR:null, GBP:null, JPY:null, CAD:null, USD:1};
 
-function getFxCapital(){ const v=parseFloat(document.getElementById('fx-capital').value); return(!isNaN(v)&&v>0)?v:100; }
+function getFxCapital(){
+  const v=parseFloat(document.getElementById('fx-capital').value);
+  return(!isNaN(v)&&v>0)?v:100;
+}
+
 function fxSetStatus(state){
-  const dot=document.getElementById('fx-status-dot'), txt=document.getElementById('fx-status-text');
+  const dot=document.getElementById('fx-status-dot');
+  const txt=document.getElementById('fx-status-text');
   dot.className='fx-dot '+(state==='ok'?'':state);
   txt.textContent=state==='ok'?'En vivo':state==='loading'?'Cargando':'Sin datos';
 }
@@ -1563,24 +1987,38 @@ async function fetchFxRates(){
     if(!res.ok) throw new Error();
     const data=await res.json();
     const {EUR:e,GBP:g,JPY:j,CAD:c}=data.rates;
+    // Store raw rates (units per 1 USD)
     fxRaw.EUR=e; fxRaw.GBP=g; fxRaw.JPY=j; fxRaw.CAD=c; fxRaw.USD=1;
+    // If form date is today (or not set), sync live rates into fxRawForm immediately
     const todayISO2=new Date().toISOString().split('T')[0];
     const formDate=document.getElementById('f-fecha').value;
-    if(!formDate||formDate>=todayISO2){ fxRawForm.EUR=e; fxRawForm.GBP=g; fxRawForm.JPY=j; fxRawForm.CAD=c; fxRawFormDate=formDate||todayISO2; }
+    if(!formDate||formDate>=todayISO2){
+      fxRawForm.EUR=e; fxRawForm.GBP=g; fxRawForm.JPY=j; fxRawForm.CAD=c;
+      fxRawFormDate=formDate||todayISO2;
+    }
+    // Lot calculator rates (capital × rate)
     const capital=getFxCapital();
     ['EURUSD','GBPUSD','JPYUSD'].forEach(p=>fxPrevRates[p]=fxRates[p]);
-    fxRates.EURUSD=capital*e; fxRates.GBPUSD=capital*g; fxRates.JPYUSD=capital*j;
+    fxRates.EURUSD=capital*e;
+    fxRates.GBPUSD=capital*g;
+    fxRates.JPYUSD=capital*j;
     ['EURUSD','GBPUSD','JPYUSD'].forEach(p=>{fxUpdateDisplay(p);fxCalcLots(p);});
     const t=new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
     document.getElementById('fx-last-update').textContent='Última actualización: '+t;
     fxSetStatus('ok');
-    recalcFormPip(); recalcCalcPip();
-  } catch(e){ fxSetStatus('error'); document.getElementById('fx-last-update').textContent='Error al obtener datos'; }
+    // Recalc pip if currency selected
+    recalcFormPip();
+    recalcCalcPip();
+  } catch(e){
+    fxSetStatus('error');
+    document.getElementById('fx-last-update').textContent='Error al obtener datos';
+  }
 }
 
 function fxUpdateDisplay(pair){
   const val=fxRates[pair], prev=fxPrevRates[pair], dec=FX_DECIMALS[pair];
-  const el=document.getElementById('fx-rate-'+pair), chg=document.getElementById('fx-chg-'+pair);
+  const el=document.getElementById('fx-rate-'+pair);
+  const chg=document.getElementById('fx-chg-'+pair);
   el.textContent=val.toFixed(dec);
   if(prev!==null){
     const diff=val-prev;
@@ -1597,171 +2035,323 @@ function fxCalcLots(pair){
   const cambio=fxRates[pair];
   const range=parseFloat(document.getElementById('fx-range-'+pair).value);
   const el=document.getElementById('fx-lots-'+pair);
-  if(!cambio||isNaN(range)||range<=0){ el.textContent='—'; el.className='fx-lots-display fx-lots-empty'; return; }
+  if(!cambio||isNaN(range)||range<=0){
+    el.textContent='—'; el.className='fx-lots-display fx-lots-empty'; return;
+  }
   const lots=Math.ceil((cambio/range)*1000)/1000;
   el.textContent=fmtN(lots,3);
   el.className='fx-lots-display fx-lots-flash';
   setTimeout(()=>el.classList.remove('fx-lots-flash'),300);
 }
 
-// ── IMPORT TRADES ────────────────────────────────────
-let importPending=[];
-const FIELD_ALIASES={
-  fecha:['abrir','fecha','date','trade date','open date','open_date','fecha apertura'],
-  ticker:['ticker','symbol','simbolo','instrumento','instrument','pair','activo','asset'],
-  tipo:['tipo','type','direction','side','buy/sell','long/short'],
-  lotes:['lotes','lots','size','volume','volumen','cantidad','qty','quantity'],
-  entrada:['entrada','entry','open price','precio entrada','price in','open_price'],
-  salida:['salida','exit','close price','precio salida','price out','close_price'],
+// Auto-fetch FX when switching to calc tab
+// ── IMPORT ────────────────────────────────────────────
+let importPending = [];
+
+const FIELD_ALIASES = {
+  fecha:    ['abrir','fecha','date','trade date','open date','open_date','fecha apertura'],
+  ticker:   ['ticker','symbol','simbolo','instrumento','instrument','pair','activo','asset'],
+  tipo:     ['tipo','type','direction','side','buy/sell','long/short'],
+  lotes:    ['lotes','lots','size','volume','volumen','cantidad','qty','quantity'],
+  entrada:  ['entrada','entry','open price','precio entrada','price in','open_price'],
+  salida:   ['salida','exit','close price','precio salida','price out','close_price'],
   beneficio:['beneficio','profit','p&l','pnl','resultado','net profit','profit/loss','ganancias','gain/loss'],
-  notas:['notas','notes','comment','comments','comentario','descripcion','description'],
+  notas:    ['notas','notes','comment','comments','comentario','descripcion','description'],
 };
+
+// Normalize broker symbol names → canonical ticker
 function normalizeTicker(raw){
-  const map={'GER40.CASH':'GER40','GER40CASH':'GER40','UK100.CASH':'FTSE100','UK100CASH':'FTSE100','US500.CASH':'US500','US500CASH':'US500','US100.CASH':'US100','US100CASH':'US100','JP225.CASH':'JP225','JP225CASH':'JP225','JPY225.CASH':'JP225','JPY225CASH':'JP225'};
-  const key=raw.toUpperCase().replace(/\s/g,''); return map[key]||raw.toUpperCase();
+  const map={
+    'GER40.CASH':'GER40','GER40CASH':'GER40',
+    'UK100.CASH':'FTSE100','UK100CASH':'FTSE100',
+    'US500.CASH':'US500','US500CASH':'US500',
+    'US100.CASH':'US100','US100CASH':'US100',
+    'JP225.CASH':'JP225','JP225CASH':'JP225',
+    'JPY225.CASH':'JP225','JPY225CASH':'JP225',
+  };
+  const key=raw.toUpperCase().replace(/\s/g,'');
+  return map[key]||raw.toUpperCase();
 }
+
 function norm(s){return s.toLowerCase().trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
+
 function detectField(header){
   const h=norm(header);
-  for(const[field,aliases] of Object.entries(FIELD_ALIASES)){ if(aliases.some(a=>norm(a)===h)) return field; }
-  for(const[field,aliases] of Object.entries(FIELD_ALIASES)){ if(aliases.some(a=>h.startsWith(norm(a))||norm(a).startsWith(h))) return field; }
+  for(const [field,aliases] of Object.entries(FIELD_ALIASES)){
+    if(aliases.some(a=>norm(a)===h)) return field;
+  }
+  for(const [field,aliases] of Object.entries(FIELD_ALIASES)){
+    if(aliases.some(a=>h.startsWith(norm(a))||norm(a).startsWith(h))) return field;
+  }
   return null;
 }
+
+// Build colMap handling duplicate column names (e.g. two "Precio" columns)
+// Returns colMap with special handling: entrada = first Precio idx, salida = second Precio idx
 function buildColMap(headers){
-  const colMap={}, precioIdxs=[];
-  headers.forEach((h,i)=>{ const hn=norm(h); if(hn==='precio'||hn==='price'){precioIdxs.push(i);return;} const f=detectField(h); if(f&&colMap[f]===undefined) colMap[f]=i; });
-  if(precioIdxs.length>=1&&colMap['entrada']===undefined) colMap['entrada']=precioIdxs[0];
-  if(precioIdxs.length>=2&&colMap['salida']===undefined) colMap['salida']=precioIdxs[1];
+  const colMap={};
+  const precioIdxs=[];
+  headers.forEach((h,i)=>{
+    const hn=norm(h);
+    if(hn==='precio'||hn==='price') { precioIdxs.push(i); return; }
+    const f=detectField(h);
+    if(f&&colMap[f]===undefined) colMap[f]=i;
+  });
+  // First Precio = entrada, second Precio = salida
+  if(precioIdxs.length>=1 && colMap['entrada']===undefined) colMap['entrada']=precioIdxs[0];
+  if(precioIdxs.length>=2 && colMap['salida']===undefined)  colMap['salida']=precioIdxs[1];
   return colMap;
 }
+
 function parseDate(raw){
   if(!raw) return null;
+  // Strip time part: "2026-03-11 11:42:49" → "2026-03-11"
   const s=String(raw).trim().split(/[\sT]/)[0];
+  // ISO YYYY-MM-DD
   if(/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
+  // DD/MM/YYYY or DD-MM-YYYY
   const m1=s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
   if(m1) return `${m1[3]}-${m1[2].padStart(2,'0')}-${m1[1].padStart(2,'0')}`;
+  // DD/MM/YY
   const m2=s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2})$/);
   if(m2) return `20${m2[3]}-${m2[1].padStart(2,'0')}-${m2[2].padStart(2,'0')}`;
-  if(!isNaN(s)&&s!==''){ const d=XLSX.SSF.parse_date_code(Number(s)); if(d) return `${d.y}-${String(d.m).padStart(2,'0')}-${String(d.d).padStart(2,'0')}`; }
-  const nd=new Date(s); if(!isNaN(nd)) return nd.toISOString().split('T')[0];
+  // Excel serial
+  if(!isNaN(s)&&s!==''){
+    const d=XLSX.SSF.parse_date_code(Number(s));
+    if(d) return `${d.y}-${String(d.m).padStart(2,'0')}-${String(d.d).padStart(2,'0')}`;
+  }
+  const nd=new Date(s);
+  if(!isNaN(nd)) return nd.toISOString().split('T')[0];
   return null;
 }
-function parseTipo(raw){ if(!raw) return 'long'; const v=String(raw).toLowerCase().trim(); if(['short','sell','s','venta','bajista'].some(x=>v.includes(x))) return 'short'; return 'long'; }
-function parseNum(raw){ if(raw===null||raw===undefined||raw==='') return null; let s=String(raw).replace(/[€$£\s]/g,'').trim(); if(s.includes('.')&&s.includes(',')) s=s.replace(/\./g,'').replace(',','.'); else if(s.includes(',')&&!s.includes('.')) s=s.replace(',','.'); const n=parseFloat(s); return isNaN(n)?null:n; }
-function rowsToTrades(rows,colMap){
-  const result=[],errors=[];
+
+function parseTipo(raw){
+  if(!raw) return 'long';
+  const v=String(raw).toLowerCase().trim();
+  if(['short','sell','s','venta','bajista'].some(x=>v.includes(x))) return 'short';
+  return 'long';
+}
+
+function parseNum(raw){
+  if(raw===null||raw===undefined||raw==='') return null;
+  let s=String(raw).replace(/[€$£\s]/g,'').trim();
+  // European thousands+decimal: "1.234,56" → "1234.56"
+  if(s.includes('.')&&s.includes(',')) s=s.replace(/\./g,'').replace(',','.');
+  // Comma-only decimal: "-29,39" → "-29.39"
+  else if(s.includes(',')&&!s.includes('.')) s=s.replace(',','.');
+  const n=parseFloat(s);
+  return isNaN(n)?null:n;
+}
+
+function rowsToTrades(rows, colMap){
+  const result=[], errors=[];
   rows.forEach((row,i)=>{
     const get=f=>colMap[f]!==undefined?row[colMap[f]]:undefined;
     const fecha=parseDate(String(get('fecha')??''));
     const ticker=normalizeTicker(String(get('ticker')??'').trim());
     const beneficio=parseNum(get('beneficio'));
-    if(!fecha){errors.push(`Fila ${i+2}: fecha inválida`);return;}
-    if(!ticker){errors.push(`Fila ${i+2}: ticker vacío`);return;}
-    if(beneficio===null){errors.push(`Fila ${i+2}: beneficio inválido`);return;}
-    result.push({id:nextId++,fecha,ticker,tipo:parseTipo(get('tipo')),lotes:parseNum(get('lotes')),entrada:parseNum(get('entrada')),salida:parseNum(get('salida')),beneficio,notas:String(get('notas')??'').trim()});
+    if(!fecha){ errors.push(`Fila ${i+2}: fecha inválida ("${get('fecha')}")`); return; }
+    if(!ticker){ errors.push(`Fila ${i+2}: ticker vacío`); return; }
+    if(beneficio===null){ errors.push(`Fila ${i+2}: beneficio inválido ("${get('beneficio')}")`); return; }
+    result.push({
+      id: nextId++,
+      fecha,
+      ticker,
+      tipo: parseTipo(get('tipo')),
+      lotes: parseNum(get('lotes')),
+      entrada: parseNum(get('entrada')),
+      salida: parseNum(get('salida')),
+      beneficio,
+      notas: String(get('notas')??'').trim(),
+    });
   });
-  return {result,errors};
+  return {result, errors};
 }
+
 function parseCSVRows(text){
   const sep=text.includes(';')?';':',';
   const lines=text.trim().split(/\r?\n/);
   const headers=lines[0].split(sep).map(h=>h.replace(/^"|"$/g,'').trim());
   const colMap=buildColMap(headers);
-  const rows=lines.slice(1).filter(l=>l.trim()).map(l=>l.split(sep).map(c=>c.replace(/^"|"$/g,'').trim()));
-  return {headers,colMap,rows};
+  const rows=lines.slice(1).filter(l=>l.trim()).map(l=>
+    l.split(sep).map(c=>c.replace(/^"|"$/g,'').trim())
+  );
+  return {headers, colMap, rows};
 }
+
 function parseXLSXRows(ab){
-  const wb=XLSX.read(ab,{type:'array'}),ws=wb.Sheets[wb.SheetNames[0]];
+  const wb=XLSX.read(ab,{type:'array'});
+  const ws=wb.Sheets[wb.SheetNames[0]];
   const data=XLSX.utils.sheet_to_json(ws,{header:1,defval:''});
   if(data.length<2) return {headers:[],colMap:{},rows:[]};
   const headers=data[0].map(h=>String(h).trim());
-  return {headers,colMap:buildColMap(headers),rows:data.slice(1).filter(r=>r.some(c=>c!==''))};
+  const colMap=buildColMap(headers);
+  const rows=data.slice(1).filter(r=>r.some(c=>c!==''));
+  return {headers, colMap, rows};
 }
-function showImportModal(trades,errors,mappedFields){
+
+function showImportModal(trades, errors, mappedFields){
   importPending=trades;
   const modal=document.getElementById('import-modal');
   const preview=document.getElementById('import-preview');
   const errEl=document.getElementById('import-errors');
   const confirmBtn=document.getElementById('import-confirm-btn');
-  const fieldNames={fecha:'Fecha',ticker:'Ticker',tipo:'Tipo',lotes:'Lotes',entrada:'Entrada',salida:'Salida',beneficio:'Beneficio',notas:'Notas'};
+
+  const fieldNames={fecha:'Fecha',ticker:'Ticker',tipo:'Tipo',lotes:'Lotes',
+    entrada:'Entrada',salida:'Salida',beneficio:'Beneficio',notas:'Notas'};
   const mapped=Object.keys(mappedFields).filter(f=>mappedFields[f]!==undefined);
   const missing=Object.keys(fieldNames).filter(f=>!mapped.includes(f)&&f!=='notas');
+
   let html=`<b>${trades.length}</b> operaciones detectadas.<br>`;
   html+=`<span style="color:var(--green)">Campos mapeados: ${mapped.map(f=>fieldNames[f]).join(', ')}</span><br>`;
   if(missing.length) html+=`<span style="color:var(--warn)">Sin mapear: ${missing.map(f=>fieldNames[f]).join(', ')}</span><br>`;
-  if(trades.length>0){ html+=`<br><b>Primeras ${Math.min(3,trades.length)} filas:</b><br>`; trades.slice(0,3).forEach(t=>{ html+=`• ${t.fecha} · ${t.ticker} · ${t.tipo} · ${t.beneficio>0?'+':''}${t.beneficio}€<br>`; }); }
+  if(trades.length>0){
+    html+=`<br><b>Primeras ${Math.min(3,trades.length)} filas:</b><br>`;
+    trades.slice(0,3).forEach(t=>{
+      html+=`• ${t.fecha} · ${t.ticker} · ${t.tipo} · ${t.beneficio>0?'+':''}${t.beneficio}€<br>`;
+    });
+  }
   preview.innerHTML=html;
-  if(errors.length){ errEl.style.display=''; errEl.innerHTML='<b>Advertencias:</b><br>'+errors.slice(0,5).join('<br>')+(errors.length>5?`<br>...y ${errors.length-5} más`:''); } else errEl.style.display='none';
+
+  if(errors.length){
+    errEl.style.display='';
+    errEl.innerHTML='<b>Advertencias:</b><br>'+errors.slice(0,5).join('<br>')+(errors.length>5?`<br>...y ${errors.length-5} más`:'');
+  } else errEl.style.display='none';
+
   confirmBtn.textContent=`IMPORTAR ${trades.length} TRADES`;
   confirmBtn.disabled=trades.length===0;
   modal.style.display='flex';
 }
-function closeImportModal(){ document.getElementById('import-modal').style.display='none'; document.getElementById('import-file').value=''; importPending=[]; }
+
+function closeImportModal(){
+  document.getElementById('import-modal').style.display='none';
+  document.getElementById('import-file').value='';
+  importPending=[];
+}
+
 function confirmImport(){
   if(!importPending.length) return;
   trades.push(...importPending);
-  sortTrades();
+  trades.sort((a,b)=>b.fecha.localeCompare(a.fecha));
   save(); render();
   closeImportModal();
   toast(`${importPending.length} trades importados ✓`);
   importPending=[];
 }
+
 function importFile(input){
   const file=input.files[0]; if(!file) return;
   const ext=file.name.split('.').pop().toLowerCase();
   const reader=new FileReader();
+
   reader.onload=function(e){
     let parsed;
-    if(ext==='csv') parsed=parseCSVRows(e.target.result);
-    else { const ab=new Uint8Array(e.target.result); parsed=parseXLSXRows(ab); }
-    const {colMap,rows}=parsed;
-    if(!Object.keys(colMap).length){ toast('No se reconoció ninguna columna',true); return; }
+    if(ext==='csv'){
+      parsed=parseCSVRows(e.target.result);
+    } else {
+      const ab=new Uint8Array(e.target.result);
+      parsed=parseXLSXRows(ab);
+    }
+    const {colMap, rows}=parsed;
+    if(!Object.keys(colMap).length){
+      toast('No se reconoció ninguna columna',true); return;
+    }
     const {result,errors}=rowsToTrades(rows,colMap);
-    showImportModal(result,errors,colMap);
+    showImportModal(result, errors, colMap);
   };
+
   if(ext==='csv') reader.readAsText(file,'UTF-8');
   else reader.readAsArrayBuffer(file);
 }
 
-// ── GITLAB SYNC (trades) ─────────────────────────────
-const GH_CFG_KEY='tradelog_gh_config';
-let ghConfig=null;
+function showTab(id,btn){ showMainTab(id,btn); }
+
+// ── GITLAB SYNC ───────────────────────────────────────
+const GH_CFG_KEY = 'tradelog_gh_config';
+let ghConfig = null; // {user, projectId, token}
+
 function ghLoadConfig(){
-  try{ const s=localStorage.getItem(GH_CFG_KEY); if(s){ ghConfig=JSON.parse(s); } }catch(e){}
-  if(ghConfig){ document.getElementById('gh-user').value=ghConfig.user||''; document.getElementById('gh-repo').value=ghConfig.projectId||''; document.getElementById('gh-token').value=ghConfig.token||''; ghUpdateSyncInfo(); }
+  try{
+    const s=localStorage.getItem(GH_CFG_KEY);
+    if(s){ ghConfig=JSON.parse(s); }
+  }catch(e){}
+  if(ghConfig){
+    document.getElementById('gh-user').value=ghConfig.user||'';
+    document.getElementById('gh-repo').value=ghConfig.projectId||'';
+    document.getElementById('gh-token').value=ghConfig.token||'';
+    ghUpdateSyncInfo();
+  }
 }
+
 function ghSaveConfig(){
   const user=document.getElementById('gh-user').value.trim();
   const projectId=document.getElementById('gh-repo').value.trim();
   const token=document.getElementById('gh-token').value.trim();
   if(!user||!projectId||!token){ toast('Rellena todos los campos',true); return; }
-  ghConfig={user,projectId,token}; localStorage.setItem(GH_CFG_KEY,JSON.stringify(ghConfig));
-  toast('Configuración guardada ✓'); ghUpdateSyncInfo();
+  ghConfig={user, projectId, token};
+  localStorage.setItem(GH_CFG_KEY, JSON.stringify(ghConfig));
+  toast('Configuración guardada ✓');
+  ghUpdateSyncInfo();
 }
-function ghSetStatus(msg,color='var(--text3)'){ const el=document.getElementById('gh-status'); if(el){el.style.color=color;el.textContent=msg;} }
-function ghUpdateSyncInfo(){ const el=document.getElementById('gh-sync-info'); if(!el) return; if(!ghConfig){el.textContent='No configurado';return;} el.textContent=`Usuario: ${ghConfig.user}\nProyecto ID: ${ghConfig.projectId}\nToken: ${ghConfig.token.substring(0,8)}...`; }
+
+function ghSetStatus(msg, color='var(--text3)'){
+  const el=document.getElementById('gh-status');
+  if(el){ el.style.color=color; el.textContent=msg; }
+}
+
+function ghUpdateSyncInfo(){
+  const el=document.getElementById('gh-sync-info');
+  if(!el) return;
+  if(!ghConfig){ el.textContent='No configurado'; return; }
+  el.textContent=`Usuario: ${ghConfig.user}\nProyecto ID: ${ghConfig.projectId}\nToken: ${ghConfig.token.substring(0,8)}...`;
+}
+
+// GitLab API base
 function glAPI(){ return `https://gitlab.com/api/v4/projects/${encodeURIComponent(ghConfig.user+'/'+ghConfig.projectId)}`; }
-function glHeaders(){ return{'PRIVATE-TOKEN':ghConfig.token,'Content-Type':'application/json'}; }
-const GL_FILENAME='tradelog_data.json', GL_BRANCH='main';
+function glHeaders(){ return { 'PRIVATE-TOKEN': ghConfig.token, 'Content-Type':'application/json' }; }
+
+const GL_FILENAME = 'tradelog_data.json';
+const GL_BRANCH = 'main';
 
 async function ghPush(manual=false){
   if(!ghConfig){ if(manual) toast('Configura GitLab primero',true); return; }
   if(manual) ghSetStatus('Subiendo datos…');
   try{
+    // Build full data object
     _origSaveTrades();
-    const allData={accounts,accountsData:{}};
-    for(const acct of accounts){ const s=localStorage.getItem(acctLSKey(acct.id)); allData.accountsData[acct.id]=s?JSON.parse(s):{trades:[],nextId:1}; }
-    const content=JSON.stringify(allData,null,2);
+    const allData = { accounts, accountsData:{} };
+    for(const acct of accounts){
+      const s=localStorage.getItem(acctLSKey(acct.id));
+      allData.accountsData[acct.id]=s?JSON.parse(s):{trades:[],nextId:1};
+    }
+    const content=JSON.stringify(allData, null, 2);
+
+    // Check if file exists
     const checkUrl=`${glAPI()}/repository/files/${encodeURIComponent(GL_FILENAME)}?ref=${GL_BRANCH}`;
     const check=await fetch(checkUrl,{headers:glHeaders()});
     const exists=check.ok;
-    const body={branch:GL_BRANCH,content,commit_message:'Trading journal sync '+new Date().toISOString()};
-    const r=await fetch(`${glAPI()}/repository/files/${encodeURIComponent(GL_FILENAME)}`,{method:exists?'PUT':'POST',headers:glHeaders(),body:JSON.stringify(body)});
-    if(!r.ok){ const err=await r.json().catch(()=>({})); throw new Error(err.message||err.error||'HTTP '+r.status); }
+
+    const method=exists?'PUT':'POST';
+    const body={ branch:GL_BRANCH, content, commit_message:'Trading journal sync '+new Date().toISOString() };
+    const r=await fetch(`${glAPI()}/repository/files/${encodeURIComponent(GL_FILENAME)}`,{
+      method, headers:glHeaders(), body:JSON.stringify(body)
+    });
+    if(!r.ok){
+      const err=await r.json().catch(()=>({}));
+      throw new Error(err.message||err.error||'HTTP '+r.status);
+    }
     const now=new Date().toLocaleTimeString('es-ES');
-    if(manual){ ghSetStatus('✓ Subido a las '+now,'var(--accent)'); toast('Datos subidos a GitLab ✓'); }
-    else ghSetStatus('✓ Auto-sync '+now,'var(--text3)');
-  }catch(e){ ghSetStatus('✗ Error: '+e.message,'var(--red)'); if(manual) toast('Error subiendo a GitLab',true); }
+    if(manual){
+      ghSetStatus('✓ Subido a las '+now,'var(--accent)');
+      toast('Datos subidos a GitLab ✓');
+    } else {
+      ghSetStatus('✓ Auto-sync '+now,'var(--text3)');
+    }
+  }catch(e){
+    ghSetStatus('✗ Error: '+e.message,'var(--red)');
+    if(manual) toast('Error subiendo a GitLab',true);
+    console.error('glPush error',e);
+  }
 }
 
 async function ghPull(){
@@ -1775,17 +2365,33 @@ async function ghPull(){
     const json=await r.json();
     if(!json.accounts||!json.accountsData) throw new Error('Formato inválido');
     accounts=json.accounts;
-    for(const acctId in json.accountsData){ localStorage.setItem(acctLSKey(acctId),JSON.stringify(json.accountsData[acctId])); }
-    saveAccounts(); currentAcctId=accounts[0].id; loadTrades(currentAcctId); renderAcctTabs(); render();
+    for(const acctId in json.accountsData){
+      localStorage.setItem(acctLSKey(acctId), JSON.stringify(json.accountsData[acctId]));
+    }
+    saveAccounts();
+    currentAcctId=accounts[0].id;
+    loadTrades(currentAcctId);
+    renderAcctTabs();
+    render();
     const now=new Date().toLocaleTimeString('es-ES');
-    ghSetStatus('✓ Descargado a las '+now,'var(--accent)'); toast('Datos descargados de GitLab ✓');
-  }catch(e){ ghSetStatus('✗ Error: '+e.message,'var(--red)'); toast('Error descargando de GitLab',true); }
+    ghSetStatus('✓ Descargado a las '+now,'var(--accent)');
+    toast('Datos descargados de GitLab ✓');
+  }catch(e){
+    ghSetStatus('✗ Error: '+e.message,'var(--red)');
+    toast('Error descargando de GitLab',true);
+    console.error('glPull error',e);
+  }
 }
 
-const _origSaveTrades=saveTrades;
-saveTrades=function(){ _origSaveTrades(); ghPush(false); };
-ghLoadConfig();
+// Auto-push after every save
+const _origSaveTrades = saveTrades;
+saveTrades = function(){
+  _origSaveTrades();
+  ghPush(false);
+};
 
+// Load config on init
+ghLoadConfig();
 
 // ═══════════════════════════════════════════════════════
 // ── IRPF MODULE ─────────────────────────────────────
@@ -1827,6 +2433,8 @@ function irpfSaveState(){
   const salary=document.getElementById('irpf-salary')?.value;
   localStorage.setItem(IRPF_LS_KEY,JSON.stringify({cobros:irpfCobros,nextId:irpfNextId,tramosPerYear:irpfTramosPerYear,salary}));
   irpfGlPush(false);
+  // Actualizar RETA automáticamente cuando cambian los cobros
+  if(typeof retaSyncFromIRPF === 'function') retaSyncFromIRPF();
 }
 function irpfLoadState(){
   try{
@@ -1838,7 +2446,6 @@ function irpfLoadState(){
   }catch(e){}
 }
 
-// Init IRPF
 document.getElementById('irpf-f-fecha').value=todayISO;
 irpfLoadState();
 irpfSelectedYear=irpfCurrentYear;
@@ -1870,7 +2477,7 @@ async function irpfRefreshFX(){
   const dot=document.getElementById('irpf-fx-dot'),val=document.getElementById('irpf-fx-val'),
     ref=document.getElementById('irpf-fx-refresh'),err=document.getElementById('irpf-fx-err'),
     tag=document.getElementById('irpf-fx-live-tag');
-  dot.className='irpf-fx-dot loading';val.textContent=irpfCurrentFX.toFixed(4);ref.classList.add('spin');err.style.display='none';tag.style.display='none';
+  dot.className='irpf-fx-dot loading';val.textContent=irpfCurrentFX.toFixed(4);ref.classList.add('spin');err.style.display='none';if(tag)tag.style.display='none';
   try{
     const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),4000);
     const res=await fetch('https://api.frankfurter.app/latest?from=USD&to=EUR',{signal:controller.signal});
@@ -1880,10 +2487,10 @@ async function irpfRefreshFX(){
     const rate=data.rates?.EUR;
     if(!rate||isNaN(rate)) throw new Error();
     irpfCurrentFX=rate;
-    document.getElementById('irpf-f-fx').value=rate.toFixed(4);
+    if(document.getElementById('irpf-f-fx')) document.getElementById('irpf-f-fx').value=rate.toFixed(4);
     val.textContent=rate.toFixed(4);
     document.getElementById('irpf-fx-time').textContent=new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'})+' · frankfurter.app';
-    dot.className='irpf-fx-dot';tag.style.display='';
+    dot.className='irpf-fx-dot';if(tag)tag.style.display='';
     irpfFxLoaded=true;
   }catch(e){
     dot.className='irpf-fx-dot error';
@@ -2070,7 +2677,6 @@ function irpfRenderTramos(desglose,tramos){
   });
 }
 
-// ── EXPORT IRPF ──────────────────────────────────────
 function irpfGetRows(){
   const salary=parseFloat(document.getElementById('irpf-salary')?.value)||0;
   const year=irpfSelectedYear==='all'?irpfCurrentYear:irpfSelectedYear;
@@ -2107,10 +2713,7 @@ function irpfExportExcel(){
   const headers=Object.keys(rows[0]);
   const yearLabel=irpfSelectedYear==='all'?'Todos los años':irpfSelectedYear;
   const yearSuffix=irpfSelectedYear==='all'?'':'_'+irpfSelectedYear;
-  let html=`<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="UTF-8"><style>body{font-family:Calibri,sans-serif;font-size:11pt;}h2{color:#005a3c;font-size:14pt;margin-bottom:12px;}.summary{background:#f0faf5;padding:10px 14px;margin-bottom:16px;border-left:4px solid #00b87d;font-size:10pt;line-height:2;}table{border-collapse:collapse;width:100%;}th{background:#0a3d2e;color:#fff;padding:8px 12px;text-align:right;font-size:10pt;}th:first-child{text-align:left;}td{padding:7px 12px;border-bottom:1px solid #e8e8e8;text-align:right;font-size:10pt;}td:first-child{text-align:left;}tr:nth-child(even)td{background:#f7f7f7;}.green{color:#007a50;font-weight:bold;}.red{color:#cc1f3a;font-weight:bold;}</style></head><body>
-  <h2>FTMO · Registro IRPF · ${yearLabel}</h2>
-  <div class="summary"><b>Salario base:</b> ${irpfFmt(salary)} € &nbsp;·&nbsp; <b>Total cobrado:</b> ${irpfFmt(totalFTMO)} €<br><b>Impuesto a guardar:</b> <span class="red">${irpfFmt(impFTMO)} €</span> &nbsp;·&nbsp; <b>Neto real:</b> <span class="green">${irpfFmt(netoFTMO)} €</span> &nbsp;·&nbsp; <b>Tipo efectivo:</b> ${irpfFmt(tipoEfect,1)} %</div>
-  <table><thead><tr>`;
+  let html=`<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="UTF-8"><style>body{font-family:Calibri;font-size:11pt;}table{border-collapse:collapse;width:100%;}th{background:#0a3d2e;color:#fff;padding:8px;text-align:right;}th:first-child{text-align:left;}td{padding:7px;border-bottom:1px solid #e8e8e8;text-align:right;}td:first-child{text-align:left;}.green{color:#007a50;font-weight:bold;}.red{color:#cc1f3a;font-weight:bold;}</style></head><body><h2>FTMO · Registro IRPF · ${yearLabel}</h2><table><thead><tr>`;
   headers.forEach(h=>html+=`<th>${h}</th>`);
   html+=`</tr></thead><tbody>`;
   rows.forEach(r=>{html+=`<tr>`;headers.forEach(h=>{const cls=h.includes('Neto')?'green':h.includes('Impuesto')?'red':'';html+=`<td${cls?` class="${cls}"`:''}>${r[h]}</td>`;});html+=`</tr>`;});
@@ -2164,7 +2767,6 @@ function irpfImportCSV(input){
   reader.readAsText(file,'UTF-8');
 }
 
-// ── GITLAB SYNC IRPF ─────────────────────────────────
 const IRPF_GL_CFG_KEY='ftmo_irpf_gl_config';
 const IRPF_GL_FILENAME='ftmo_irpf_data.json';
 let irpfGlConfig=null;
@@ -2172,9 +2774,8 @@ let irpfGlConfig=null;
 function irpfGlLoadConfig(){
   try{const s=localStorage.getItem(IRPF_GL_CFG_KEY);if(s)irpfGlConfig=JSON.parse(s);}catch(e){}
   if(irpfGlConfig){
-    document.getElementById('irpf-gl-user').value=irpfGlConfig.user||'';
-    document.getElementById('irpf-gl-repo').value=irpfGlConfig.repo||'';
-    document.getElementById('irpf-gl-token').value=irpfGlConfig.token||'';
+    const uu=document.getElementById('irpf-gl-user');const ur=document.getElementById('irpf-gl-repo');const ut=document.getElementById('irpf-gl-token');
+    if(uu)uu.value=irpfGlConfig.user||'';if(ur)ur.value=irpfGlConfig.repo||'';if(ut)ut.value=irpfGlConfig.token||'';
     irpfGlSetStatus('Configurado · '+irpfGlConfig.user+'/'+irpfGlConfig.repo);
   }
 }
@@ -2208,10 +2809,7 @@ async function irpfGlPush(manual=false){
     const now=new Date().toLocaleTimeString('es-ES');
     if(manual){irpfGlSetStatus('✓ Subido a las '+now,'var(--green)');toast('Datos subidos a GitLab ✓');}
     else irpfGlSetStatus('✓ Auto-sync '+now,'var(--text3)');
-  }catch(e){
-    irpfGlSetStatus('✗ Error: '+e.message,'var(--red)');
-    if(manual)toast('Error subiendo a GitLab',true);
-  }
+  }catch(e){irpfGlSetStatus('✗ Error: '+e.message,'var(--red)');if(manual)toast('Error subiendo a GitLab',true);}
 }
 
 async function irpfGlPull(){
@@ -2226,14 +2824,12 @@ async function irpfGlPull(){
     if(!data.cobros)throw new Error('Formato inválido');
     irpfCobros=data.cobros||[];irpfNextId=data.nextId||irpfCobros.length+1;
     irpfTramosPerYear=data.tramosPerYear||{};
-    if(data.salary)document.getElementById('irpf-salary').value=data.salary;
+    if(data.salary){const el=document.getElementById('irpf-salary');if(el)el.value=data.salary;}
     localStorage.setItem(IRPF_LS_KEY,JSON.stringify(data));
     irpfBuildYearSelector();irpfRender();
     const now=new Date().toLocaleTimeString('es-ES');
     irpfGlSetStatus('✓ Descargado a las '+now,'var(--green)');toast('Datos descargados de GitLab ✓');
-  }catch(e){
-    irpfGlSetStatus('✗ Error: '+e.message,'var(--red)');toast('Error descargando de GitLab',true);
-  }
+  }catch(e){irpfGlSetStatus('✗ Error: '+e.message,'var(--red)');toast('Error descargando de GitLab',true);}
 }
 
 function irpfToggleSyncPanel(){
@@ -2245,6 +2841,330 @@ function irpfToggleSyncPanel(){
   btn.classList.toggle('open',!isOpen);
   dot.textContent=isOpen?'▸':'▾';
 }
+
+// ═══════════════════════════════════════════════════════
+// ── RETA / AUTÓNOMOS MODULE ──────────────────────────
+// ═══════════════════════════════════════════════════════
+
+const RETA_TRAMOS = [
+  { t:'1',  rMin:      0, rMax:   8039.99, bMin:  653.59, bMax:  718.94, cuotaMin: 206 },
+  { t:'2',  rMin:   8040, rMax:  10159.99, bMin:  718.94, bMax:  900.00, cuotaMin: 226 },
+  { t:'3',  rMin:  10160, rMax:  12299.99, bMin:  849.67, bMax:  900.00, cuotaMin: 267 },
+  { t:'4',  rMin:  12300, rMax:  14039.99, bMin:  898.69, bMax:  950.98, cuotaMin: 283 },
+  { t:'5',  rMin:  14040, rMax:  15119.99, bMin:  950.98, bMax:  960.78, cuotaMin: 299 },
+  { t:'6',  rMin:  15120, rMax:  17279.99, bMin:  960.78, bMax: 1000.00, cuotaMin: 302 },
+  { t:'7',  rMin:  17280, rMax:  18899.99, bMin: 1000.00, bMax: 1050.00, cuotaMin: 315 },
+  { t:'8',  rMin:  18900, rMax:  22959.99, bMin: 1050.00, bMax: 1190.18, cuotaMin: 330 },
+  { t:'9',  rMin:  22960, rMax:  26799.99, bMin: 1190.18, bMax: 1260.00, cuotaMin: 375 },
+  { t:'10', rMin:  26800, rMax:  30479.99, bMin: 1260.00, bMax: 1320.00, cuotaMin: 397 },
+  { t:'11', rMin:  30480, rMax:  36039.99, bMin: 1320.00, bMax: 1414.06, cuotaMin: 415 },
+  { t:'12', rMin:  36040, rMax:  43199.99, bMin: 1414.06, bMax: 1732.03, cuotaMin: 445 },
+  { t:'13', rMin:  43200, rMax:  54039.99, bMin: 1732.03, bMax: 2054.00, cuotaMin: 545 },
+  { t:'14', rMin:  54040, rMax:  72099.99, bMin: 2054.00, bMax: 3424.00, cuotaMin: 646 },
+  { t:'15', rMin:  72100, rMax: 999999999, bMin: 3424.00, bMax: 4720.50, cuotaMin:1077 },
+];
+const RETA_T_CC_GENERAL  = 28.30;
+const RETA_T_CC_DISCAPAC = 26.50;
+const RETA_T_CC_FAMILIAR = 27.45;
+const RETA_T_IT   = 1.30;
+const RETA_T_CESE = 0.90;
+const RETA_T_FP   = 0.10;
+const RETA_T_MEI  = 0.90;
+
+let retaTipoAlta    = 'general';
+let retaTpAno       = 1;
+let retaSelectedYear = String(new Date().getFullYear());
+let retaSyncEnabled  = true; // toggle: usar cobros IRPF
+
+// ── Deducción Gipuzkoa Art. 28 NF 3/2014 ─────────────
+function retaCalcDeduccionGipuzkoa(base) {
+  if (base <= 0) return 0;
+  if (base <= 35000)  return base * 0.20;
+  if (base <= 85000)  return 35000 * 0.20 + (base - 35000) * 0.15;
+  return 35000 * 0.20 + 50000 * 0.15 + (base - 85000) * 0.10;
+}
+
+const retaFE = n => (isNaN(n)||n===null) ? '—' :
+  n.toLocaleString('es-ES',{style:'currency',currency:'EUR',minimumFractionDigits:2,maximumFractionDigits:2});
+const retaFP = n => (isNaN(n)||n===null) ? '—' :
+  n.toFixed(2).replace('.',',')+' %';
+const retaFN = (n,d=0) => isNaN(n) ? '—' :
+  n.toLocaleString('es-ES',{minimumFractionDigits:d,maximumFractionDigits:d});
+
+// ── Year selector ─────────────────────────────────────
+function retaBuildYearSelector() {
+  const cobrosYears = [...new Set(irpfCobros.map(c => c.fecha.slice(0,4)))].sort();
+  const years = [...new Set([...cobrosYears, String(new Date().getFullYear())])].sort();
+  const wrap = document.getElementById('reta-year-selector');
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  years.forEach(y => {
+    const btn = document.createElement('button');
+    btn.className = 'year-btn' + (retaSelectedYear === y ? ' active' : '');
+    btn.textContent = y;
+    btn.onclick = () => { retaSelectedYear = y; retaBuildYearSelector(); retaSyncFromIRPF(); };
+    wrap.appendChild(btn);
+  });
+}
+
+// ── Sync desde cobros IRPF ───────────────────────────
+function retaSyncFromIRPF() {
+  // Reconstruir selector de años por si hay cobros nuevos
+  retaBuildYearSelector();
+
+  const cobrosAnio = irpfCobros.filter(c => c.fecha.startsWith(retaSelectedYear));
+  const totalEUR   = cobrosAnio.reduce((s, c) => s + c.tuParteEUR, 0);
+  const n          = cobrosAnio.length;
+
+  // Actualizar panel de cobros
+  const countEl = document.getElementById('reta-cobros-count');
+  const listEl  = document.getElementById('reta-cobros-list');
+  const totalEl = document.getElementById('reta-cobros-total');
+  const dotEl   = document.getElementById('reta-sync-dot');
+  const labelEl = document.getElementById('reta-sync-label');
+
+  if (countEl) countEl.textContent = n + (n === 1 ? ' cobro' : ' cobros');
+
+  if (n === 0) {
+    if (listEl)  listEl.textContent = 'Sin cobros registrados en IRPF para ' + retaSelectedYear + '.';
+    if (totalEl) totalEl.textContent = '—';
+    if (dotEl)   dotEl.style.background = 'var(--text3)';
+    if (labelEl) labelEl.textContent = 'Sin cobros IRPF';
+  } else {
+    // Mostrar resumen de cobros (máx. 5 líneas + total si hay más)
+    const lines = cobrosAnio.map(c => {
+      const d = c.fecha.split('-'); const fechaStr = d[2]+'/'+d[1]+'/'+d[0].slice(2);
+      return fechaStr + ' · ' + retaFE(c.tuParteEUR);
+    });
+    if (listEl)  listEl.innerHTML = lines.join('<br>');
+    if (totalEl) totalEl.textContent = retaFE(totalEUR);
+    if (dotEl)   dotEl.style.background = 'var(--green)';
+    if (labelEl) labelEl.textContent = retaSelectedYear + ' · ' + n + ' cobros sincronizados';
+  }
+
+  // Si sync activo → rellenar campo ingresos
+  if (retaSyncEnabled) {
+    const inp = document.getElementById('reta-inp-ingr');
+    if (inp) {
+      inp.value = n > 0 ? totalEUR.toFixed(2) : '';
+      inp.readOnly = n > 0; // bloquear si hay datos reales
+      inp.style.color = n > 0 ? 'var(--green)' : '';
+      inp.style.borderColor = n > 0 ? 'var(--green)' : '';
+    }
+    // Desactivar presets si hay datos reales
+    document.querySelectorAll('#reta-pres-ingr .preset-btn').forEach(b => {
+      b.disabled = n > 0;
+      b.style.opacity = n > 0 ? '0.35' : '';
+    });
+    // Actualizar label
+    const lbl = document.getElementById('reta-ingr-label');
+    if (lbl) lbl.textContent = n > 0
+      ? 'Ingresos brutos anuales (€) · desde IRPF'
+      : 'Ingresos brutos anuales (€)';
+  }
+
+  retaRecalc();
+}
+
+function retaToggleSyncIRPF() {
+  retaSyncEnabled = document.getElementById('reta-tog-sync-irpf').checked;
+  const inp = document.getElementById('reta-inp-ingr');
+  if (!retaSyncEnabled) {
+    // Desbloquear campo manual
+    if (inp) { inp.readOnly = false; inp.style.color = ''; inp.style.borderColor = ''; }
+    document.querySelectorAll('#reta-pres-ingr .preset-btn').forEach(b => { b.disabled = false; b.style.opacity = ''; });
+    const lbl = document.getElementById('reta-ingr-label');
+    if (lbl) lbl.textContent = 'Ingresos brutos anuales (€)';
+  } else {
+    retaSyncFromIRPF();
+  }
+}
+
+// ── Presets y tipo ────────────────────────────────────
+function retaSetIngr(v) {
+  if (retaSyncEnabled) return; // ignorar si sync activo
+  document.getElementById('reta-inp-ingr').value = v;
+  document.querySelectorAll('#reta-pres-ingr .preset-btn').forEach(b => {
+    const m = b.textContent.match(/(\d+)k/);
+    b.classList.toggle('active', m && parseInt(m[1])*1000 === v);
+  });
+  retaRecalc();
+}
+function retaClearPres(id) {
+  document.querySelectorAll('#'+id+' .preset-btn').forEach(b => b.classList.remove('active'));
+}
+function retaSetTipo(t, btn) {
+  retaTipoAlta = t;
+  document.querySelectorAll('#reta-pres-tipo .preset-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('reta-tp-opts').style.display = t === 'tarifa-plana' ? '' : 'none';
+  retaRecalc();
+}
+function retaSetTpAno(n, btn) {
+  retaTpAno = n;
+  document.querySelectorAll('#reta-pres-tp .preset-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  retaRecalc();
+}
+
+// ── Cálculo principal ─────────────────────────────────
+function retaRecalc() {
+  const ingr    = parseFloat(document.getElementById('reta-inp-ingr').value)  || 0;
+  const gastos  = parseFloat(document.getElementById('reta-inp-gastos').value) || 0;
+  const useGip  = document.getElementById('reta-tog-gipuzkoa').checked;
+  const withIT  = document.getElementById('reta-tog-it').checked;
+  const withCese= document.getElementById('reta-tog-cese').checked;
+  const pluri   = document.getElementById('reta-tog-pluri').checked;
+  const useMax  = document.getElementById('reta-tog-max').checked;
+  const esTP    = retaTipoAlta === 'tarifa-plana' && retaTpAno <= 2;
+
+  const basePrevia = Math.max(0, ingr - gastos);
+  const deduccion  = (useGip && basePrevia > 0) ? retaCalcDeduccionGipuzkoa(basePrevia) : 0;
+  const baseNeta   = Math.max(0, basePrevia - deduccion);
+
+  // Badge deducción
+  const tagDed = document.getElementById('reta-tag-deduccion');
+  if (useGip && deduccion > 0) {
+    const pct = deduccion / basePrevia * 100;
+    tagDed.textContent = '−'+retaFE(deduccion)+' ('+retaFN(pct,1)+' %)';
+    tagDed.className = 'tag green';
+  } else {
+    tagDed.textContent = 'No aplicada'; tagDed.className = 'tag';
+  }
+
+  // Tipo CC
+  let tipCC = RETA_T_CC_GENERAL;
+  if (retaTipoAlta === 'discapacidad') tipCC = RETA_T_CC_DISCAPAC;
+  if (retaTipoAlta === 'familiar')     tipCC = RETA_T_CC_FAMILIAR;
+  if (pluri) tipCC *= 0.5;
+  const tipTotal = tipCC + (withIT?RETA_T_IT:0) + (withCese?RETA_T_CESE:0) + RETA_T_FP + RETA_T_MEI;
+
+  document.getElementById('reta-r-tipo-cc').textContent    = retaFP(tipCC);
+  document.getElementById('reta-r-tipo-it').textContent    = withIT ? retaFP(RETA_T_IT) : '—';
+  document.getElementById('reta-r-tipo-total').textContent = retaFP(tipTotal);
+
+  // Stats izq
+  document.getElementById('reta-r-ingr').textContent      = ingr > 0 ? retaFE(ingr) : '—';
+  document.getElementById('reta-r-gastos').textContent    = gastos > 0 ? '−'+retaFE(gastos) : '—';
+  document.getElementById('reta-r-deduccion').textContent = (useGip && deduccion > 0) ? '−'+retaFE(deduccion) : '—';
+  document.getElementById('reta-r-base-neta').textContent = ingr > 0 ? retaFE(baseNeta) : '—';
+
+  if (ingr <= 0) { retaSetEmpty(); retaRenderTramosTable(-1); return; }
+
+  // Tarifa plana fija
+  if (esTP) {
+    document.getElementById('reta-res-mes').textContent      = retaFE(80);
+    document.getElementById('reta-res-mes').className        = 'reta-result-main pos';
+    document.getElementById('reta-res-mes-sub').textContent  = 'Tarifa plana fija';
+    document.getElementById('reta-res-anual').textContent    = retaFE(960);
+    document.getElementById('reta-res-anual').className      = 'reta-result-main neg';
+    document.getElementById('reta-res-anual-sub').textContent= '80 € × 12 meses';
+    document.getElementById('reta-breakdown').style.display  = 'none';
+    document.getElementById('reta-tag-tramo').textContent    = 'Tarifa Plana';
+    retaSetKpi('reta-kpi-mes',   '80,00 €',  'pos');
+    retaSetKpi('reta-kpi-anual', '960,00 €', 'neg');
+    const pctTP = baseNeta > 0 ? 960/baseNeta*100 : 0;
+    retaSetKpi('reta-kpi-pct', retaFP(pctTP), 'neu');
+    retaRenderTramosTable(-1); return;
+  }
+
+  // Tramo
+  let tramoIdx = RETA_TRAMOS.findIndex(t => baseNeta >= t.rMin && baseNeta <= t.rMax);
+  if (tramoIdx < 0) tramoIdx = RETA_TRAMOS.length - 1;
+  const tramo  = RETA_TRAMOS[tramoIdx];
+  const baseMes = useMax ? tramo.bMax : tramo.bMin;
+
+  const qCC    = baseMes * tipCC / 100;
+  const qIT    = withIT    ? baseMes * RETA_T_IT   / 100 : 0;
+  const qCese  = withCese  ? baseMes * RETA_T_CESE / 100 : 0;
+  const qFP    = baseMes * RETA_T_FP  / 100;
+  const qMEI   = baseMes * RETA_T_MEI / 100;
+  const qTotal = qCC + qIT + qCese + qFP + qMEI;
+  const qAnual = qTotal * 12;
+
+  document.getElementById('reta-tag-tramo').textContent = 'Tramo '+tramo.t;
+  retaSetKpi('reta-kpi-mes',   retaFE(qTotal), 'pos');
+  retaSetKpi('reta-kpi-anual', retaFE(qAnual), 'neg');
+  const pctNeta = baseNeta > 0 ? qAnual/baseNeta*100 : 0;
+  retaSetKpi('reta-kpi-pct', retaFP(pctNeta), 'neu');
+
+  const rMesEl = document.getElementById('reta-res-mes');
+  rMesEl.textContent = retaFE(qTotal); rMesEl.className = 'reta-result-main pos';
+  document.getElementById('reta-res-mes-sub').textContent = 'base: '+retaFE(baseMes)+'/mes';
+  const rAnEl = document.getElementById('reta-res-anual');
+  rAnEl.textContent = retaFE(qAnual); rAnEl.className = 'reta-result-main neg';
+  document.getElementById('reta-res-anual-sub').textContent = retaFE(qTotal)+' × 12';
+
+  document.getElementById('reta-breakdown').style.display = '';
+  document.getElementById('reta-bd-base').textContent   = retaFE(baseMes);
+  document.getElementById('reta-bd-cc').textContent     = retaFE(qCC);
+  document.getElementById('reta-row-it').style.display  = withIT ? '' : 'none';
+  document.getElementById('reta-bd-it').textContent     = retaFE(qIT);
+  document.getElementById('reta-row-cese').style.display= withCese ? '' : 'none';
+  document.getElementById('reta-bd-cese').textContent   = retaFE(qCese);
+  document.getElementById('reta-bd-fp').textContent     = retaFE(qFP);
+  document.getElementById('reta-bd-mei').textContent    = retaFE(qMEI);
+  document.getElementById('reta-bd-total').textContent  = retaFE(qTotal);
+  document.getElementById('reta-bd-anual').textContent  = retaFE(qAnual);
+  document.getElementById('reta-bd-pct-neta').textContent  = retaFP(pctNeta);
+  const pctBruto = ingr > 0 ? qAnual/ingr*100 : 0;
+  document.getElementById('reta-bd-pct-bruto').textContent = retaFP(pctBruto);
+  document.getElementById('reta-bd-rango').textContent  = retaFE(tramo.bMin)+'–'+retaFE(tramo.bMax);
+
+  retaRenderTramosTable(tramoIdx);
+}
+
+function retaSetKpi(id, val, cls) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = val; el.className = 'kpi-val '+cls;
+}
+
+function retaSetEmpty() {
+  ['reta-res-mes','reta-res-anual'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = '—'; el.className = 'reta-result-main empty';
+  });
+  ['reta-res-mes-sub','reta-res-anual-sub'].forEach(id => { const el=document.getElementById(id); if(el) el.textContent=''; });
+  const bd = document.getElementById('reta-breakdown');
+  if (bd) bd.style.display = 'none';
+  const tt = document.getElementById('reta-tag-tramo');
+  if (tt) tt.textContent = 'Tramo —';
+  ['reta-kpi-mes','reta-kpi-anual','reta-kpi-pct'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = '—'; el.className = 'kpi-val neu';
+  });
+}
+
+function retaRenderTramosTable(activeIdx) {
+  const tbody = document.getElementById('reta-tramos-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+  RETA_TRAMOS.forEach((t, i) => {
+    const tr = document.createElement('tr');
+    if (i === activeIdx) tr.className = 'reta-tr-active';
+    const rMinMes = Math.round(t.rMin / 12);
+    const rMaxMes = t.rMax >= 999999 ? null : Math.round(t.rMax / 12);
+    const rStr = rMinMes === 0
+      ? '< 670 €/mes'
+      : retaFN(rMinMes)+' – '+(rMaxMes ? retaFN(rMaxMes)+' €' : '∞')+' €';
+    tr.innerHTML = `
+      <td>${t.t}</td>
+      <td style="color:var(--text2);font-size:10px">${rStr}</td>
+      <td class="${i===activeIdx?'reta-c-green':''}">${retaFE(t.bMin)}</td>
+      <td>${retaFE(t.bMax)}</td>
+      <td class="${i===activeIdx?'reta-c-warn':''}">${retaFE(t.cuotaMin)}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+// Init RETA
+retaBuildYearSelector();
+retaRenderTramosTable(-1);
+retaSyncFromIRPF(); // carga inicial desde IRPF
 </script>
 </body>
 </html>

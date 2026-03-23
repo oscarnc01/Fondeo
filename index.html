@@ -87,6 +87,8 @@ header{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap
 .panel-head-right{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
 .tag{font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:3px;border:1px solid var(--border2);color:var(--text2);}
 .tag.accent{border-color:rgba(0,212,255,.25);color:var(--accent);background:var(--accent-dim);}
+.tag.green{border-color:rgba(0,229,160,.25);color:var(--green);background:var(--green-dim);}
+.tag.red{border-color:rgba(255,77,106,.25);color:var(--red);background:var(--red-dim);}
 .panel-body{padding:16px;}
 
 /* FORM */
@@ -1107,7 +1109,7 @@ tr:hover td{background:rgba(0,212,255,0.02);}
           <div class="panel-head">
             <span class="panel-title">REGISTRO DE CUOTAS</span>
             <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-              <span class="tag" id="reta-pagos-balance-tag">—</span>
+              <span class="tag" id="reta-pagos-balance-tag" style="font-size:13px;padding:5px 13px;font-weight:700;letter-spacing:.05em">—</span>
               <span class="tag" id="reta-pagos-count">0 registros</span>
             </div>
           </div>
@@ -3318,7 +3320,11 @@ function retaAddPago() {
   if (isNaN(pagado) || pagado < 0)  { alert('Importe no válido'); return; }
   retaPagos.push({id: retaPagosNextId++, mes: mes, pagado: pagado, teorico: retaCuotaTeoricaMes});
   retaSortPagos();
-  if (mesEl) mesEl.value = '';
+  if (mesEl) {
+    var now = new Date();
+    var mm = String(now.getMonth()+1).padStart(2,'0');
+    mesEl.value = mm + '/' + now.getFullYear();
+  }
   if (impEl) impEl.value = '';
   retaSavePagos();
   retaRenderPagos();
@@ -3534,6 +3540,14 @@ function retaRenderPagos() {
 (function initRETA() {
   try {
     retaLoadPagos();
+    // Rellenar mes actual por defecto
+    var mesInput = document.getElementById('reta-pago-mes');
+    if (mesInput && !mesInput.value) {
+      var now = new Date();
+      var mm = String(now.getMonth()+1).padStart(2,'0');
+      var yyyy = now.getFullYear();
+      mesInput.value = mm + '/' + yyyy;
+    }
     retaBuildYearSelector();
     retaRenderTramosTable(-1);
     retaSyncFromIRPF();
